@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAPIDARIUM</title>
+<meta name="description" content="Lapidarium — repositório maçônico de estudo. Vídeos, símbolos, rituais e tradições dos acervos EpaminondasOnline e Grupo de Estudos Urânia.">
+<meta name="theme-color" content="#171510">
+<meta property="og:title" content="Lapidarium — Repositório Maçônico de Estudo">
+<meta property="og:description" content="Um repositório vivo do conhecimento das ordens maçônicas — textos, rituais, símbolos e tradições.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://viaveritasvita.github.io/lapidarium/">
+<meta property="og:image" content="https://viaveritasvita.github.io/lapidarium/urania.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'><polygon points='42,8 78,74 6,74' fill='none' stroke='%23c9a84c' stroke-width='4'/><ellipse cx='42' cy='54' rx='12' ry='8' fill='none' stroke='%23c9a84c' stroke-width='2.5'/><circle cx='42' cy='54' r='3' fill='%23c9a84c'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#c9a84c;--gold-l:#f0d98a;--gold-d:#7a6230;--gold-vd:#3d3018;
+  --copper:#b87333;--copper-l:#d4905a;
+  --blue:#1a3a5c;--blue-l:#4a7fa8;
+  --s1:#171510;--s2:#1e1c14;--s3:#252118;
+  --text:#e0d0b0;--text-d:#9a8a6a;--text-dd:#524a3c;
+  --border:rgba(201,168,76,0.13);--border-h:rgba(201,168,76,0.3);
+}
+
+body{background:var(--s1);color:var(--text);font-family:'EB Garamond',serif;overflow-x:hidden;min-height:100vh}
+
+/* ── LAYOUT ── */
+.wrap{position:relative;z-index:1;max-width:940px;margin:0 auto;padding:0 24px 60px}
+
+/* ── HEADER ── */
+header{text-align:center;padding:52px 0 0}
+
+.delta-wrap{width:84px;height:84px;margin:0 auto 22px;position:relative;cursor:default;display:flex;align-items:center;justify-content:center}
+.delta-halo{position:absolute;inset:-14px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,0) 35%,rgba(201,168,76,0) 100%);transition:background 0.7s ease;pointer-events:none}
+.delta-rays{position:absolute;inset:-20px;opacity:0;transition:opacity 0.5s ease;pointer-events:none}
+.delta-svg-wrap{position:relative;width:84px;height:84px;transition:transform 0.5s cubic-bezier(.34,1.4,.64,1)}
+@keyframes delta-breathe{
+  0%,100%{filter:drop-shadow(0 0 4px rgba(201,168,76,0.3)) drop-shadow(0 0 14px rgba(201,168,76,0.08))}
+  50%{filter:drop-shadow(0 0 9px rgba(201,168,76,0.5)) drop-shadow(0 0 28px rgba(201,168,76,0.15))}
+}
+.delta-svg-wrap{animation:delta-breathe 5s ease-in-out infinite}
+
+.site-name{font-family:'Cinzel',serif;font-size:clamp(2.1rem,6.6vw,3.7rem);font-weight:700;letter-spacing:0.34em;background:linear-gradient(170deg,#f5e49a 0%,var(--gold) 42%,#8a6820 78%,var(--gold-vd) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.site-tagline{font-style:italic;font-size:clamp(.9rem,2.2vw,1.05rem);color:var(--text-d);letter-spacing:.06em;margin-bottom:5px;line-height:1.5}
+.site-lema{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.55em;color:var(--gold-d);text-transform:uppercase;margin-bottom:16px}
+
+.orn{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px auto}
+.ol{width:65px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-d))}
+.ol.r{background:linear-gradient(90deg,var(--gold-d),transparent)}
+.od{width:6px;height:6px;background:var(--gold-d);transform:rotate(45deg);opacity:.8}
+
+nav{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;padding:10px 0 30px}
+nav a{font-family:'Cinzel',serif;font-size:.64rem;letter-spacing:.22em;color:#b0a079;text-decoration:none;text-transform:uppercase;padding:2px 0;border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
+nav a:hover{color:var(--gold);border-color:var(--gold-d)}
+
+/* ── AI BAR ── */
+.ai-bar{position:relative;border:1px solid var(--border);border-top:1px solid rgba(201,168,76,0.26);background:rgba(16,14,9,0.82);backdrop-filter:blur(8px);padding:13px 16px 11px;margin-bottom:34px}
+.ai-bar::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--gold-l) 50%,var(--gold) 70%,transparent)}
+.ai-prompt-text{font-style:italic;font-size:.85rem;color:var(--text-d);margin-bottom:9px;display:block}
+.ai-prompt-text strong{color:var(--gold-d);font-style:normal;font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.1em}
+.ai-row{display:flex;align-items:center;gap:8px}
+.ai-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--gold);box-shadow:0 0 7px var(--gold);animation:delta-breathe 2.5s ease-in-out infinite}
+.ai-input{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.15);color:var(--text);font-family:'EB Garamond',serif;font-size:.95rem;padding:7px 12px;outline:none;transition:border-color .3s}
+.ai-input::placeholder{color:#93855f;font-style:italic}
+.ai-input:focus{border-color:rgba(201,168,76,.35);background:rgba(255,255,255,.06)}
+.ai-btn{background:rgba(201,168,76,.1);border:1px solid var(--gold-d);color:var(--gold);font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;padding:8px 13px;cursor:pointer;text-transform:uppercase;transition:all .3s;white-space:nowrap}
+.ai-btn:hover{background:rgba(201,168,76,.2);color:var(--gold-l);border-color:var(--gold)}
+.ai-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.chip{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.1em;border:1px solid rgba(201,168,76,.28);color:#c2b189;padding:4px 9px;cursor:pointer;text-transform:uppercase;background:rgba(201,168,76,.05);transition:all .25s}
+.chip:hover{border-color:var(--gold-d);color:var(--gold-d);background:rgba(201,168,76,.06)}
+
+/* ── PORTALS ── */
+.sec-label{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.5em;color:#bda05a;text-align:center;text-transform:uppercase;margin-bottom:20px}
+.portals{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:40px}
+@media(max-width:540px){.portals{grid-template-columns:1fr}}
+.portal{position:relative;overflow:hidden;text-decoration:none;display:block;border:1px solid var(--border);background:rgba(16,14,9,0.75);backdrop-filter:blur(6px);transition:border-color .4s,transform .3s,box-shadow .4s}
+.portal:hover{transform:translateY(-4px)}
+.portal::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .5s;pointer-events:none}
+.portal-ep::after{background:radial-gradient(ellipse at 50% 0%,rgba(184,115,51,.12) 0%,transparent 60%)}
+.portal-ur::after{background:radial-gradient(ellipse at 50% 0%,rgba(74,127,168,.14) 0%,transparent 60%)}
+.portal:hover::after{opacity:1}
+.portal-ep:hover{border-color:rgba(184,115,51,.45);box-shadow:0 10px 40px rgba(184,115,51,.1)}
+.portal-ur:hover{border-color:rgba(74,127,168,.45);box-shadow:0 10px 40px rgba(74,127,168,.1)}
+.p-accent{height:2px;width:100%;display:block}
+.portal-ep .p-accent{background:linear-gradient(90deg,transparent,var(--copper),var(--copper-l),var(--copper),transparent)}
+.portal-ur .p-accent{background:linear-gradient(90deg,transparent,var(--blue),var(--blue-l),var(--blue),transparent)}
+.p-body{padding:22px 22px 24px;position:relative;z-index:1}
+.p-icon{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel Decorative',serif;font-size:1.35rem;font-weight:700;margin:0 auto 13px;border:1px solid;transition:box-shadow .4s;overflow:hidden}
+.portal-ep .p-icon{border-color:rgba(184,115,51,.35);color:var(--copper-l);background:rgba(184,115,51,.07)}
+.portal-ur .p-icon{border-color:rgba(74,127,168,.35);color:var(--blue-l);background:rgba(74,127,168,.07)}
+.portal-ep:hover .p-icon{box-shadow:0 0 22px rgba(184,115,51,.25)}
+.portal-ur:hover .p-icon{box-shadow:0 0 22px rgba(74,127,168,.25)}
+.p-name{font-family:'Cinzel',serif;font-size:.9rem;font-weight:600;letter-spacing:.2em;text-align:center;text-transform:uppercase;margin-bottom:3px}
+.portal-ep .p-name{color:var(--copper-l)}
+.portal-ur .p-name{color:var(--blue-l)}
+.p-sub{font-style:italic;font-size:.8rem;color:var(--text-d);text-align:center;margin-bottom:15px}
+.p-stats{display:flex;justify-content:center;gap:20px;margin-bottom:13px}
+.ps-n{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:600;display:block;text-align:center}
+.portal-ep .ps-n{color:var(--copper)}
+.portal-ur .ps-n{color:var(--blue-l)}
+.ps-l{font-size:.6rem;letter-spacing:.15em;color:var(--text-d);text-transform:uppercase;display:block;text-align:center}
+.p-cta{display:flex;align-items:center;justify-content:center;gap:7px;font-family:'Cinzel',serif;font-size:.57rem;letter-spacing:.28em;text-transform:uppercase;opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}
+.portal:hover .p-cta{opacity:1;transform:translateY(0)}
+.portal-ep .p-cta{color:var(--copper-l)}
+.portal-ur .p-cta{color:var(--blue-l)}
+
+/* ── CAROUSEL ── */
+.c-outer{overflow:hidden;position:relative}
+.c-outer::before,.c-outer::after{content:'';position:absolute;top:0;bottom:0;width:48px;z-index:2;pointer-events:none}
+.c-outer::before{left:0;background:linear-gradient(90deg,var(--s1),transparent)}
+.c-outer::after{right:0;background:linear-gradient(270deg,var(--s1),transparent)}
+.c-track{display:flex;gap:12px;animation:scroll 48s linear infinite;width:max-content}
+.c-track:hover{animation-play-state:paused}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.vc{width:185px;flex-shrink:0;border:1px solid var(--border);background:rgba(16,14,9,.85);overflow:hidden;cursor:pointer;transition:border-color .3s,transform .3s}
+.vc:hover{border-color:var(--border-h);transform:translateY(-3px)}
+.vc-thumb{width:100%;height:102px;position:relative;overflow:hidden}
+.vc-img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.7) saturate(.55);transition:filter .4s}
+.vc:hover .vc-img{filter:brightness(.9) saturate(.85)}
+.vc-badge{position:absolute;bottom:5px;left:5px;font-family:'Cinzel',serif;font-size:.47rem;letter-spacing:.1em;padding:2px 6px;text-transform:uppercase}
+.b-ep{background:rgba(184,115,51,.82);color:#fff}
+.b-ur{background:rgba(20,50,80,.88);color:var(--blue-l)}
+.vc-body{padding:9px 10px 11px}
+.vc-title{font-size:.75rem;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:3px}
+.vc-meta{font-size:.62rem;color:var(--text-d)}
+
+/* ── AGENDA ── */
+.ag-list{display:flex;flex-direction:column;gap:7px}
+.ag-item{display:flex;align-items:center;gap:13px;border:1px solid var(--border);padding:11px 15px;background:rgba(16,14,9,.75);backdrop-filter:blur(4px);transition:border-color .3s,background .3s}
+.ag-item:hover{border-color:var(--border-h)}
+.ag-date{text-align:center;min-width:42px;border-right:1px solid var(--border);padding-right:13px}
+.ag-day{font-family:'Cinzel',serif;font-size:1.35rem;font-weight:700;color:var(--gold);line-height:1;display:block}
+.ag-month{font-family:'Cinzel',serif;font-size:.53rem;letter-spacing:.2em;color:var(--text-d);text-transform:uppercase;display:block}
+.ag-info{flex:1}
+.ag-evt{font-family:'Cinzel',serif;font-size:.74rem;letter-spacing:.04em;color:var(--text);margin-bottom:1px}
+.ag-sub{font-size:.72rem;color:var(--text-d);font-style:italic}
+.ag-tag{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.12em;padding:3px 7px;border:1px solid;text-transform:uppercase;white-space:nowrap}
+.t-ep{border-color:rgba(184,115,51,.3);color:var(--copper-l)}
+.t-ur{border-color:rgba(74,127,168,.3);color:var(--blue-l)}
+.ag-cal{background:transparent;border:1px solid var(--border);color:var(--text-d);font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.12em;padding:5px 8px;cursor:pointer;text-transform:uppercase;white-space:nowrap;transition:all .3s;text-decoration:none;display:inline-block}
+.ag-cal:hover{border-color:var(--gold-d);color:var(--gold)}
+
+/* ── FEATURES ── */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:50px}
+@media(max-width:600px){.feats{grid-template-columns:repeat(2,1fr)}}
+.feat{border:1px solid var(--border);padding:17px 13px;text-align:center;background:rgba(16,14,9,.7);backdrop-filter:blur(4px);transition:border-color .3s,background .3s;cursor:pointer}
+.feat:hover{border-color:var(--border-h);background:rgba(201,168,76,.03)}
+.feat-ico{font-size:1.35rem;margin-bottom:6px;display:block;opacity:.65}
+.feat-name{font-family:'Cinzel',serif;font-size:.61rem;letter-spacing:.18em;color:var(--gold-d);text-transform:uppercase;margin-bottom:4px}
+.feat-desc{font-size:.74rem;color:var(--text-d);font-style:italic;line-height:1.45}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:24px;text-align:center}
+footer p{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.32em;color:#9c8c6a;text-transform:uppercase}
+
+@keyframes fu{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+header{animation:fu .9s ease both}
+.ai-bar{animation:fu .9s .1s ease both}
+.portals{animation:fu .9s .2s ease both}
+.carousel-wrap{animation:fu .9s .3s ease both;margin-bottom:40px}
+.agenda{animation:fu .9s .35s ease both;margin-bottom:42px}
+.feats{animation:fu .9s .4s ease both}
+/* ── ORDENS & RITOS ── */
+.ordens{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));gap:12px;margin-bottom:46px;animation:fu .9s .25s ease both}
+.ord-card{border:1px solid var(--border);background:rgba(16,14,9,.72);backdrop-filter:blur(4px);padding:14px 8px 12px;text-align:center;cursor:pointer;transition:border-color .3s,transform .3s,box-shadow .4s}
+.ord-card:hover{transform:translateY(-3px);border-color:currentColor;box-shadow:0 8px 26px rgba(0,0,0,.4)}
+.ord-emb{height:64px;display:flex;align-items:center;justify-content:center}
+.ord-emb svg{width:58px;height:58px}
+.ordens .s{stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ordens .f{fill:currentColor;stroke:none}
+.ordens .t{fill:currentColor;font-family:Georgia,serif}
+.ordens .rer-dot{fill:#4f8a4f}
+.ord-nm{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.07em;color:var(--text);text-transform:uppercase;margin-top:9px;line-height:1.25}
+.ord-or{font-size:.72rem;color:var(--text-d);font-style:italic;margin-top:2px}
+/* ── BOTÃO DE TEMA ── */
+.theme-btn{position:fixed;top:16px;right:16px;z-index:6;width:38px;height:38px;border-radius:50%;border:1px solid var(--border-h);background:rgba(0,0,0,.28);color:var(--gold);font-size:1rem;line-height:1;cursor:pointer;backdrop-filter:blur(6px);transition:all .3s;display:flex;align-items:center;justify-content:center}
+.theme-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.14)}
+
+/* ── TEMA CLEAN (claro) ── */
+body.light{
+  --gold:#9a7a2e;--gold-l:#b8933f;--gold-d:#7c6222;--gold-vd:#5a4416;
+  --copper:#a5621f;--copper-l:#c07d3a;--blue:#2b5a86;--blue-l:#3f7fb0;
+  --s1:#ece3cf;--s2:#e3d8c0;--s3:#d9ccb0;
+  --text:#3a3327;--text-d:#6e6149;--text-dd:#9c8d70;
+  --border:rgba(120,92,30,.22);--border-h:rgba(120,92,30,.45);
+}
+body.light .bgbase{fill:#ece3cf!important}
+body.light .bgmood{fill:transparent!important}
+body.light .bgsyms{opacity:.15}
+body.light .bgsyms .s{stroke:#9a7a2e}
+body.light .bgsyms .f{fill:#9a7a2e}
+body.light .site-name{background:linear-gradient(170deg,#b8933f 0%,#9a7a2e 45%,#6a5018 100%);-webkit-background-clip:text;background-clip:text}
+body.light nav a{color:#7c6a44}
+body.light .sec-label{color:#8a6a24}
+body.light footer p{color:#7c6f54}
+body.light .chip{color:#7c6a3e;background:rgba(120,92,30,.06);border-color:rgba(120,92,30,.3)}
+body.light .ai-input{background:rgba(0,0,0,.03)}
+body.light .ai-input::placeholder{color:#8a7c5c}
+body.light .ai-bar{background:rgba(255,251,242,.82)}
+body.light .portal{background:rgba(255,251,242,.72)}
+body.light .vc{background:rgba(255,251,242,.85)}
+body.light .vc-img{filter:brightness(.95) saturate(.82)}
+body.light .ag-item{background:rgba(255,251,242,.72)}
+body.light .feat{background:rgba(255,251,242,.6)}
+body.light .theme-btn{background:rgba(255,251,242,.6)}
+/* ── EM BREVE ── */
+nav a.soon{opacity:.4;pointer-events:none;cursor:not-allowed;position:relative}
+nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 1px);transform:translateX(-50%);font-size:.44rem;letter-spacing:.06em;color:var(--gold-d);font-style:italic;text-transform:none;white-space:nowrap}
+.feat.soon{opacity:.55;pointer-events:none;position:relative;overflow:hidden}
+.feat.soon::after{content:'Em breve';position:absolute;top:9px;right:-26px;transform:rotate(45deg);background:var(--gold-d);color:var(--s1);font-family:'Cinzel',serif;font-size:.44rem;letter-spacing:.1em;padding:2px 28px;text-transform:uppercase}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema (claro/escuro)" aria-label="Alternar tema">☀</button>
+
+<!-- ══ BG ICONOGRÁFICO ══ -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1440 900"
+     preserveAspectRatio="xMidYMid slice"
+     style="position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%;">
+<defs>
+  <style>.s{fill:none;stroke:#C8A84B;stroke-linecap:round;stroke-linejoin:round}.f{fill:#C8A84B;stroke:none}.t{fill:#C8A84B;font-family:Georgia,serif}</style>
+  <pattern id="grain-h" width="6" height="6" patternUnits="userSpaceOnUse"><line x1="0" y1="3" x2="6" y2="3" stroke="#C8A84B" stroke-width="0.25"/></pattern>
+  <pattern id="grain-d1" width="8" height="8" patternUnits="userSpaceOnUse"><line x1="0" y1="8" x2="8" y2="0" stroke="#C8A84B" stroke-width="0.18"/></pattern>
+  <radialGradient id="luz-central" cx="50%" cy="48%" r="55%">
+    <stop offset="0%" stop-color="#2a2518" stop-opacity="1"/>
+    <stop offset="60%" stop-color="#171510" stop-opacity="1"/>
+    <stop offset="100%" stop-color="#0e0d0a" stop-opacity="1"/>
+  </radialGradient>
+  <radialGradient id="vinheta" cx="50%" cy="50%" r="68%">
+    <stop offset="0%" stop-color="#000000" stop-opacity="0"/>
+    <stop offset="75%" stop-color="#000000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000000" stop-opacity="0.55"/>
+  </radialGradient>
+  <radialGradient id="m1" cx="18%" cy="22%" r="38%"><stop offset="0%" stop-color="#231f14" stop-opacity="0.7"/><stop offset="100%" stop-color="#171510" stop-opacity="0"/></radialGradient>
+  <radialGradient id="m2" cx="82%" cy="75%" r="42%"><stop offset="0%" stop-color="#1f1c11" stop-opacity="0.6"/><stop offset="100%" stop-color="#171510" stop-opacity="0"/></radialGradient>
+  <radialGradient id="m3" cx="60%" cy="15%" r="30%"><stop offset="0%" stop-color="#131108" stop-opacity="0.5"/><stop offset="100%" stop-color="#171510" stop-opacity="0"/></radialGradient>
+  <radialGradient id="m4" cx="30%" cy="85%" r="32%"><stop offset="0%" stop-color="#1c1a10" stop-opacity="0.5"/><stop offset="100%" stop-color="#171510" stop-opacity="0"/></radialGradient>
+</defs>
+
+<rect class="bgbase" width="1440" height="900" fill="#171510"/>
+<rect class="bgmood" width="1440" height="900" fill="url(#luz-central)"/>
+<rect class="bgmood" width="1440" height="900" fill="url(#m1)"/>
+<rect class="bgmood" width="1440" height="900" fill="url(#m2)"/>
+<rect class="bgmood" width="1440" height="900" fill="url(#m3)"/>
+<rect class="bgmood" width="1440" height="900" fill="url(#m4)"/>
+<rect width="1440" height="900" fill="url(#grain-h)" opacity="0.06"/>
+<rect width="1440" height="900" fill="url(#grain-d1)" opacity="0.03"/>
+
+<!-- SÍMBOLOS — opacidade reduzida para não competir com conteúdo -->
+<g class="bgsyms" opacity="0.10">
+<g transform="translate(150,110) scale(0.82) translate(-50,-50)"><circle class="s" cx="50" cy="50" r="37"/><polygon class="s" points="50,20 82,72 18,72"/><line class="s" x1="41" y1="42" x2="59" y2="42"/><line class="s" x1="50" y1="42" x2="50" y2="61"/><line class="s" x1="36" y1="50" x2="36" y2="73"/><line class="s" x1="64" y1="50" x2="64" y2="73"/><line class="s" x1="36" y1="61" x2="64" y2="61"/></g>
+<g transform="translate(380,110) scale(0.82) translate(-50,-50)"><polygon class="s" points="10,22 90,22 70,82 30,82"/><text class="t" x="50" y="40" text-anchor="middle" font-size="6.5" letter-spacing="2.5">H·T·W·S</text><text class="t" x="50" y="79" text-anchor="middle" font-size="6.5" letter-spacing="2.5">S·T·K·S</text><line class="s" x1="50" y1="49" x2="50" y2="66"/><line class="s" x1="40" y1="57.5" x2="60" y2="57.5"/><line class="s" x1="43" y1="51" x2="57" y2="51"/></g>
+<g transform="translate(610,110) scale(0.82) translate(-50,-50)"><path class="s" d="M16,58 A34,34 0 0 1 84,58"/><path class="s" d="M22,58 A28,28 0 0 1 78,58"/><path class="s" d="M28,58 A22,22 0 0 1 72,58"/><path class="s" d="M32,66 Q50,80 68,66"/><rect class="s" x="41" y="55" width="18" height="11"/><path class="s" d="M20,74 q5,-4 10,0 t10,0 t10,0 t10,0 t10,0"/><path class="s" d="M46,49 c2,-3 7,-3 9,-1 c-2,0 -3,2 -4,3 c-1,-2 -3,-2 -5,-2z"/><line class="s" x1="46" y1="49" x2="42" y2="47"/></g>
+<g transform="translate(840,110) scale(0.82) translate(-50,-50)"><path class="s" d="M40,24 L44,20 L48,24 L50,17 L52,24 L56,20 L60,24 Z"/><polygon class="s" points="50,52 42,30 58,30"/><polygon class="s" points="50,52 42,76 58,76"/><polygon class="s" points="50,52 28,44 28,60"/><polygon class="s" points="50,52 72,44 72,60"/></g>
+<g transform="translate(1070,110) scale(0.82) translate(-50,-50)"><circle class="s" cx="50" cy="50" r="30"/><line class="s" x1="50" y1="30" x2="50" y2="74"/><path class="s" d="M50,32 C63,32 63,50 50,50"/><line class="s" x1="37" y1="43" x2="63" y2="67"/><line class="s" x1="63" y1="43" x2="37" y2="67"/></g>
+<g transform="translate(1300,110) scale(0.82) translate(-50,-50)"><polygon class="s" points="50,6 59,20 41,20"/><text class="t" x="50" y="18" text-anchor="middle" font-size="8">33</text><path class="s" d="M43,28 L45,22 L47,27 L50,21 L53,27 L55,22 L57,28 Z"/><line class="s" x1="43" y1="30" x2="57" y2="30"/><path class="s" d="M47,34 C42,30 37,30 35,34 C34,36 35,38 37,38"/><path class="s" d="M35,34 L31,33 L34,36"/><circle class="f" cx="36" cy="34" r="1.3"/><path class="s" d="M53,34 C58,30 63,30 65,34 C66,36 65,38 63,38"/><path class="s" d="M65,34 L69,33 L66,36"/><circle class="f" cx="64" cy="34" r="1.3"/><path class="s" d="M45,38 Q45,56 50,68 Q55,56 55,38 Z"/><path class="s" d="M45,41 Q30,39 20,45 Q28,45 26,51 Q34,47 30,55 Q38,51 36,58 Q43,53 45,55"/><path class="s" d="M55,41 Q70,39 80,45 Q72,45 74,51 Q66,47 70,55 Q62,51 64,58 Q57,53 55,55"/><path class="s" d="M46,66 L44,74 L50,70 L56,74 L54,66"/><line class="s" x1="30" y1="70" x2="68" y2="70"/><line class="s" x1="68" y1="70" x2="74" y2="70"/><line class="s" x1="70" y1="67" x2="70" y2="73"/><polygon class="f" points="30,70 34,68 34,72"/></g>
+<g transform="translate(150,290) scale(0.82) translate(-50,-50)"><rect class="s" x="20" y="30" width="60" height="28" rx="2"/><line class="s" x1="30" y1="30" x2="30" y2="58"/><line class="s" x1="40" y1="30" x2="40" y2="58"/><line class="s" x1="50" y1="30" x2="50" y2="58"/><line class="s" x1="60" y1="30" x2="60" y2="58"/><line class="s" x1="70" y1="30" x2="70" y2="58"/><line class="s" x1="50" y1="58" x2="50" y2="72"/><path class="s" d="M44,78 A6,6 0 1 1 56,78"/><line class="s" x1="24" y1="58" x2="22" y2="64"/><line class="s" x1="76" y1="58" x2="78" y2="64"/></g>
+<g transform="translate(380,290) scale(0.82) translate(-50,-50)"><polygon class="s" points="50,15 77,61 23,61"/><polygon class="s" points="50,73 77,27 23,27"/><line class="s" x1="50" y1="66" x2="50" y2="29"/><line class="s" x1="66.5" y1="38" x2="33.5" y2="57"/><line class="s" x1="33.5" y1="38" x2="66.5" y2="57"/><polygon class="f" points="50,29 46,36 54,36"/><polygon class="f" points="66.5,38 60.5,39 63,44"/><polygon class="f" points="33.5,38 36.5,44 39,39"/><text class="t" x="9" y="52" font-size="8">D</text><text class="t" x="85" y="52" font-size="8">J</text></g>
+<g transform="translate(610,290) scale(0.82) translate(-50,-50)"><circle class="s" cx="50" cy="50" r="40"/><line class="s" x1="50" y1="50" x2="50" y2="90"/><line class="s" x1="50" y1="50" x2="15" y2="30"/><line class="s" x1="50" y1="50" x2="85" y2="30"/><g transform="translate(50,28)"><line class="s" x1="0" y1="-3" x2="0" y2="12"/><line class="s" x1="-7" y1="4" x2="7" y2="4"/><path class="s" d="M-8,-3 l2,-5 l2,4 l2,-5 l2,5 l2,-4 l2,5 z"/></g><g transform="translate(33,63)"><polygon class="s" points="-10,-7 10,-7 7,8 -7,8"/><line class="s" x1="-5" y1="0.5" x2="5" y2="0.5"/></g><g transform="translate(67,63)"><line class="s" x1="-7" y1="7" x2="8" y2="-8"/><circle class="f" cx="-7" cy="7" r="1.6"/><line class="s" x1="-4" y1="1" x2="1" y2="6"/><line class="s" x1="7" y1="7" x2="-6" y2="-6"/><polygon class="s" points="-6,-6 -10,-9 -3,-9"/></g></g>
+<g transform="translate(840,290) scale(0.82) translate(-50,-50)"><polygon class="s" points="50,50 42,28 58,28"/><polygon class="s" points="50,50 42,72 58,72"/><polygon class="s" points="50,50 28,42 28,58"/><polygon class="s" points="50,50 72,42 72,58"/><circle class="f rer-dot" cx="30" cy="30" r="2.4"/><circle class="f rer-dot" cx="70" cy="30" r="2.4"/><circle class="f rer-dot" cx="30" cy="70" r="2.4"/><circle class="f rer-dot" cx="70" cy="70" r="2.4"/></g>
+<g transform="translate(1070,290) scale(0.82) translate(-50,-50)"><circle class="s" cx="35" cy="40" r="8.5"/><line class="s" x1="35" y1="31.5" x2="35" y2="48.5"/><line class="s" x1="26.5" y1="40" x2="43.5" y2="40"/><path class="s" d="M38,50 C32,48 28,52 30,58 C31,63 40,65 50,63 C60,61 64,55 60,51 C56,47 48,49 44,50"/><path class="s" d="M38,44 c-4,0 -7,3 -6,7 c1,3 5,4 8,2"/><circle class="f" cx="33" cy="47" r="1.1"/><line class="s" x1="36" y1="63" x2="36" y2="67"/><line class="s" x1="43" y1="64" x2="43" y2="67"/><line class="s" x1="52" y1="63" x2="52" y2="67"/><line class="s" x1="58" y1="61" x2="58" y2="67"/><line class="s" x1="43" y1="28" x2="48" y2="63"/><line class="s" x1="40" y1="32" x2="46" y2="32"/><path class="s" d="M44,30 L61,33 L56,38 L60,43 L45,40 Z"/><line class="s" x1="51" y1="34" x2="51" y2="39"/><line class="s" x1="48" y1="36.5" x2="54" y2="36.5"/><rect class="s" x="28" y="67" width="44" height="9" rx="1"/><line class="s" x1="28" y1="70" x2="72" y2="70"/><line class="s" x1="50" y1="67" x2="50" y2="76"/><circle class="f" cx="32" cy="81" r="1.5"/><circle class="f" cx="38.7" cy="81" r="1.5"/><circle class="f" cx="45.3" cy="81" r="1.5"/><circle class="f" cx="52" cy="81" r="1.5"/><circle class="f" cx="58.7" cy="81" r="1.5"/><circle class="f" cx="65.3" cy="81" r="1.5"/><circle class="f" cx="72" cy="81" r="1.5"/><line class="s" x1="32" y1="76" x2="32" y2="79.5"/><line class="s" x1="52" y1="76" x2="52" y2="79.5"/><line class="s" x1="72" y1="76" x2="72" y2="79.5"/></g>
+<g transform="translate(1300,290) scale(0.82) translate(-50,-50)"><circle class="s" cx="50" cy="50" r="37"/><polygon class="s" points="50,20 82,72 18,72"/><line class="s" x1="41" y1="42" x2="59" y2="42"/><line class="s" x1="50" y1="42" x2="50" y2="61"/><line class="s" x1="36" y1="50" x2="36" y2="73"/><line class="s" x1="64" y1="50" x2="64" y2="73"/><line class="s" x1="36" y1="61" x2="64" y2="61"/></g>
+<g transform="translate(150,470) scale(0.82) translate(-50,-50)"><polygon class="s" points="10,22 90,22 70,82 30,82"/><text class="t" x="50" y="40" text-anchor="middle" font-size="6.5" letter-spacing="2.5">H·T·W·S</text><text class="t" x="50" y="79" text-anchor="middle" font-size="6.5" letter-spacing="2.5">S·T·K·S</text><line class="s" x1="50" y1="49" x2="50" y2="66"/><line class="s" x1="40" y1="57.5" x2="60" y2="57.5"/><line class="s" x1="43" y1="51" x2="57" y2="51"/></g>
+<g transform="translate(380,470) scale(0.82) translate(-50,-50)"><path class="s" d="M16,58 A34,34 0 0 1 84,58"/><path class="s" d="M22,58 A28,28 0 0 1 78,58"/><path class="s" d="M28,58 A22,22 0 0 1 72,58"/><path class="s" d="M32,66 Q50,80 68,66"/><rect class="s" x="41" y="55" width="18" height="11"/><path class="s" d="M20,74 q5,-4 10,0 t10,0 t10,0 t10,0 t10,0"/><path class="s" d="M46,49 c2,-3 7,-3 9,-1 c-2,0 -3,2 -4,3 c-1,-2 -3,-2 -5,-2z"/><line class="s" x1="46" y1="49" x2="42" y2="47"/></g>
+<g transform="translate(610,470) scale(0.82) translate(-50,-50)"><path class="s" d="M40,24 L44,20 L48,24 L50,17 L52,24 L56,20 L60,24 Z"/><polygon class="s" points="50,52 42,30 58,30"/><polygon class="s" points="50,52 42,76 58,76"/><polygon class="s" points="50,52 28,44 28,60"/><polygon class="s" points="50,52 72,44 72,60"/></g>
+<g transform="translate(840,470) scale(0.82) translate(-50,-50)"><circle class="s" cx="50" cy="50" r="30"/><line class="s" x1="50" y1="30" x2="50" y2="74"/><path class="s" d="M50,32 C63,32 63,50 50,50"/><line class="s" x1="37" y1="43" x2="63" y2="67"/><line class="s" x1="63" y1="43" x2="37" y2="67"/></g>
+<g transform="translate(1070,470) scale(0.82) translate(-50,-50)"><polygon class="s" points="50,6 59,20 41,20"/><text class="t" x="50" y="18" text-anchor="middle" font-size="8">33</text><path class="s" d="M43,28 L45,22 L47,27 L50,21 L53,27 L55,22 L57,28 Z"/><line class="s" x1="43" y1="30" x2="57" y2="30"/><path class="s" d="M47,34 C42,30 37,30 35,34 C34,36 35,38 37,38"/><path class="s" d="M35,34 L31,33 L34,36"/><circle class="f" cx="36" cy="34" r="1.3"/><path class="s" d="M53,34 C58,30 63,30 65,34 C66,36 65,38 63,38"/><path class="s" d="M65,34 L69,33 L66,36"/><circle class="f" cx="64" cy="34" r="1.3"/><path class="s" d="M45,38 Q45,56 50,68 Q55,56 55,38 Z"/><path class="s" d="M45,41 Q30,39 20,45 Q28,45 26,51 Q34,47 30,55 Q38,51 36,58 Q43,53 45,55"/><path class="s" d="M55,41 Q70,39 80,45 Q72,45 74,51 Q66,47 70,55 Q62,51 64,58 Q57,53 55,55"/><path class="s" d="M46,66 L44,74 L50,70 L56,74 L54,66"/><line class="s" x1="30" y1="70" x2="68" y2="70"/><line class="s" x1="68" y1="70" x2="74" y2="70"/><line class="s" x1="70" y1="67" x2="70" y2="73"/><polygon class="f" points="30,70 34,68 34,72"/></g>
+<g transform="translate(1300,470) scale(0.82) translate(-50,-50)"><rect class="s" x="20" y="30" width="60" height="28" rx="2"/><line class="s" x1="30" y1="30" x2="30" y2="58"/><line class="s" x1="40" y1="30" x2="40" y2="58"/><line class="s" x1="50" y1="30" x2="50" y2="58"/><line class="s" x1="60" y1="30" x2="60" y2="58"/><line class="s" x1="70" y1="30" x2="70" y2="58"/><line class="s" x1="50" y1="58" x2="50" y2="72"/><path class="s" d="M44,78 A6,6 0 1 1 56,78"/><line class="s" x1="24" y1="58" x2="22" y2="64"/><line class="s" x1="76" y1="58" x2="78" y2="64"/></g>
+<g transform="translate(150,650) scale(0.82) translate(-50,-50)"><polygon class="s" points="50,15 77,61 23,61"/><polygon class="s" points="50,73 77,27 23,27"/><line class="s" x1="50" y1="66" x2="50" y2="29"/><line class="s" x1="66.5" y1="38" x2="33.5" y2="57"/><line class="s" x1="33.5" y1="38" x2="66.5" y2="57"/><polygon class="f" points="50,29 46,36 54,36"/><polygon class="f" points="66.5,38 60.5,39 63,44"/><polygon class="f" points="33.5,38 36.5,44 39,39"/><text class="t" x="9" y="52" font-size="8">D</text><text class="t" x="85" y="52" font-size="8">J</text></g>
+<g transform="translate(380,650) scale(0.82) translate(-50,-50)"><circle class="s" cx="50" cy="50" r="40"/><line class="s" x1="50" y1="50" x2="50" y2="90"/><line class="s" x1="50" y1="50" x2="15" y2="30"/><line class="s" x1="50" y1="50" x2="85" y2="30"/><g transform="translate(50,28)"><line class="s" x1="0" y1="-3" x2="0" y2="12"/><line class="s" x1="-7" y1="4" x2="7" y2="4"/><path class="s" d="M-8,-3 l2,-5 l2,4 l2,-5 l2,5 l2,-4 l2,5 z"/></g><g transform="translate(33,63)"><polygon class="s" points="-10,-7 10,-7 7,8 -7,8"/><line class="s" x1="-5" y1="0.5" x2="5" y2="0.5"/></g><g transform="translate(67,63)"><line class="s" x1="-7" y1="7" x2="8" y2="-8"/><circle class="f" cx="-7" cy="7" r="1.6"/><line class="s" x1="-4" y1="1" x2="1" y2="6"/><line class="s" x1="7" y1="7" x2="-6" y2="-6"/><polygon class="s" points="-6,-6 -10,-9 -3,-9"/></g></g>
+<g transform="translate(610,650) scale(0.82) translate(-50,-50)"><polygon class="s" points="50,50 42,28 58,28"/><polygon class="s" points="50,50 42,72 58,72"/><polygon class="s" points="50,50 28,42 28,58"/><polygon class="s" points="50,50 72,42 72,58"/><circle class="f rer-dot" cx="30" cy="30" r="2.4"/><circle class="f rer-dot" cx="70" cy="30" r="2.4"/><circle class="f rer-dot" cx="30" cy="70" r="2.4"/><circle class="f rer-dot" cx="70" cy="70" r="2.4"/></g>
+<g transform="translate(840,650) scale(0.82) translate(-50,-50)"><circle class="s" cx="35" cy="40" r="8.5"/><line class="s" x1="35" y1="31.5" x2="35" y2="48.5"/><line class="s" x1="26.5" y1="40" x2="43.5" y2="40"/><path class="s" d="M38,50 C32,48 28,52 30,58 C31,63 40,65 50,63 C60,61 64,55 60,51 C56,47 48,49 44,50"/><path class="s" d="M38,44 c-4,0 -7,3 -6,7 c1,3 5,4 8,2"/><circle class="f" cx="33" cy="47" r="1.1"/><line class="s" x1="36" y1="63" x2="36" y2="67"/><line class="s" x1="43" y1="64" x2="43" y2="67"/><line class="s" x1="52" y1="63" x2="52" y2="67"/><line class="s" x1="58" y1="61" x2="58" y2="67"/><line class="s" x1="43" y1="28" x2="48" y2="63"/><line class="s" x1="40" y1="32" x2="46" y2="32"/><path class="s" d="M44,30 L61,33 L56,38 L60,43 L45,40 Z"/><line class="s" x1="51" y1="34" x2="51" y2="39"/><line class="s" x1="48" y1="36.5" x2="54" y2="36.5"/><rect class="s" x="28" y="67" width="44" height="9" rx="1"/><line class="s" x1="28" y1="70" x2="72" y2="70"/><line class="s" x1="50" y1="67" x2="50" y2="76"/><circle class="f" cx="32" cy="81" r="1.5"/><circle class="f" cx="38.7" cy="81" r="1.5"/><circle class="f" cx="45.3" cy="81" r="1.5"/><circle class="f" cx="52" cy="81" r="1.5"/><circle class="f" cx="58.7" cy="81" r="1.5"/><circle class="f" cx="65.3" cy="81" r="1.5"/><circle class="f" cx="72" cy="81" r="1.5"/><line class="s" x1="32" y1="76" x2="32" y2="79.5"/><line class="s" x1="52" y1="76" x2="52" y2="79.5"/><line class="s" x1="72" y1="76" x2="72" y2="79.5"/></g>
+<g transform="translate(1070,650) scale(0.82) translate(-50,-50)"><circle class="s" cx="50" cy="50" r="37"/><polygon class="s" points="50,20 82,72 18,72"/><line class="s" x1="41" y1="42" x2="59" y2="42"/><line class="s" x1="50" y1="42" x2="50" y2="61"/><line class="s" x1="36" y1="50" x2="36" y2="73"/><line class="s" x1="64" y1="50" x2="64" y2="73"/><line class="s" x1="36" y1="61" x2="64" y2="61"/></g>
+<g transform="translate(1300,650) scale(0.82) translate(-50,-50)"><polygon class="s" points="10,22 90,22 70,82 30,82"/><text class="t" x="50" y="40" text-anchor="middle" font-size="6.5" letter-spacing="2.5">H·T·W·S</text><text class="t" x="50" y="79" text-anchor="middle" font-size="6.5" letter-spacing="2.5">S·T·K·S</text><line class="s" x1="50" y1="49" x2="50" y2="66"/><line class="s" x1="40" y1="57.5" x2="60" y2="57.5"/><line class="s" x1="43" y1="51" x2="57" y2="51"/></g>
+<g transform="translate(150,830) scale(0.82) translate(-50,-50)"><path class="s" d="M16,58 A34,34 0 0 1 84,58"/><path class="s" d="M22,58 A28,28 0 0 1 78,58"/><path class="s" d="M28,58 A22,22 0 0 1 72,58"/><path class="s" d="M32,66 Q50,80 68,66"/><rect class="s" x="41" y="55" width="18" height="11"/><path class="s" d="M20,74 q5,-4 10,0 t10,0 t10,0 t10,0 t10,0"/><path class="s" d="M46,49 c2,-3 7,-3 9,-1 c-2,0 -3,2 -4,3 c-1,-2 -3,-2 -5,-2z"/><line class="s" x1="46" y1="49" x2="42" y2="47"/></g>
+<g transform="translate(380,830) scale(0.82) translate(-50,-50)"><path class="s" d="M40,24 L44,20 L48,24 L50,17 L52,24 L56,20 L60,24 Z"/><polygon class="s" points="50,52 42,30 58,30"/><polygon class="s" points="50,52 42,76 58,76"/><polygon class="s" points="50,52 28,44 28,60"/><polygon class="s" points="50,52 72,44 72,60"/></g>
+<g transform="translate(610,830) scale(0.82) translate(-50,-50)"><circle class="s" cx="50" cy="50" r="30"/><line class="s" x1="50" y1="30" x2="50" y2="74"/><path class="s" d="M50,32 C63,32 63,50 50,50"/><line class="s" x1="37" y1="43" x2="63" y2="67"/><line class="s" x1="63" y1="43" x2="37" y2="67"/></g>
+<g transform="translate(840,830) scale(0.82) translate(-50,-50)"><polygon class="s" points="50,6 59,20 41,20"/><text class="t" x="50" y="18" text-anchor="middle" font-size="8">33</text><path class="s" d="M43,28 L45,22 L47,27 L50,21 L53,27 L55,22 L57,28 Z"/><line class="s" x1="43" y1="30" x2="57" y2="30"/><path class="s" d="M47,34 C42,30 37,30 35,34 C34,36 35,38 37,38"/><path class="s" d="M35,34 L31,33 L34,36"/><circle class="f" cx="36" cy="34" r="1.3"/><path class="s" d="M53,34 C58,30 63,30 65,34 C66,36 65,38 63,38"/><path class="s" d="M65,34 L69,33 L66,36"/><circle class="f" cx="64" cy="34" r="1.3"/><path class="s" d="M45,38 Q45,56 50,68 Q55,56 55,38 Z"/><path class="s" d="M45,41 Q30,39 20,45 Q28,45 26,51 Q34,47 30,55 Q38,51 36,58 Q43,53 45,55"/><path class="s" d="M55,41 Q70,39 80,45 Q72,45 74,51 Q66,47 70,55 Q62,51 64,58 Q57,53 55,55"/><path class="s" d="M46,66 L44,74 L50,70 L56,74 L54,66"/><line class="s" x1="30" y1="70" x2="68" y2="70"/><line class="s" x1="68" y1="70" x2="74" y2="70"/><line class="s" x1="70" y1="67" x2="70" y2="73"/><polygon class="f" points="30,70 34,68 34,72"/></g>
+<g transform="translate(1070,830) scale(0.82) translate(-50,-50)"><rect class="s" x="20" y="30" width="60" height="28" rx="2"/><line class="s" x1="30" y1="30" x2="30" y2="58"/><line class="s" x1="40" y1="30" x2="40" y2="58"/><line class="s" x1="50" y1="30" x2="50" y2="58"/><line class="s" x1="60" y1="30" x2="60" y2="58"/><line class="s" x1="70" y1="30" x2="70" y2="58"/><line class="s" x1="50" y1="58" x2="50" y2="72"/><path class="s" d="M44,78 A6,6 0 1 1 56,78"/><line class="s" x1="24" y1="58" x2="22" y2="64"/><line class="s" x1="76" y1="58" x2="78" y2="64"/></g>
+<g transform="translate(1300,830) scale(0.82) translate(-50,-50)"><polygon class="s" points="50,15 77,61 23,61"/><polygon class="s" points="50,73 77,27 23,27"/><line class="s" x1="50" y1="66" x2="50" y2="29"/><line class="s" x1="66.5" y1="38" x2="33.5" y2="57"/><line class="s" x1="33.5" y1="38" x2="66.5" y2="57"/><polygon class="f" points="50,29 46,36 54,36"/><polygon class="f" points="66.5,38 60.5,39 63,44"/><polygon class="f" points="33.5,38 36.5,44 39,39"/><text class="t" x="9" y="52" font-size="8">D</text><text class="t" x="85" y="52" font-size="8">J</text></g>
+</g>
+
+<rect class="bgmood" width="1440" height="900" fill="url(#vinheta)"/>
+</svg>
+
+<div class="wrap">
+<header>
+  <div class="delta-wrap" id="deltaWrap">
+    <div class="delta-halo"></div>
+    <svg class="delta-rays" viewBox="0 0 120 120" style="position:absolute;inset:-18px;width:calc(100% + 36px);height:calc(100% + 36px)">
+      <g transform="translate(60,60)" stroke="rgba(240,217,138,0.35)" stroke-width="0.8">
+        <line x1="0" y1="-52" x2="0" y2="-44"/><line x1="0" y1="44" x2="0" y2="52"/>
+        <line x1="-52" y1="0" x2="-44" y2="0"/><line x1="44" y1="0" x2="52" y2="0"/>
+        <line x1="-37" y1="-37" x2="-31" y2="-31"/><line x1="31" y1="-31" x2="37" y2="-37"/>
+        <line x1="-37" y1="37" x2="-31" y2="31"/><line x1="31" y1="31" x2="37" y2="37"/>
+      </g>
+    </svg>
+    <div class="delta-svg-wrap">
+      <svg viewBox="0 0 84 84" fill="none" style="width:84px;height:84px">
+        <defs>
+          <linearGradient id="dg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f5e49a"/><stop offset="55%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#7a6230"/>
+          </linearGradient>
+          <radialGradient id="eyeRg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(240,217,138,0.28)"/><stop offset="100%" stop-color="rgba(201,168,76,0)"/>
+          </radialGradient>
+        </defs>
+        <polygon points="42,5 78,75 6,75" stroke="url(#dg)" stroke-width="2.2" fill="rgba(201,168,76,0.035)"/>
+        <polygon points="42,18 65,64 19,64" stroke="#c9a84c" stroke-width=".5" stroke-dasharray="2,3.5" fill="none" opacity=".25"/>
+        <ellipse id="eyeGlow" cx="42" cy="54" rx="13" ry="8.5" fill="url(#eyeRg)"/>
+        <ellipse id="eyeOutline" cx="42" cy="54" rx="12" ry="7.5" stroke="url(#dg)" stroke-width="1.3" fill="none"/>
+        <circle id="iris" cx="42" cy="54" r="5" fill="rgba(201,168,76,0.1)" stroke="url(#dg)" stroke-width="1"/>
+        <circle id="pupil" cx="42" cy="54" r="2.2" fill="url(#dg)" opacity=".92"/>
+        <circle id="spec" cx="43.2" cy="52.8" r=".7" fill="rgba(255,248,220,0.8)"/>
+        <line x1="42" y1="40" x2="42" y2="44" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
+        <line x1="42" y1="64" x2="42" y2="68" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
+        <line x1="28" y1="54" x2="32" y2="54" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
+        <line x1="52" y1="54" x2="56" y2="54" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
+      </svg>
+    </div>
+  </div>
+
+  <h1 class="site-name">LAPIDARIUM</h1>
+  <p class="site-tagline">Um lugar de estudo, reflexão e memória maçônica</p>
+  <p class="site-lema">Lux · Sapientia · Opus</p>
+  <div class="orn"><span class="ol"></span><span class="od"></span><span class="ol r"></span></div>
+  <nav>
+    <a href="#">Início</a><a class="soon">Pranchas</a><a class="soon">Calendário</a>
+    <a class="soon">Glossário</a><a class="soon">Linha do Tempo</a><a class="soon">Acesso Restrito</a>
+  </nav>
+</header>
+
+<div class="ai-bar">
+  <span class="ai-prompt-text"><strong>Qual pedra o Irmão deseja lapidar hoje?</strong> — Busque por tema, orador, rito ou grau nos dois acervos.</span>
+  <div class="ai-row">
+    <span class="ai-dot"></span>
+    <input class="ai-input" id="searchInput" type="text" placeholder="Ex: simbologia da pedra bruta, grau de mestre, Adonhiramita…"/>
+    <button class="ai-btn" onclick="doSearch()">Buscar</button>
+  </div>
+  <div class="ai-chips">
+    <button class="chip" onclick="setQ('Grau de Aprendiz')">Aprendiz</button>
+    <button class="chip" onclick="setQ('Simbolismo')">Simbolismo</button>
+    <button class="chip" onclick="setQ('História da Maçonaria')">História</button>
+    <button class="chip" onclick="setQ('Templários')">Templários</button>
+    <button class="chip" onclick="setQ('Filosofia')">Filosofia</button>
+    <button class="chip" onclick="setQ('REAA')">REAA</button>
+    <button class="chip" onclick="setQ('Geometria Sagrada')">Geometria</button>
+    <button class="chip" onclick="setQ('Cabala')">Cabala</button>
+    <button class="chip" onclick="setQ('Hiram Abif')">Hiram</button>
+  </div>
+</div>
+
+<p class="sec-label">Grupos de Estudo</p>
+<div class="portals">
+  <a href="#" class="portal portal-ep">
+    <span class="p-accent"></span>
+    <div class="p-body">
+      <div class="p-icon" id="icon-ep">E</div>
+      <p class="p-name">Epaminondas</p><p class="p-sub">EpaminondasOnline</p>
+      <div class="p-stats">
+        <div><span class="ps-n">400+</span><span class="ps-l">Vídeos</span></div>
+        <div><span class="ps-n">2021</span><span class="ps-l">Desde</span></div>
+        <div><span class="ps-n">80+</span><span class="ps-l">Oradores</span></div>
+      </div>
+      <div class="p-cta"><span>Entrar no Portal</span>
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+    </div>
+  </a>
+  <a href="#" class="portal portal-ur">
+    <span class="p-accent"></span>
+    <div class="p-body">
+      <div class="p-icon" id="icon-ur">U</div>
+      <p class="p-name">Urânia</p><p class="p-sub">Grupo de Estudos Urânia</p>
+      <div class="p-stats">
+        <div><span class="ps-n">60+</span><span class="ps-l">Vídeos</span></div>
+        <div><span class="ps-n">2023</span><span class="ps-l">Desde</span></div>
+        <div><span class="ps-n">20+</span><span class="ps-l">Oradores</span></div>
+      </div>
+      <div class="p-cta"><span>Entrar no Portal</span>
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+    </div>
+  </a>
+</div>
+
+<div id="secao-ordens" hidden> <!-- OFF até haver conteúdo; remover hidden para reativar -->
+<p class="sec-label">Ordens &amp; Ritos</p>
+<div class="ordens">
+  <div class="ord-card" style="color:#c0392b" onclick="setQ('Real Arco')" title="Real Arco">
+    <div class="ord-emb"><svg viewBox="0 0 100 100"><circle class="s" cx="50" cy="50" r="37"/><polygon class="s" points="50,20 82,72 18,72"/><line class="s" x1="41" y1="42" x2="59" y2="42"/><line class="s" x1="50" y1="42" x2="50" y2="61"/><line class="s" x1="36" y1="50" x2="36" y2="73"/><line class="s" x1="64" y1="50" x2="64" y2="73"/><line class="s" x1="36" y1="61" x2="64" y2="61"/></svg></div>
+    <p class="ord-nm">Triplo Tau</p><p class="ord-or">Real Arco</p></div>
+  <div class="ord-card" style="color:#4277a3" onclick="setQ('Marca')" title="Marca · HTWSSTKS">
+    <div class="ord-emb"><svg viewBox="0 0 100 100"><polygon class="s" points="10,22 90,22 70,82 30,82"/><text class="t" x="50" y="40" text-anchor="middle" font-size="6.5" letter-spacing="2.5">H·T·W·S</text><text class="t" x="50" y="79" text-anchor="middle" font-size="6.5" letter-spacing="2.5">S·T·K·S</text><line class="s" x1="50" y1="49" x2="50" y2="66"/><line class="s" x1="40" y1="57.5" x2="60" y2="57.5"/><line class="s" x1="43" y1="51" x2="57" y2="51"/></svg></div>
+    <p class="ord-nm">Pedra Angular</p><p class="ord-or">Marca · HTWSSTKS</p></div>
+  <div class="ord-card" style="color:#3f8f6a" onclick="setQ('Nautas')" title="Nautas · RAM">
+    <div class="ord-emb"><svg viewBox="0 0 100 100"><path class="s" d="M16,58 A34,34 0 0 1 84,58"/><path class="s" d="M22,58 A28,28 0 0 1 78,58"/><path class="s" d="M28,58 A22,22 0 0 1 72,58"/><path class="s" d="M32,66 Q50,80 68,66"/><rect class="s" x="41" y="55" width="18" height="11"/><path class="s" d="M20,74 q5,-4 10,0 t10,0 t10,0 t10,0 t10,0"/><path class="s" d="M46,49 c2,-3 7,-3 9,-1 c-2,0 -3,2 -4,3 c-1,-2 -3,-2 -5,-2z"/><line class="s" x1="46" y1="49" x2="42" y2="47"/></svg></div>
+    <p class="ord-nm">Arca & Arco-Íris</p><p class="ord-or">Nautas · RAM</p></div>
+  <div class="ord-card" style="color:#b5322f" onclick="setQ('Cavaleiros Templários')" title="Cavaleiros Templários">
+    <div class="ord-emb"><svg viewBox="0 0 100 100"><path class="s" d="M40,24 L44,20 L48,24 L50,17 L52,24 L56,20 L60,24 Z"/><polygon class="s" points="50,52 42,30 58,30"/><polygon class="s" points="50,52 42,76 58,76"/><polygon class="s" points="50,52 28,44 28,60"/><polygon class="s" points="50,52 72,44 72,60"/></svg></div>
+    <p class="ord-nm">Cruz Pattée & Coroa</p><p class="ord-or">Cavaleiros Templários</p></div>
+  <div class="ord-card" style="color:#7d3c8a" onclick="setQ('Cruz Vermelha de Constantino')" title="Cruz Vermelha de Constantino">
+    <div class="ord-emb"><svg viewBox="0 0 100 100"><circle class="s" cx="50" cy="50" r="30"/><line class="s" x1="50" y1="30" x2="50" y2="74"/><path class="s" d="M50,32 C63,32 63,50 50,50"/><line class="s" x1="37" y1="43" x2="63" y2="67"/><line class="s" x1="63" y1="43" x2="37" y2="67"/></svg></div>
+    <p class="ord-nm">Lábaro Chi-Rho</p><p class="ord-or">Cruz Vermelha de Constantino</p></div>
+  <div class="ord-card" style="color:#c9a84c" onclick="setQ('REAA')" title="REAA">
+    <div class="ord-emb"><svg viewBox="0 0 100 100"><polygon class="s" points="50,6 59,20 41,20"/><text class="t" x="50" y="18" text-anchor="middle" font-size="8">33</text><path class="s" d="M43,28 L45,22 L47,27 L50,21 L53,27 L55,22 L57,28 Z"/><line class="s" x1="43" y1="30" x2="57" y2="30"/><path class="s" d="M47,34 C42,30 37,30 35,34 C34,36 35,38 37,38"/><path class="s" d="M35,34 L31,33 L34,36"/><circle class="f" cx="36" cy="34" r="1.3"/><path class="s" d="M53,34 C58,30 63,30 65,34 C66,36 65,38 63,38"/><path class="s" d="M65,34 L69,33 L66,36"/><circle class="f" cx="64" cy="34" r="1.3"/><path class="s" d="M45,38 Q45,56 50,68 Q55,56 55,38 Z"/><path class="s" d="M45,41 Q30,39 20,45 Q28,45 26,51 Q34,47 30,55 Q38,51 36,58 Q43,53 45,55"/><path class="s" d="M55,41 Q70,39 80,45 Q72,45 74,51 Q66,47 70,55 Q62,51 64,58 Q57,53 55,55"/><path class="s" d="M46,66 L44,74 L50,70 L56,74 L54,66"/><line class="s" x1="30" y1="70" x2="68" y2="70"/><line class="s" x1="68" y1="70" x2="74" y2="70"/><line class="s" x1="70" y1="67" x2="70" y2="73"/><polygon class="f" points="30,70 34,68 34,72"/></svg></div>
+    <p class="ord-nm">Águia Bicéfala 33°</p><p class="ord-or">REAA</p></div>
+  <div class="ord-card" style="color:#cc7a2a" onclick="setQ('Graus Aliados')" title="Graus Aliados · AMD">
+    <div class="ord-emb"><svg viewBox="0 0 100 100"><rect class="s" x="20" y="30" width="60" height="28" rx="2"/><line class="s" x1="30" y1="30" x2="30" y2="58"/><line class="s" x1="40" y1="30" x2="40" y2="58"/><line class="s" x1="50" y1="30" x2="50" y2="58"/><line class="s" x1="60" y1="30" x2="60" y2="58"/><line class="s" x1="70" y1="30" x2="70" y2="58"/><line class="s" x1="50" y1="58" x2="50" y2="72"/><path class="s" d="M44,78 A6,6 0 1 1 56,78"/><line class="s" x1="24" y1="58" x2="22" y2="64"/><line class="s" x1="76" y1="58" x2="78" y2="64"/></svg></div>
+    <p class="ord-nm">Grelha de S. Lourenço</p><p class="ord-or">Graus Aliados · AMD</p></div>
+  <div class="ord-card" style="color:#8a5cae" onclick="setQ('Monitor Secreto')" title="Monitor Secreto · OSM">
+    <div class="ord-emb"><svg viewBox="0 0 100 100"><polygon class="s" points="50,15 77,61 23,61"/><polygon class="s" points="50,73 77,27 23,27"/><line class="s" x1="50" y1="66" x2="50" y2="29"/><line class="s" x1="66.5" y1="38" x2="33.5" y2="57"/><line class="s" x1="33.5" y1="38" x2="66.5" y2="57"/><polygon class="f" points="50,29 46,36 54,36"/><polygon class="f" points="66.5,38 60.5,39 63,44"/><polygon class="f" points="33.5,38 36.5,44 39,39"/><text class="t" x="9" y="52" font-size="8">D</text><text class="t" x="85" y="52" font-size="8">J</text></svg></div>
+    <p class="ord-nm">Hexagrama & Flechas</p><p class="ord-or">Monitor Secreto · OSM</p></div>
+  <div class="ord-card" style="color:#b8863b" onclick="setQ('York')" title="York · Cap·Cons·Com">
+    <div class="ord-emb"><svg viewBox="0 0 100 100"><circle class="s" cx="50" cy="50" r="40"/><line class="s" x1="50" y1="50" x2="50" y2="90"/><line class="s" x1="50" y1="50" x2="15" y2="30"/><line class="s" x1="50" y1="50" x2="85" y2="30"/><g transform="translate(50,28)"><line class="s" x1="0" y1="-3" x2="0" y2="12"/><line class="s" x1="-7" y1="4" x2="7" y2="4"/><path class="s" d="M-8,-3 l2,-5 l2,4 l2,-5 l2,5 l2,-4 l2,5 z"/></g><g transform="translate(33,63)"><polygon class="s" points="-10,-7 10,-7 7,8 -7,8"/><line class="s" x1="-5" y1="0.5" x2="5" y2="0.5"/></g><g transform="translate(67,63)"><line class="s" x1="-7" y1="7" x2="8" y2="-8"/><circle class="f" cx="-7" cy="7" r="1.6"/><line class="s" x1="-4" y1="1" x2="1" y2="6"/><line class="s" x1="7" y1="7" x2="-6" y2="-6"/><polygon class="s" points="-6,-6 -10,-9 -3,-9"/></g></svg></div>
+    <p class="ord-nm">Emblema Composto</p><p class="ord-or">York · Cap·Cons·Com</p></div>
+  <div class="ord-card" style="color:#b5322f" onclick="setQ('RER')" title="RER / CBCS">
+    <div class="ord-emb"><svg viewBox="0 0 100 100"><polygon class="s" points="50,50 42,28 58,28"/><polygon class="s" points="50,50 42,72 58,72"/><polygon class="s" points="50,50 28,42 28,58"/><polygon class="s" points="50,50 72,42 72,58"/><circle class="f rer-dot" cx="30" cy="30" r="2.4"/><circle class="f rer-dot" cx="70" cy="30" r="2.4"/><circle class="f rer-dot" cx="30" cy="70" r="2.4"/><circle class="f rer-dot" cx="70" cy="70" r="2.4"/></svg></div>
+    <p class="ord-nm">Cruz Vermelha & Verde</p><p class="ord-or">RER / CBCS</p></div>
+  <div class="ord-card" style="color:#dccaa0" onclick="setQ('Adonhiramita')" title="Adonhiramita">
+    <div class="ord-emb"><svg viewBox="0 0 100 100"><circle class="s" cx="35" cy="40" r="8.5"/><line class="s" x1="35" y1="31.5" x2="35" y2="48.5"/><line class="s" x1="26.5" y1="40" x2="43.5" y2="40"/><path class="s" d="M38,50 C32,48 28,52 30,58 C31,63 40,65 50,63 C60,61 64,55 60,51 C56,47 48,49 44,50"/><path class="s" d="M38,44 c-4,0 -7,3 -6,7 c1,3 5,4 8,2"/><circle class="f" cx="33" cy="47" r="1.1"/><line class="s" x1="36" y1="63" x2="36" y2="67"/><line class="s" x1="43" y1="64" x2="43" y2="67"/><line class="s" x1="52" y1="63" x2="52" y2="67"/><line class="s" x1="58" y1="61" x2="58" y2="67"/><line class="s" x1="43" y1="28" x2="48" y2="63"/><line class="s" x1="40" y1="32" x2="46" y2="32"/><path class="s" d="M44,30 L61,33 L56,38 L60,43 L45,40 Z"/><line class="s" x1="51" y1="34" x2="51" y2="39"/><line class="s" x1="48" y1="36.5" x2="54" y2="36.5"/><rect class="s" x="28" y="67" width="44" height="9" rx="1"/><line class="s" x1="28" y1="70" x2="72" y2="70"/><line class="s" x1="50" y1="67" x2="50" y2="76"/><circle class="f" cx="32" cy="81" r="1.5"/><circle class="f" cx="38.7" cy="81" r="1.5"/><circle class="f" cx="45.3" cy="81" r="1.5"/><circle class="f" cx="52" cy="81" r="1.5"/><circle class="f" cx="58.7" cy="81" r="1.5"/><circle class="f" cx="65.3" cy="81" r="1.5"/><circle class="f" cx="72" cy="81" r="1.5"/><line class="s" x1="32" y1="76" x2="32" y2="79.5"/><line class="s" x1="52" y1="76" x2="52" y2="79.5"/><line class="s" x1="72" y1="76" x2="72" y2="79.5"/></svg></div>
+    <p class="ord-nm">Agnus Dei & Livro</p><p class="ord-or">Adonhiramita</p></div>
+</div>
+</div>
+
+<p class="sec-label">Últimos Vídeos Adicionados</p>
+<div class="carousel-wrap">
+  <div class="c-outer"><div class="c-track" id="ctrack"></div></div>
+</div>
+
+<p class="sec-label">Próximas Reuniões</p>
+<div class="agenda" style="margin-bottom:42px"><div class="ag-list" id="agList"></div></div>
+
+<div class="orn" style="margin-bottom:22px"><span class="ol"></span><span class="od"></span><span class="ol r"></span></div>
+<p class="sec-label">Ferramentas da Plataforma</p>
+<div class="feats">
+  <div class="feat soon"><span class="feat-ico">📜</span><p class="feat-name">Pranchas</p><p class="feat-desc">Repositório por grau, tema e rito</p></div>
+  <div class="feat"><span class="feat-ico">🔍</span><p class="feat-name">Pesquisa</p><p class="feat-desc">Filtros por orador, período e rito</p></div>
+  <div class="feat soon"><span class="feat-ico">📅</span><p class="feat-name">Calendário</p><p class="feat-desc">Sessões e datas simbólicas</p></div>
+  <div class="feat soon"><span class="feat-ico">📖</span><p class="feat-name">Glossário</p><p class="feat-desc">Termos e símbolos interativos</p></div>
+  <div class="feat soon"><span class="feat-ico">⏳</span><p class="feat-name">Linha do Tempo</p><p class="feat-desc">História da Maçonaria</p></div>
+  <div class="feat soon"><span class="feat-ico">🔒</span><p class="feat-name">Área Restrita</p><p class="feat-desc">Conteúdo reservado</p></div>
+</div>
+
+<footer>
+  <div class="orn" style="margin-bottom:13px"><span class="ol"></span><span class="od"></span><span class="ol r"></span></div>
+  <p>Lapidarium · In Nomine GADU · Omnia Vincit Lux</p>
+</footer>
+</div>
+
+<script>
+// ══ LOGOS ══
+(function(){
+  // Epaminondas — brasão circular
+  const ep=document.getElementById('icon-ep');
+  const imgEp=new Image();
+  imgEp.onload=function(){
+    ep.innerHTML='';ep.style.padding='0';ep.style.overflow='hidden';ep.style.background='none';ep.style.border='none';
+    imgEp.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%;filter:saturate(0.65) brightness(0.8)';
+    ep.appendChild(imgEp);
+  };
+  imgEp.onerror=function(){}; imgEp.src='epaminondas.png';
+
+  // Urânia — musa
+  const ur=document.getElementById('icon-ur');
+  const imgUr=new Image();
+  imgUr.onload=function(){
+    ur.innerHTML='';ur.style.padding='0';ur.style.overflow='hidden';ur.style.background='none';ur.style.border='none';
+    imgUr.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%;filter:saturate(0.65) brightness(0.8)';
+    ur.appendChild(imgUr);
+  };
+  imgUr.onerror=function(){}; imgUr.src='urania.png';
+})();
+
+// ══ DELTA — olho vivo (rastreio suave · deriva ociosa · piscar) ══
+(function(){
+  const wrap=document.getElementById('deltaWrap');
+  if(!wrap) return;
+  const svgWrap=wrap.querySelector('.delta-svg-wrap');
+  const halo=wrap.querySelector('.delta-halo');
+  const rays=wrap.querySelector('.delta-rays');
+  const pupil=document.getElementById('pupil');
+  const iris=document.getElementById('iris');
+  const spec=document.getElementById('spec');
+  const eye=document.getElementById('eyeOutline');
+  const glow=document.getElementById('eyeGlow');
+  if(!pupil) return;
+  const EX=42,EY=54,MAX=3.0,SX=1.2,SY=-1.2;
+  const IRIS_RY=7.5,IRIS_R=5,PUP_R=2.2,GLOW_RY=8.5;
+  let tgtX=EX,tgtY=EY,curX=EX,curY=EY;
+  let tgtProx=0,curProx=0,tgtNb=0,curNb=0;
+  let lastMove=performance.now();
+  let blinking=false,blinkStart=0,blink=1;
+  let nextBlink=performance.now()+2000+Math.random()*3000;
+  const lerp=(a,b,f)=>a+(b-a)*f;
+  document.addEventListener('mousemove',function(e){
+    lastMove=performance.now();
+    const r=wrap.getBoundingClientRect();
+    const cx=r.left+r.width/2, cy=r.top+r.height/2;
+    const dx=e.clientX-cx, dy=e.clientY-cy;
+    const dist=Math.hypot(dx,dy);
+    const t=Math.min(dist,140)/140;
+    tgtX=EX+(dx/Math.max(dist,1))*MAX*t;
+    tgtY=EY+(dy/Math.max(dist,1))*MAX*t;
+    const FULL=380;
+    tgtProx=Math.max(0,Math.min(1,(FULL-dist)/FULL));
+    tgtNb=Math.max(0,Math.min(1,(120-dist)/120));
+  });
+  function frame(now){
+    // deriva ociosa: olhar vagueia devagar quando o mouse para
+    if(now-lastMove>2600){
+      const w=now/1000;
+      tgtX=EX+Math.cos(w*0.5)*1.4;
+      tgtY=EY+Math.sin(w*0.7)*1.0;
+      tgtProx=lerp(tgtProx,0.12,0.02);
+      tgtNb=lerp(tgtNb,0,0.05);
+    }
+    curX=lerp(curX,tgtX,0.14);
+    curY=lerp(curY,tgtY,0.14);
+    curProx=lerp(curProx,tgtProx,0.08);
+    curNb=lerp(curNb,tgtNb,0.10);
+    // piscar
+    if(!blinking && now>=nextBlink){blinking=true;blinkStart=now;}
+    if(blinking){
+      const bd=now-blinkStart,DUR=150;
+      if(bd>=DUR){blinking=false;blink=1;nextBlink=now+2600+Math.random()*4200;}
+      else{blink=Math.abs(Math.cos((bd/DUR)*Math.PI));}
+    }
+    // respiração sutil sempre ativa
+    const breathe=0.5+0.5*Math.sin(now/1500);
+    pupil.setAttribute('cx',curX.toFixed(2));pupil.setAttribute('cy',curY.toFixed(2));
+    iris.setAttribute('cx',curX.toFixed(2));iris.setAttribute('cy',curY.toFixed(2));
+    spec.setAttribute('cx',(curX+SX).toFixed(2));spec.setAttribute('cy',(curY+SY).toFixed(2));
+    if(eye) eye.setAttribute('ry',(IRIS_RY*blink).toFixed(2));
+    if(glow) glow.setAttribute('ry',(GLOW_RY*Math.max(blink,0.2)).toFixed(2));
+    iris.setAttribute('r',(IRIS_R*Math.max(blink,0.05)).toFixed(2));
+    pupil.setAttribute('r',(PUP_R*Math.max(blink,0.05)).toFixed(2));
+    spec.style.opacity=blink.toFixed(2);
+    svgWrap.style.animation='none';
+    svgWrap.style.transform=`scale(${(1+curProx*0.05+curNb*0.05).toFixed(3)})`;
+    halo.style.background=`radial-gradient(circle,rgba(240,217,138,${(0.02+curProx*0.11).toFixed(3)}) 0%,rgba(201,168,76,${(0.01+curProx*0.06).toFixed(3)}) 45%,transparent 100%)`;
+    const s1=Math.round(3+curProx*11+curNb*5+breathe*2), s2=Math.round(10+curProx*24+curNb*12+breathe*4);
+    svgWrap.style.filter=`drop-shadow(0 0 ${s1}px rgba(240,217,138,${(0.26+curProx*0.34+curNb*0.15).toFixed(2)})) drop-shadow(0 0 ${s2}px rgba(201,168,76,${(0.06+curProx*0.2+curNb*0.08).toFixed(2)}))`;
+    rays.style.opacity=(curProx*0.45+curNb*0.30).toFixed(2);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+// ══ CAROUSEL ══
+const vids=[
+  {id:'WKbl-YqBAk8',t:'O Talento que a Maçonaria Perde',d:'25/04/2026',g:'Urânia',b:'b-ur'},
+  {id:'DaNG-EvrwCI',t:'Ordem Shriners: A Missão Mais Nobre',d:'18/04/2026',g:'Urânia',b:'b-ur'},
+  {id:'4h6b8lqTK7M',t:'Sinopse da História da Maçonaria no Brasil',d:'27/04/2025',g:'Epaminondas',b:'b-ep'},
+  {id:'U37oB2mNfpo',t:'A Jornada do Aprendiz Maçom',d:'20/04/2025',g:'Epaminondas',b:'b-ep'},
+  {id:'fPTswT9CX8I',t:'Telhamento Maçônico',d:'11/04/2026',g:'Urânia',b:'b-ur'},
+  {id:'YpPmsfbnKBk',t:'Páscoa e Maçonaria: O Renascimento',d:'04/04/2026',g:'Urânia',b:'b-ur'},
+  {id:'duWuJDlRazg',t:'O Templo Adonhiramita',d:'07/05/2025',g:'Epaminondas',b:'b-ep'},
+  {id:'QzbKrXNpsZ4',t:'O Tronco de Beneficência',d:'28/03/2026',g:'Urânia',b:'b-ur'},
+  {id:'eij78d_Z374',t:'O Iluminismo',d:'06/04/2025',g:'Epaminondas',b:'b-ep'},
+  {id:'JysWVfA3RVo',t:'Jacques DeMolay e os Templários',d:'21/03/2026',g:'Urânia',b:'b-ur'},
+  {id:'nVSdPtFdxUY',t:'A Corda de 81 Nós',d:'14/05/2025',g:'Epaminondas',b:'b-ep'},
+  {id:'tykhet22-4Q',t:'LGPD na sua Vida e na Maçonaria',d:'23/04/2025',g:'Epaminondas',b:'b-ep'},
+];
+const tr=document.getElementById('ctrack');
+[...vids,...vids].forEach(v=>{
+  tr.innerHTML+=`<div class="vc" onclick="window.open('https://youtube.com/watch?v=${v.id}','_blank')">
+    <div class="vc-thumb"><img class="vc-img" src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" loading="lazy" alt="">
+    <span class="vc-badge ${v.b}">${v.g}</span></div>
+    <div class="vc-body"><p class="vc-title">${v.t}</p><p class="vc-meta">${v.d}</p></div></div>`;
+});
+
+// ══ AGENDA — próximas sessões (auto-atualizável) ══
+(function(){
+  const MES=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const now=new Date();
+  // Urânia: sextas (5) · Epaminondas: quartas (3) — sessões às 20h (23:00Z)
+  function proximos(wd,count){
+    const out=[]; const d=new Date(now); d.setHours(0,0,0,0); let i=0;
+    while(out.length<count && i<160){
+      if(d.getDay()===wd){
+        const s=new Date(d); s.setUTCHours(23,0,0,0);
+        if(s.getTime()>now.getTime()-3600e3) out.push(s);
+      }
+      d.setDate(d.getDate()+1); i++;
+    }
+    return out;
+  }
+  const ur=proximos(5,3).map(s=>({dt:s,evt:'Grupo de Estudos Urânia',sub:'Sessão semanal de estudos',tag:'t-ur',tl:'Urânia',dur:90,tt:'Grupo de Estudos Urânia'}));
+  const ep=proximos(3,3).map(s=>({dt:s,evt:'EpaminondasOnline',sub:'Sessão ao vivo',tag:'t-ep',tl:'Epaminondas',dur:90,tt:'EpaminondasOnline — Sessão ao vivo'}));
+  const evts=[...ur,...ep].sort((a,b)=>a.dt-b.dt).slice(0,4);
+  const al=document.getElementById('agList');
+  const pad=n=>String(n).padStart(2,'0');
+  const fmt=d=>`${d.getUTCFullYear()}${pad(d.getUTCMonth()+1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}00Z`;
+  evts.forEach(e=>{
+    const end=new Date(e.dt.getTime()+e.dur*60000);
+    const gc=`${fmt(e.dt)}/${fmt(end)}`;
+    const u=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(e.tt)}&dates=${gc}&details=Lapidarium&sf=true&output=xml`;
+    al.innerHTML+=`<div class="ag-item">
+      <div class="ag-date"><span class="ag-day">${pad(e.dt.getDate())}</span><span class="ag-month">${MES[e.dt.getMonth()]}</span></div>
+      <div class="ag-info"><p class="ag-evt">${e.evt}</p><p class="ag-sub">${e.sub}</p></div>
+      <span class="ag-tag ${e.tag}">${e.tl}</span>
+      <a class="ag-cal" href="${u}" target="_blank">+ Agenda</a></div>`;
+  });
+})();
+
+// ══ SEARCH ══
+function setQ(t){document.getElementById('searchInput').value=t;document.getElementById('searchInput').focus()}
+function doSearch(){const q=document.getElementById('searchInput').value.trim();if(q)alert(`Pesquisa: "${q}"\n\nEm breve: filtro nos 460 vídeos do acervo.`)}
+document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
+
+// ══ TEMA ══
+function toggleTheme(){const l=document.body.classList.toggle('light');const b=document.getElementById('themeBtn');if(b)b.textContent=l?'\u263e':'\u2600';}
+</script>
+</body>
+</html>
