@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publicar — Lapidarium</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'><polygon points='42,8 78,74 6,74' fill='none' stroke='%23c9a84c' stroke-width='4'/><ellipse cx='42' cy='54' rx='12' ry='8' fill='none' stroke='%23c9a84c' stroke-width='2.5'/><circle cx='42' cy='54' r='3' fill='%23c9a84c'/></svg>">
+<link rel="stylesheet" href="lapidarium.css">
+<style>
+  .pmode{display:flex;gap:8px;justify-content:center;margin:14px 0}
+  .pm{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-d);background:transparent;border:1px solid var(--border);padding:8px 18px;cursor:pointer;transition:all .25s}
+  .pm:hover{color:var(--text);border-color:var(--border-h)}
+  .pm.ativa{color:var(--s1);background:var(--gold);border-color:var(--gold);font-weight:600}
+  form{max-width:640px;margin:6px auto 0}
+  label{display:block;margin:15px 0 5px;color:var(--gold);font-size:.62rem;letter-spacing:.14em;font-family:'Cinzel',serif;text-transform:uppercase}
+  input,textarea,select{width:100%;padding:11px 14px;font-size:1rem;font-family:'EB Garamond',serif;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text);outline:none;transition:border-color .3s}
+  input:focus,textarea:focus,select:focus{border-color:var(--border-h)}
+  textarea{min-height:84px;resize:vertical}
+  .linha{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.linha{grid-template-columns:1fr}}
+  .previa{display:none;margin-top:12px;border:1px solid var(--border);overflow:hidden}
+  .previa img{width:100%;display:block;filter:brightness(.85)}
+  .nota{color:var(--text-d);font-size:.82rem;margin-top:4px;font-style:italic}
+  button[type=submit]{margin-top:26px;width:100%;padding:14px;font-size:.8rem;letter-spacing:.25em;font-family:'Cinzel',serif;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:.25s;text-transform:uppercase}
+  button[type=submit]:hover{background:var(--gold);color:var(--s1)}
+  button[disabled]{opacity:.4;cursor:wait}
+  #aviso{margin-top:18px;padding:14px 16px;display:none;font-size:1rem;border:1px solid}
+  #aviso.ok{display:block;border-color:#7ba05b;color:#9ec27a;background:rgba(123,160,91,.08)}
+  #aviso.erro{display:block;border-color:#c86b4b;color:#d68a6a;background:rgba(200,107,75,.08)}
+  .acoes{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  .acao{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:9px 16px;border:1px solid var(--border-h);color:var(--gold);cursor:pointer;background:transparent;transition:.25s}
+  .acao:hover{background:rgba(201,168,76,.12);border-color:var(--gold)}
+  .oculto{display:none}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">☀</button>
+<div class="wrap">
+<header>
+  <a class="backlink" href="index.html">◂ Lapidarium</a>
+  <div class="delta-wrap" id="deltaWrap">
+    <div class="delta-halo"></div>
+    <svg class="delta-rays" viewBox="0 0 120 120" style="position:absolute;inset:-18px;width:calc(100% + 36px);height:calc(100% + 36px)">
+      <g transform="translate(60,60)" stroke="rgba(240,217,138,0.35)" stroke-width="0.8">
+        <line x1="0" y1="-52" x2="0" y2="-44"/><line x1="0" y1="44" x2="0" y2="52"/><line x1="-52" y1="0" x2="-44" y2="0"/><line x1="44" y1="0" x2="52" y2="0"/>
+        <line x1="-37" y1="-37" x2="-31" y2="-31"/><line x1="31" y1="-31" x2="37" y2="-37"/><line x1="-37" y1="37" x2="-31" y2="31"/><line x1="31" y1="31" x2="37" y2="37"/>
+      </g>
+    </svg>
+    <div class="delta-svg-wrap">
+      <svg viewBox="0 0 84 84" fill="none" style="width:100%;height:100%">
+        <defs>
+          <linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5e49a"/><stop offset="55%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#7a6230"/></linearGradient>
+          <radialGradient id="eyeRg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(240,217,138,0.28)"/><stop offset="100%" stop-color="rgba(201,168,76,0)"/></radialGradient>
+        </defs>
+        <polygon points="42,5 78,75 6,75" stroke="url(#dg)" stroke-width="2.2" fill="rgba(201,168,76,0.035)"/>
+        <polygon points="42,18 65,64 19,64" stroke="#c9a84c" stroke-width=".5" stroke-dasharray="2,3.5" fill="none" opacity=".25"/>
+        <ellipse id="eyeGlow" cx="42" cy="54" rx="13" ry="8.5" fill="url(#eyeRg)"/>
+        <ellipse id="eyeOutline" cx="42" cy="54" rx="12" ry="7.5" stroke="url(#dg)" stroke-width="1.3" fill="none"/>
+        <circle id="iris" cx="42" cy="54" r="5" fill="rgba(201,168,76,0.1)" stroke="url(#dg)" stroke-width="1"/>
+        <circle id="pupil" cx="42" cy="54" r="2.2" fill="url(#dg)" opacity=".92"/>
+        <circle id="spec" cx="43.2" cy="52.8" r=".7" fill="rgba(255,248,220,0.8)"/>
+      </svg>
+    </div>
+  </div>
+  <h1 class="site-name" style="font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:.42em">PUBLICAR</h1>
+  <p class="page-tagline">Lançar no acervo — só Irmãos com código.</p>
+</header>
+
+<div class="pmode">
+  <button class="pm ativa" data-m="video">Publicar Vídeo</button>
+  <button class="pm" data-m="reuniao">Próxima Reunião</button>
+</div>
+
+<form id="formulario">
+  <label>Código de publicação</label>
+  <input id="codigo" type="password" required autocomplete="off" placeholder="Seu código pessoal">
+
+  <!-- ===== MODO VÍDEO ===== -->
+  <div id="bloco-video">
+    <label>Link (YouTube)</label>
+    <input id="url" type="url" placeholder="https://www.youtube.com/watch?v=...">
+    <div class="previa" id="previa"><img id="previa-img" alt=""></div>
+    <label>Título</label>
+    <input id="titulo" placeholder="Título do trabalho">
+    <label>Descrição</label>
+    <textarea id="descricao" placeholder="Do que trata? Quanto mais rica a descrição, melhor a busca encontra."></textarea>
+    <p class="nota">Cite o tema central, símbolos e a que grau/rito se refere.</p>
+    <div class="linha">
+      <div><label>Palestrante / Autor</label><input id="autor" placeholder="Ir∴ Nome"></div>
+      <div><label>Data da apresentação</label><input id="data" type="date"></div>
+    </div>
+    <div class="linha">
+      <div><label>Grupo</label>
+        <select id="origem">
+          <option value="EpaminondasOnline">EpaminondasOnline</option>
+          <option value="Grupo de Estudos Urânia">Grupo de Estudos Urânia</option>
+          <option value="outro">Outro…</option>
+        </select>
+        <input id="origem-outro" class="oculto" style="margin-top:8px" placeholder="Nome do grupo">
+      </div>
+      <div><label>Rito (opcional)</label><input id="rito" placeholder="REAA, Emulação…"></div>
+    </div>
+    <div class="linha">
+      <div><label>Grau / Ordem (opcional)</label><input id="grau" placeholder="Aprendiz, Arco Real…"></div>
+      <div><label>Tags</label><input id="tags" placeholder="simbolismo; história; hiram"></div>
+    </div>
+    <label>Perguntas de aprofundamento (opcional)</label>
+    <textarea id="perguntas" placeholder="3 a 5 perguntas que este trabalho responde ou provoca."></textarea>
+  </div>
+
+  <!-- ===== MODO REUNIÃO ===== -->
+  <div id="bloco-reuniao" class="oculto">
+    <div class="linha">
+      <div><label>Grupo</label>
+        <select id="r-grupo">
+          <option value="EpaminondasOnline">EpaminondasOnline</option>
+          <option value="Grupo de Estudos Urânia">Grupo de Estudos Urânia</option>
+        </select>
+      </div>
+      <div><label>Data</label><input id="r-data" type="date"></div>
+    </div>
+    <div class="linha">
+      <div><label>Hora</label><input id="r-hora" type="time" value="20:00"></div>
+      <div><label>Link (opcional)</label><input id="r-link" type="url" placeholder="YouTube ao vivo / Meet"></div>
+    </div>
+    <label>Tema da reunião</label>
+    <input id="r-tema" placeholder="Ex: A Corda de 81 Nós — Ir∴ Sérgio">
+    <label>Descrição (opcional)</label>
+    <textarea id="r-descricao" placeholder="Detalhes da sessão."></textarea>
+    <p class="nota">A próxima reunião cadastrada aqui alimenta a agenda da home. Para corrigir, basta cadastrar de novo com a data certa.</p>
+  </div>
+
+  <button type="submit" id="botao">LANÇAR NO ACERVO</button>
+  <div id="aviso"></div>
+  <div class="acoes" id="acoes"></div>
+</form>
+<footer><p>Lapidarium · In Nomine GADU · Omnia Vincit Lux</p></footer>
+</div>
+
+<script src="ui.js"></script>
+<script>
+const CONFIG = { API_URL: "COLE_AQUI_A_URL_DO_APPS_SCRIPT" };
+const $ = (id) => document.getElementById(id);
+let modo = "video";
+
+// alternância de modo
+document.querySelectorAll(".pm").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".pm").forEach(x=>x.classList.remove("ativa"));
+  b.classList.add("ativa"); modo = b.dataset.m;
+  $("bloco-video").classList.toggle("oculto", modo!=="video");
+  $("bloco-reuniao").classList.toggle("oculto", modo!=="reuniao");
+  $("botao").textContent = modo==="video" ? "LANÇAR NO ACERVO" : "SALVAR PRÓXIMA REUNIÃO";
+  $("aviso").className=""; $("acoes").innerHTML="";
+});
+
+// prévia da thumbnail
+$("url").addEventListener("input", () => {
+  const m = $("url").value.match(/(?:youtu\.be\/|v=|\/embed\/|\/live\/|shorts\/)([A-Za-z0-9_-]{11})/);
+  if (m){ $("previa-img").src="https://img.youtube.com/vi/"+m[1]+"/hqdefault.jpg"; $("previa").style.display="block"; }
+  else { $("previa").style.display="none"; }
+});
+$("origem").addEventListener("change", () => $("origem-outro").classList.toggle("oculto", $("origem").value!=="outro"));
+
+// lembra o código neste aparelho
+try { $("codigo").value = localStorage.getItem("lapidarium_codigo") || ""; } catch(e){}
+
+function pad(n){return String(n).padStart(2,'0');}
+function linkAgenda(grupo, data, hora, tema, descricao){
+  // data yyyy-mm-dd ; hora HH:MM (opcional)
+  const [Y,M,D] = data.split('-');
+  let dates;
+  if (hora){ const [h,mi]=hora.split(':'); const ini=`${Y}${M}${D}T${pad(h)}${pad(mi)}00`;
+    const fim = new Date(Date.UTC(+Y,+M-1,+D,+h,+mi)); fim.setUTCMinutes(fim.getUTCMinutes()+90);
+    const f=`${fim.getUTCFullYear()}${pad(fim.getUTCMonth()+1)}${pad(fim.getUTCDate())}T${pad(fim.getUTCHours())}${pad(fim.getUTCMinutes())}00`;
+    dates=`${ini}/${f}`;
+  } else { const d2=new Date(Date.UTC(+Y,+M-1,+D)); d2.setUTCDate(d2.getUTCDate()+1);
+    dates=`${Y}${M}${D}/${d2.getUTCFullYear()}${pad(d2.getUTCMonth()+1)}${pad(d2.getUTCDate())}`; }
+  const txt = encodeURIComponent(`${grupo} — ${tema}`);
+  const det = encodeURIComponent((descricao||'') + '\n\nLapidarium');
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${txt}&dates=${dates}&details=${det}&ctz=America/Boa_Vista`;
+}
+
+$("formulario").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const aviso=$("aviso"); aviso.className=""; aviso.textContent=""; $("acoes").innerHTML="";
+  $("botao").disabled=true; const rot=$("botao").textContent; $("botao").textContent="LAPIDANDO…";
+  let corpo;
+  if (modo==="video"){
+    const origem = $("origem").value==="outro" ? $("origem-outro").value.trim() : $("origem").value;
+    corpo = { codigo:$("codigo").value.trim(), item:{ tipo:"video", url:$("url").value.trim(), titulo:$("titulo").value.trim(),
+      descricao:$("descricao").value.trim(), autor:$("autor").value.trim(), data:$("data").value, origem:origem,
+      rito:$("rito").value.trim(), grau:$("grau").value.trim(),
+      tags:$("tags").value.split(";").map(s=>s.trim()).filter(Boolean), perguntas_aprofundamento:$("perguntas").value.trim() } };
+  } else {
+    corpo = { codigo:$("codigo").value.trim(), item:{ tipo:"reuniao", grupo:$("r-grupo").value, data:$("r-data").value,
+      hora:$("r-hora").value, tema:$("r-tema").value.trim(), descricao:$("r-descricao").value.trim(), link:$("r-link").value.trim() } };
+  }
+  try {
+    if (CONFIG.API_URL.startsWith("COLE_AQUI")) throw new Error("Painel ainda não conectado: cole a URL do Apps Script em CONFIG.API_URL.");
+    const r = await fetch(CONFIG.API_URL, { method:"POST", body:JSON.stringify(corpo) });
+    const resp = await r.json();
+    if (!resp.ok) throw new Error(resp.erro || "Falha desconhecida.");
+    try { localStorage.setItem("lapidarium_codigo", corpo.codigo); } catch(e){}
+    aviso.className="ok"; aviso.textContent="✓ "+resp.mensagem+" O site atualiza na próxima sincronização.";
+    // ações pós-publicação
+    if (modo==="reuniao"){
+      const it=corpo.item; const url=linkAgenda(it.grupo,it.data,it.hora,it.tema,it.descricao);
+      const share=`${it.grupo} — ${it.tema} (${it.data.split('-').reverse().join('/')}${it.hora?' '+it.hora:''})`;
+      $("acoes").innerHTML =
+        `<a class="acao" href="${url}" target="_blank">+ Adicionar ao Google Agenda</a>`+
+        `<a class="acao" href="https://api.whatsapp.com/send?text=${encodeURIComponent(share+(it.link?' '+it.link:''))}" target="_blank">Compartilhar no WhatsApp</a>`;
+    } else {
+      const v=corpo.item; const link=v.url;
+      $("acoes").innerHTML =
+        `<a class="acao" href="https://api.whatsapp.com/send?text=${encodeURIComponent((v.titulo||'Novo vídeo no Lapidarium')+' '+link)}" target="_blank">Compartilhar no WhatsApp</a>`+
+        `<button class="acao" type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText('${link}');this.textContent='Link copiado ✓'">Copiar link</button>`;
+    }
+    $("formulario").reset(); $("codigo").value=corpo.codigo; $("previa").style.display="none";
+  } catch (erro){ aviso.className="erro"; aviso.textContent="✕ "+erro.message; }
+  finally { $("botao").disabled=false; $("botao").textContent=rot; }
+});
+</script>
+</body>
+</html>
