@@ -81,6 +81,7 @@
     <label>Link (YouTube)</label>
     <input id="url" type="url" placeholder="https://www.youtube.com/watch?v=...">
     <div class="previa" id="previa"><img id="previa-img" alt=""></div>
+    <div id="sugestao" class="oculto" style="margin-top:10px;border:1px solid var(--border-h);padding:11px 13px;font-size:.92rem;background:rgba(201,168,76,.04)"></div>
     <label>Título</label>
     <input id="titulo" placeholder="Título do trabalho">
     <label>Descrição</label>
@@ -140,7 +141,7 @@
 
 <script src="ui.js"></script>
 <script>
-const CONFIG = { API_URL: "https://script.google.com/macros/s/AKfycbwFbU-NxkzMoaE6856qGW1Z5c7Ac-q3u_yReVUMNN8wvJyVJX9FNtMjhdbrN1kM8PNBdQ/exec" };
+const CONFIG = { API_URL: "COLE_AQUI_A_URL_DO_APPS_SCRIPT" };
 const $ = (id) => document.getElementById(id);
 let modo = "video";
 
@@ -154,12 +155,43 @@ document.querySelectorAll(".pm").forEach(b => b.onclick = () => {
   $("aviso").className=""; $("acoes").innerHTML="";
 });
 
-// prévia da thumbnail
+// prévia da thumbnail + busca automática de dados (oEmbed)
+let _tBusca;
 $("url").addEventListener("input", () => {
   const m = $("url").value.match(/(?:youtu\.be\/|v=|\/embed\/|\/live\/|shorts\/)([A-Za-z0-9_-]{11})/);
   if (m){ $("previa-img").src="https://img.youtube.com/vi/"+m[1]+"/hqdefault.jpg"; $("previa").style.display="block"; }
   else { $("previa").style.display="none"; }
+  clearTimeout(_tBusca); _tBusca = setTimeout(() => buscarDados(m), 500);
 });
+
+async function buscarDados(m){
+  const sug = $("sugestao");
+  if (!m){ sug.classList.add("oculto"); return; }
+  const vurl = "https://www.youtube.com/watch?v=" + m[1];
+  sug.classList.remove("oculto"); sug.innerHTML = '<span style="color:var(--text-d)">Consultando o YouTube…</span>';
+  let dados = null;
+  try { const r = await fetch("https://www.youtube.com/oembed?url="+encodeURIComponent(vurl)+"&format=json"); if (r.ok) dados = await r.json(); } catch(e){}
+  if (!dados || !dados.title){ try { const r = await fetch("https://noembed.com/embed?url="+encodeURIComponent(vurl)); if (r.ok){ const j = await r.json(); if (!j.error) dados = j; } } catch(e){} }
+  if (!dados || !dados.title){ sug.classList.add("oculto"); return; }
+  sug.dataset.titulo = dados.title; sug.dataset.canal = dados.author_name || "";
+  sug.innerHTML = '<b style="color:var(--gold)">Encontrei no YouTube:</b><br>“' + dados.title + '”'
+    + '<br><span style="color:var(--text-d)">Canal: ' + (dados.author_name || "—") + '</span><br>'
+    + '<button type="button" class="acao" style="margin-top:9px" onclick="window.__preencher()">Preencher com estes dados</button>';
+}
+
+window.__preencher = function(){
+  const sug = $("sugestao");
+  const canal = (sug.dataset.canal || "").toLowerCase();
+  if (canal.indexOf("epaminond") >= 0) $("origem").value = "EpaminondasOnline";
+  else if (canal.indexOf("urania") >= 0 || canal.indexOf("ur\u00e2nia") >= 0) $("origem").value = "Grupo de Estudos Urânia";
+  let t = sug.dataset.titulo || "", autor = "";
+  const partes = t.split(/\s[-\u2014]\s/);   // separa por " - " ou " — "
+  if (partes.length >= 2){ autor = partes[partes.length-1].trim(); t = partes.slice(0,-1).join(" - ").trim(); }
+  $("titulo").value = t;
+  if (autor && !$("autor").value) $("autor").value = autor;
+  sug.innerHTML = '<span style="color:#9ec27a">✓ Campos preenchidos — confira e ajuste o que precisar.</span>';
+  $("titulo").focus();
+};
 $("origem").addEventListener("change", () => $("origem-outro").classList.toggle("oculto", $("origem").value!=="outro"));
 
 // lembra o código neste aparelho
