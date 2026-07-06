@@ -1,0 +1,167 @@
+/** ============================================================
+ * LAPIDARIUM — API da Planilha-Mãe (Google Apps Script)  v2
+ * ------------------------------------------------------------
+ * Recebe publicações do painel (publicar.html) e grava na
+ * planilha; entrega o catálogo em JSON.
+ * NOVO na v2: coleção "reuniao" (aba Reunioes) — próxima reunião
+ * (grupo, data, hora, tema), que alimenta a agenda do site.
+ *
+ * INSTALAÇÃO (uma vez — ver ATIVACAO.md):
+ *  1. Abra a planilha "Lapidarium — Acervo (planilha-mãe)".
+ *  2. Extensões → Apps Script → cole este arquivo inteiro → Salvar.
+ *  3. Configurações do projeto → Propriedades do script:
+ *       CODIGOS_PUBLICACAO = rogerio:Rogério
+ *  4. Implantar → Nova implantação → App da Web →
+ *       Executar como: eu | Acesso: Qualquer pessoa → Implantar.
+ *  5. Copie a URL (/exec) e cole no publicar.html (CONFIG.API_URL).
+ * ============================================================ */
+
+const COLECOES = {
+  video:  "Videos",
+  reuniao:"Reunioes",
+  prancha:"Pranchas",
+  ritual: "Rituais",
+  documento: "Documentos"
+};
+
+const COLUNAS = [
+  "id","tipo","titulo","descricao","autor","data","origem","rito","grau","ordem",
+  "tags","url","youtube_id","thumbnail","transcricao_status","acesso",
+  "perguntas_aprofundamento","publicado_por","publicado_em"
+];
+
+const REUNIAO_COLUNAS = [
+  "id","tipo","grupo","data","hora","tema","descricao","link","publicado_por","publicado_em"
+];
+
+function colunasDe_(tipo){ return tipo === "reuniao" ? REUNIAO_COLUNAS : COLUNAS; }
+
+/* ---------- utilidades ---------- */
+
+function abaDaColecao_(tipo) {
+  const nome = COLECOES[tipo];
+  if (!nome) throw new Error("Tipo desconhecido: " + tipo);
+  const planilha = SpreadsheetApp.getActiveSpreadsheet();
+  let aba = planilha.getSheetByName(nome);
+  if (!aba) {
+    aba = planilha.insertSheet(nome);
+    aba.appendRow(colunasDe_(tipo));
+    aba.setFrozenRows(1);
+  }
+  return aba;
+}
+
+function validarCodigo_(codigo) {
+  const bruto = PropertiesService.getScriptProperties().getProperty("CODIGOS_PUBLICACAO") || "";
+  const mapa = {};
+  bruto.split(",").forEach(par => {
+    const [cod, nome] = par.split(":").map(s => (s || "").trim());
+    if (cod) mapa[cod] = nome || cod;
+  });
+  return mapa[(codigo || "").trim()] || null;
+}
+
+function extrairYoutubeId_(url) {
+  const m = (url || "").match(/(?:youtu\.be\/|v=|\/embed\/|\/live\/|shorts\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : "";
+}
+
+function resposta_(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+/* ---------- publicar (POST) ---------- */
+
+function doPost(e) {
+  try {
+    const corpo = JSON.parse(e.postData.contents);
+    const quem = validarCodigo_(corpo.codigo);
+    if (!quem) return resposta_({ ok:false, erro:"Código de publicação inválido." });
+
+    const item = corpo.item || {};
+    const tipo = item.tipo || "video";
+    const aba = abaDaColecao_(tipo);
+    const agora = new Date();
+    const id = tipo + "-" + Utilities.formatDate(agora, "GMT-3", "yyyyMMdd-HHmmss");
+
+    let linha;
+    if (tipo === "reuniao") {
+      if (!item.data)  return resposta_({ ok:false, erro:"Data da reunião é obrigatória." });
+      if (!item.tema)  return resposta_({ ok:false, erro:"Tema da reunião é obrigatório." });
+      linha = {
+        id, tipo:"reuniao",
+        grupo: item.grupo || item.origem || "",
+        data: item.data,
+        hora: item.hora || "",
+        tema: (item.tema || "").trim(),
+        descricao: (item.descricao || "").trim(),
+        link: item.link || item.url || "",
+        publicado_por: quem,
+        publicado_em: agora.toISOString()
+      };
+    } else {
+      const youtubeId = item.youtube_id || extrairYoutubeId_(item.url);
+      linha = {
+        id, tipo,
+        titulo: (item.titulo || "").trim(),
+        descricao: (item.descricao || "").trim(),
+        autor: (item.autor || "").trim(),
+        data: item.data || Utilities.formatDate(agora, "GMT-3", "yyyy-MM-dd"),
+        origem: item.origem || "",
+        rito: item.rito || "", grau: item.grau || "", ordem: item.ordem || "",
+        tags: Array.isArray(item.tags) ? item.tags.join("; ") : (item.tags || ""),
+        url: item.url || (youtubeId ? "https://www.youtube.com/watch?v=" + youtubeId : ""),
+        youtube_id: youtubeId,
+        thumbnail: youtubeId ? "https://img.youtube.com/vi/" + youtubeId + "/hqdefault.jpg" : (item.thumbnail || ""),
+        transcricao_status: "pendente",
+        acesso: item.acesso || "publico",
+        perguntas_aprofundamento: item.perguntas_aprofundamento || "",
+        publicado_por: quem,
+        publicado_em: agora.toISOString()
+      };
+      if (!linha.titulo) return resposta_({ ok:false, erro:"Título é obrigatório." });
+      if (tipo === "video" && !youtubeId) return resposta_({ ok:false, erro:"Link do YouTube inválido." });
+    }
+
+    const cols = colunasDe_(tipo);
+    aba.appendRow(cols.map(c => linha[c] !== undefined ? linha[c] : ""));
+    return resposta_({ ok:true, id:id, mensagem:"Registrado por " + quem + " em " + COLECOES[tipo] + "." });
+
+  } catch (erro) {
+    return resposta_({ ok:false, erro: String(erro) });
+  }
+}
+
+/* ---------- catálogo (GET) — sincronizar.py e agenda do site ---------- */
+
+function doGet(e) {
+  try {
+    const p = e.parameter || {};
+    // metadados do YouTube (título/canal) — sem código, para o auto-preenchimento do painel
+    if (p.tipo === "oembed") {
+      const u = "https://www.youtube.com/oembed?format=json&url=" + encodeURIComponent(p.url || "");
+      const resp = UrlFetchApp.fetch(u, { muteHttpExceptions: true });
+      if (resp.getResponseCode() !== 200) return resposta_({ ok:false, erro:"não encontrado" });
+      const j = JSON.parse(resp.getContentText());
+      return resposta_({ ok:true, title:j.title, author_name:j.author_name });
+    }
+    if (!validarCodigo_(p.codigo)) return resposta_({ ok:false, erro:"Código inválido." });
+    const tipo = p.tipo || "video";
+    const aba = abaDaColecao_(tipo);
+    const valores = aba.getDataRange().getValues();
+    const cab = valores.shift();
+    let itens = valores.filter(l => l[0]).map(l => {
+      const obj = {}; cab.forEach((c, i) => obj[c] = l[i]);
+      if (typeof obj.tags === "string" && obj.tags) obj.tags = obj.tags.split(";").map(s => s.trim()).filter(Boolean);
+      return obj;
+    });
+    // para reuniões: só as futuras, ordenadas, útil para a agenda
+    if (tipo === "reuniao" && p.futuras === "1") {
+      const hoje = Utilities.formatDate(new Date(), "GMT-3", "yyyy-MM-dd");
+      itens = itens.filter(r => String(r.data) >= hoje).sort((a,b)=> String(a.data).localeCompare(String(b.data)));
+    }
+    return resposta_({ ok:true, tipo:tipo, total:itens.length, itens:itens });
+  } catch (erro) {
+    return resposta_({ ok:false, erro: String(erro) });
+  }
+}

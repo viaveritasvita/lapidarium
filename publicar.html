@@ -141,7 +141,7 @@
 
 <script src="ui.js"></script>
 <script>
-const CONFIG = { API_URL: "COLE_AQUI_A_URL_DO_APPS_SCRIPT" };
+const CONFIG = { API_URL: "https://script.google.com/macros/s/AKfycbwucO2iSyf-SG9XXwFtmlrcVaHNm9_zcKnKV0J4rZq0OBApbYgImuv4c0DlUDa1NVVlhg/exec", SITE_URL: "https://viaveritasvita.github.io/lapidarium/" };
 const $ = (id) => document.getElementById(id);
 let modo = "video";
 
@@ -170,9 +170,10 @@ async function buscarDados(m){
   const vurl = "https://www.youtube.com/watch?v=" + m[1];
   sug.classList.remove("oculto"); sug.innerHTML = '<span style="color:var(--text-d)">Consultando o YouTube…</span>';
   let dados = null;
-  try { const r = await fetch("https://www.youtube.com/oembed?url="+encodeURIComponent(vurl)+"&format=json"); if (r.ok) dados = await r.json(); } catch(e){}
-  if (!dados || !dados.title){ try { const r = await fetch("https://noembed.com/embed?url="+encodeURIComponent(vurl)); if (r.ok){ const j = await r.json(); if (!j.error) dados = j; } } catch(e){} }
-  if (!dados || !dados.title){ sug.classList.add("oculto"); return; }
+  try { const r = await fetch("https://noembed.com/embed?url="+encodeURIComponent(vurl)); if (r.ok){ const j = await r.json(); if (j && j.title && !j.error) dados = j; } } catch(e){}
+  if ((!dados || !dados.title) && !CONFIG.API_URL.startsWith("COLE_AQUI")){ try { const r = await fetch(CONFIG.API_URL+"?tipo=oembed&url="+encodeURIComponent(vurl)); if (r.ok){ const j = await r.json(); if (j && j.ok && j.title) dados = j; } } catch(e){} }
+  if (!dados || !dados.title){ try { const r = await fetch("https://www.youtube.com/oembed?url="+encodeURIComponent(vurl)+"&format=json"); if (r.ok) dados = await r.json(); } catch(e){} }
+  if (!dados || !dados.title){ sug.innerHTML = '<span style="color:var(--text-d)">Não consegui puxar automaticamente (o vídeo pode estar bloqueado). Preencha os campos à mão.</span>'; return; }
   sug.dataset.titulo = dados.title; sug.dataset.canal = dados.author_name || "";
   sug.innerHTML = '<b style="color:var(--gold)">Encontrei no YouTube:</b><br>“' + dados.title + '”'
     + '<br><span style="color:var(--text-d)">Canal: ' + (dados.author_name || "—") + '</span><br>'
@@ -236,17 +237,23 @@ $("formulario").addEventListener("submit", async (ev) => {
     try { localStorage.setItem("lapidarium_codigo", corpo.codigo); } catch(e){}
     aviso.className="ok"; aviso.textContent="✓ "+resp.mensagem+" O site atualiza na próxima sincronização.";
     // ações pós-publicação
+    let msg;
     if (modo==="reuniao"){
       const it=corpo.item; const url=linkAgenda(it.grupo,it.data,it.hora,it.tema,it.descricao);
-      const share=`${it.grupo} — ${it.tema} (${it.data.split('-').reverse().join('/')}${it.hora?' '+it.hora:''})`;
+      const dataFmt=it.data.split('-').reverse().join('/');
+      msg='📅 *Próxima reunião — '+it.grupo+'*\n'+it.tema+'\n🕗 '+dataFmt+(it.hora?' às '+it.hora:'')+(it.link?'\n🔗 '+it.link:'')+'\n\n🔨 Acervo maçônico Lapidarium:\n'+CONFIG.SITE_URL;
+      window.__msg=msg;
       $("acoes").innerHTML =
-        `<a class="acao" href="${url}" target="_blank">+ Adicionar ao Google Agenda</a>`+
-        `<a class="acao" href="https://api.whatsapp.com/send?text=${encodeURIComponent(share+(it.link?' '+it.link:''))}" target="_blank">Compartilhar no WhatsApp</a>`;
+        '<a class="acao" href="'+url+'" target="_blank">+ Adicionar ao Google Agenda</a>'+
+        '<a class="acao" href="https://api.whatsapp.com/send?text='+encodeURIComponent(msg)+'" target="_blank">Compartilhar no WhatsApp</a>'+
+        '<button class="acao" type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText(window.__msg);this.textContent=\'Copiado ✓\'">Copiar convite</button>';
     } else {
       const v=corpo.item; const link=v.url;
+      msg='📜 *'+(v.titulo||'Novo vídeo')+'*'+(v.autor?'\n🗣 '+v.autor:'')+'\n\n▶️ Assista:\n'+link+'\n\n🔨 Todo o acervo maçônico no Lapidarium:\n'+CONFIG.SITE_URL;
+      window.__msg=msg;
       $("acoes").innerHTML =
-        `<a class="acao" href="https://api.whatsapp.com/send?text=${encodeURIComponent((v.titulo||'Novo vídeo no Lapidarium')+' '+link)}" target="_blank">Compartilhar no WhatsApp</a>`+
-        `<button class="acao" type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText('${link}');this.textContent='Link copiado ✓'">Copiar link</button>`;
+        '<a class="acao" href="https://api.whatsapp.com/send?text='+encodeURIComponent(msg)+'" target="_blank">Compartilhar no WhatsApp</a>'+
+        '<button class="acao" type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText(window.__msg);this.textContent=\'Copiado ✓\'">Copiar convite</button>';
     }
     $("formulario").reset(); $("codigo").value=corpo.codigo; $("previa").style.display="none";
   } catch (erro){ aviso.className="erro"; aviso.textContent="✕ "+erro.message; }
