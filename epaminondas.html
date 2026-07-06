@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EpaminondasOnline — Lapidarium</title>
+<meta name="description" content="Acervo em vídeo do grupo de estudos EpaminondasOnline, no Lapidarium.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'><polygon points='42,8 78,74 6,74' fill='none' stroke='%23c9a84c' stroke-width='4'/><ellipse cx='42' cy='54' rx='12' ry='8' fill='none' stroke='%23c9a84c' stroke-width='2.5'/><circle cx='42' cy='54' r='3' fill='%23c9a84c'/></svg>">
+<link rel="stylesheet" href="assets/css/lapidarium.css">
+</head>
+<body class="theme-ep">
+<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">☀</button>
+
+<div class="wrap">
+<header>
+  <a class="backlink" href="index.html">◂ Lapidarium</a>
+  <div class="ghero">
+    <img class="ghero-logo" src="epaminondas.png" alt="EpaminondasOnline" onerror="this.style.display='none'">
+    <h1 class="ghero-name">EpaminondasOnline</h1>
+    <p class="ghero-sub">Loja Maçônica Epaminondas Souza Costa — estudos online</p>
+    <div class="ghero-stats">
+      <div><span class="gs-n">400+</span><span class="gs-l">Vídeos</span></div>
+      <div><span class="gs-n">2021</span><span class="gs-l">Desde</span></div>
+      <div><span class="gs-n">80+</span><span class="gs-l">Oradores</span></div>
+    </div>
+    <div class="orn"><span class="ol"></span><span class="od"></span><span class="ol r"></span></div>
+    <a class="backlink" href="buscar.html?q=" style="margin-bottom:0">Buscar em todo o acervo ▸</a>
+  </div>
+</header>
+
+<p class="sec-label">Acervo em Vídeo</p>
+<main id="grade"><p class="vazio">Carregando vídeos…</p></main>
+
+<footer><p>Lapidarium · In Nomine GADU · Omnia Vincit Lux</p></footer>
+</div>
+
+<script src="assets/js/ui.js"></script>
+<script>
+(async () => {
+  const grade = document.getElementById('grade');
+  try {
+    const dados = await (await fetch('dados/videos-epaminondas.json')).json();
+    const vids = (dados.videos||[]).slice().sort((a,b)=>(b.data||'').localeCompare(a.data||''));
+    if (!vids.length) { grade.innerHTML = "<p class='vazio'>Acervo em preparação.</p>"; return; }
+    grade.innerHTML = `<div class="vgrid">` + vids.map(v => `
+      <a class="vc" href="${v.url||'#'}" target="_blank" rel="noopener">
+        <div class="vc-thumb"><img class="vc-img" src="${v.thumbnail||('https://img.youtube.com/vi/'+v.youtube_id+'/hqdefault.jpg')}" alt="" loading="lazy">
+          <span class="vc-badge b-ep">Epaminondas</span></div>
+        <div class="vc-body"><p class="vc-title">${v.titulo||''}</p>
+          <p class="vc-meta">${(v.data||'').split('-').reverse().join('/')}${v.palestrante?' · '+v.palestrante:''}</p>
+          ${(v.tags&&v.tags.length)?`<div class="vc-tags">${v.tags.slice(0,3).map(t=>`<span class="vtag">${t}</span>`).join('')}</div>`:''}
+        </div></a>`).join('') + `</div>
+      <p class="expansao" style="text-align:center">Acervo em expansão — em breve os ~400 vídeos completos e a busca por transcrição.</p>`;
+  } catch(e) {
+    grade.innerHTML = "<p class='vazio'>Não foi possível carregar o acervo (verifique a conexão).</p>";
+  }
+})();
+</script>
+</body>
+</html>

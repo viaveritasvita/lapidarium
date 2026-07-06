@@ -355,7 +355,7 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
 
 <p class="sec-label">Grupos de Estudo</p>
 <div class="portals">
-  <a href="#" class="portal portal-ep">
+  <a href="epaminondas.html" class="portal portal-ep">
     <span class="p-accent"></span>
     <div class="p-body">
       <div class="p-icon" id="icon-ep">E</div>
@@ -370,7 +370,7 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
       </div>
     </div>
   </a>
-  <a href="#" class="portal portal-ur">
+  <a href="urania.html" class="portal portal-ur">
     <span class="p-accent"></span>
     <div class="p-body">
       <div class="p-icon" id="icon-ur">U</div>
@@ -438,7 +438,7 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
 <p class="sec-label">Ferramentas da Plataforma</p>
 <div class="feats">
   <div class="feat soon"><span class="feat-ico">📜</span><p class="feat-name">Pranchas</p><p class="feat-desc">Repositório por grau, tema e rito</p></div>
-  <div class="feat"><span class="feat-ico">🔍</span><p class="feat-name">Pesquisa</p><p class="feat-desc">Filtros por orador, período e rito</p></div>
+  <div class="feat" style="cursor:pointer" onclick="location.href='buscar.html'"><span class="feat-ico">🔍</span><p class="feat-name">Pesquisa</p><p class="feat-desc">Filtros por orador, período e rito</p></div>
   <div class="feat soon"><span class="feat-ico">📅</span><p class="feat-name">Calendário</p><p class="feat-desc">Sessões e datas simbólicas</p></div>
   <div class="feat soon"><span class="feat-ico">📖</span><p class="feat-name">Glossário</p><p class="feat-desc">Termos e símbolos interativos</p></div>
   <div class="feat soon"><span class="feat-ico">⏳</span><p class="feat-name">Linha do Tempo</p><p class="feat-desc">História da Maçonaria</p></div>
@@ -609,7 +609,7 @@ const tr=document.getElementById('ctrack');
 
 // ══ SEARCH ══
 function setQ(t){document.getElementById('searchInput').value=t;document.getElementById('searchInput').focus()}
-function doSearch(){const q=document.getElementById('searchInput').value.trim();if(q)alert(`Pesquisa: "${q}"\n\nEm breve: filtro nos 460 vídeos do acervo.`)}
+function doSearch(){const q=document.getElementById('searchInput').value.trim();location.href='buscar.html'+(q?('?q='+encodeURIComponent(q)):'');}
 document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
 
 // ══ TEMA ══
