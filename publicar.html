@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Publicar — Lapidarium</title>
+<title>Área Restrita — Lapidarium</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'><polygon points='42,8 78,74 6,74' fill='none' stroke='%23c9a84c' stroke-width='4'/><ellipse cx='42' cy='54' rx='12' ry='8' fill='none' stroke='%23c9a84c' stroke-width='2.5'/><circle cx='42' cy='54' r='3' fill='%23c9a84c'/></svg>">
 <link rel="stylesheet" href="lapidarium.css">
@@ -32,6 +32,15 @@
   .acao{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:9px 16px;border:1px solid var(--border-h);color:var(--gold);cursor:pointer;background:transparent;transition:.25s}
   .acao:hover{background:rgba(201,168,76,.12);border-color:var(--gold)}
   .oculto{display:none}
+  /* portão de acesso */
+  #gate{max-width:400px;margin:10px auto 0;text-align:center}
+  #gate .cadeado{font-size:2rem;color:var(--gold-d);margin-bottom:8px}
+  #gate h2{font-family:'Cinzel',serif;font-size:.9rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+  #gate p{color:var(--text-d);font-style:italic;font-size:.9rem;margin-bottom:20px}
+  #gate input{text-align:center;letter-spacing:.2em}
+  #gate button{margin-top:16px;width:100%;padding:13px;font-size:.72rem;letter-spacing:.25em;font-family:'Cinzel',serif;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:.25s;text-transform:uppercase}
+  #gate button:hover{background:var(--gold);color:var(--s1)}
+  #gate-erro{color:#d68a6a;font-size:.85rem;margin-top:10px;min-height:18px}
 </style>
 </head>
 <body>
@@ -63,20 +72,26 @@
       </svg>
     </div>
   </div>
-  <h1 class="site-name" style="font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:.42em">PUBLICAR</h1>
-  <p class="page-tagline">Lançar no acervo — só Irmãos com código.</p>
+  <h1 class="site-name" style="font-size:clamp(1.4rem,4vw,2.1rem);letter-spacing:.42em">ÁREA RESTRITA</h1>
 </header>
 
+<!-- ===== PORTÃO DE ACESSO ===== -->
+<div id="gate">
+  <div class="cadeado">&#128274;</div>
+  <h2>Acesso reservado</h2>
+  <p>Informe seu código para entrar.</p>
+  <input id="codigo-acesso" type="password" autocomplete="off" placeholder="Código de acesso" autofocus>
+  <button type="button" id="btn-entrar">Entrar</button>
+  <div id="gate-erro"></div>
+</div>
+
+<!-- ===== PAINEL (revelado após o portão) ===== -->
+<div id="painel" class="oculto">
 <div class="pmode">
   <button class="pm ativa" data-m="video">Publicar Vídeo</button>
   <button class="pm" data-m="reuniao">Próxima Reunião</button>
 </div>
-
 <form id="formulario">
-  <label>Código de publicação</label>
-  <input id="codigo" type="password" required autocomplete="off" placeholder="Seu código pessoal">
-
-  <!-- ===== MODO VÍDEO ===== -->
   <div id="bloco-video">
     <label>Link (YouTube)</label>
     <input id="url" type="url" placeholder="https://www.youtube.com/watch?v=...">
@@ -109,8 +124,6 @@
     <label>Perguntas de aprofundamento (opcional)</label>
     <textarea id="perguntas" placeholder="3 a 5 perguntas que este trabalho responde ou provoca."></textarea>
   </div>
-
-  <!-- ===== MODO REUNIÃO ===== -->
   <div id="bloco-reuniao" class="oculto">
     <div class="linha">
       <div><label>Grupo</label>
@@ -129,23 +142,39 @@
     <input id="r-tema" placeholder="Ex: A Corda de 81 Nós — Ir∴ Sérgio">
     <label>Descrição (opcional)</label>
     <textarea id="r-descricao" placeholder="Detalhes da sessão."></textarea>
-    <p class="nota">A próxima reunião cadastrada aqui alimenta a agenda da home. Para corrigir, basta cadastrar de novo com a data certa.</p>
+    <p class="nota">A próxima reunião cadastrada aqui alimenta a agenda da home. Para corrigir, cadastre de novo com a data certa.</p>
   </div>
-
   <button type="submit" id="botao">LANÇAR NO ACERVO</button>
   <div id="aviso"></div>
   <div class="acoes" id="acoes"></div>
 </form>
+</div>
+
 <footer><p>Lapidarium · In Nomine GADU · Omnia Vincit Lux</p></footer>
 </div>
 
+<script src="config.js"></script>
 <script src="ui.js"></script>
 <script>
-const CONFIG = { API_URL: "https://script.google.com/macros/s/AKfycbwucO2iSyf-SG9XXwFtmlrcVaHNm9_zcKnKV0J4rZq0OBApbYgImuv4c0DlUDa1NVVlhg/exec", SITE_URL: "https://viaveritasvita.github.io/lapidarium/" };
+const CONFIG = window.LAPIDARIUM_CONFIG || { API_URL: "COLE_AQUI_A_URL_DO_APPS_SCRIPT", SITE_URL: "https://viaveritasvita.github.io/lapidarium/" };
 const $ = (id) => document.getElementById(id);
 let modo = "video";
+let codigoAtivo = "";
 
-// alternância de modo
+// ===== PORTÃO =====
+function entrar(){
+  const c = $("codigo-acesso").value.trim();
+  if (!c){ $("gate-erro").textContent = "Digite seu código."; return; }
+  codigoAtivo = c;
+  try { localStorage.setItem("lapidarium_codigo", c); } catch(e){}
+  $("gate").classList.add("oculto");
+  $("painel").classList.remove("oculto");
+}
+$("btn-entrar").addEventListener("click", entrar);
+$("codigo-acesso").addEventListener("keydown", e => { if (e.key === "Enter") entrar(); });
+try { $("codigo-acesso").value = localStorage.getItem("lapidarium_codigo") || ""; } catch(e){}
+
+// ===== MODO =====
 document.querySelectorAll(".pm").forEach(b => b.onclick = () => {
   document.querySelectorAll(".pm").forEach(x=>x.classList.remove("ativa"));
   b.classList.add("ativa"); modo = b.dataset.m;
@@ -155,7 +184,7 @@ document.querySelectorAll(".pm").forEach(b => b.onclick = () => {
   $("aviso").className=""; $("acoes").innerHTML="";
 });
 
-// prévia da thumbnail + busca automática de dados (oEmbed)
+// ===== AUTO-PREENCHER (oEmbed) =====
 let _tBusca;
 $("url").addEventListener("input", () => {
   const m = $("url").value.match(/(?:youtu\.be\/|v=|\/embed\/|\/live\/|shorts\/)([A-Za-z0-9_-]{11})/);
@@ -163,7 +192,6 @@ $("url").addEventListener("input", () => {
   else { $("previa").style.display="none"; }
   clearTimeout(_tBusca); _tBusca = setTimeout(() => buscarDados(m), 500);
 });
-
 async function buscarDados(m){
   const sug = $("sugestao");
   if (!m){ sug.classList.add("oculto"); return; }
@@ -173,47 +201,38 @@ async function buscarDados(m){
   try { const r = await fetch("https://noembed.com/embed?url="+encodeURIComponent(vurl)); if (r.ok){ const j = await r.json(); if (j && j.title && !j.error) dados = j; } } catch(e){}
   if ((!dados || !dados.title) && !CONFIG.API_URL.startsWith("COLE_AQUI")){ try { const r = await fetch(CONFIG.API_URL+"?tipo=oembed&url="+encodeURIComponent(vurl)); if (r.ok){ const j = await r.json(); if (j && j.ok && j.title) dados = j; } } catch(e){} }
   if (!dados || !dados.title){ try { const r = await fetch("https://www.youtube.com/oembed?url="+encodeURIComponent(vurl)+"&format=json"); if (r.ok) dados = await r.json(); } catch(e){} }
-  if (!dados || !dados.title){ sug.innerHTML = '<span style="color:var(--text-d)">Não consegui puxar automaticamente (o vídeo pode estar bloqueado). Preencha os campos à mão.</span>'; return; }
+  if (!dados || !dados.title){ sug.innerHTML = '<span style="color:var(--text-d)">Não consegui puxar automaticamente. Preencha à mão.</span>'; return; }
   sug.dataset.titulo = dados.title; sug.dataset.canal = dados.author_name || "";
-  sug.innerHTML = '<b style="color:var(--gold)">Encontrei no YouTube:</b><br>“' + dados.title + '”'
+  sug.innerHTML = '<b style="color:var(--gold)">Encontrei no YouTube:</b><br>&ldquo;' + dados.title + '&rdquo;'
     + '<br><span style="color:var(--text-d)">Canal: ' + (dados.author_name || "—") + '</span><br>'
     + '<button type="button" class="acao" style="margin-top:9px" onclick="window.__preencher()">Preencher com estes dados</button>';
 }
-
 window.__preencher = function(){
-  const sug = $("sugestao");
-  const canal = (sug.dataset.canal || "").toLowerCase();
+  const sug = $("sugestao"); const canal = (sug.dataset.canal || "").toLowerCase();
   if (canal.indexOf("epaminond") >= 0) $("origem").value = "EpaminondasOnline";
-  else if (canal.indexOf("urania") >= 0 || canal.indexOf("ur\u00e2nia") >= 0) $("origem").value = "Grupo de Estudos Urânia";
+  else if (canal.indexOf("urania") >= 0 || canal.indexOf("urânia") >= 0) $("origem").value = "Grupo de Estudos Urânia";
   let t = sug.dataset.titulo || "", autor = "";
-  const partes = t.split(/\s[-\u2014]\s/);   // separa por " - " ou " — "
+  const partes = t.split(/\s[-—]\s/);
   if (partes.length >= 2){ autor = partes[partes.length-1].trim(); t = partes.slice(0,-1).join(" - ").trim(); }
   $("titulo").value = t;
   if (autor && !$("autor").value) $("autor").value = autor;
-  sug.innerHTML = '<span style="color:#9ec27a">✓ Campos preenchidos — confira e ajuste o que precisar.</span>';
+  sug.innerHTML = '<span style="color:#9ec27a">Campos preenchidos — confira e ajuste.</span>';
   $("titulo").focus();
 };
 $("origem").addEventListener("change", () => $("origem-outro").classList.toggle("oculto", $("origem").value!=="outro"));
 
-// lembra o código neste aparelho
-try { $("codigo").value = localStorage.getItem("lapidarium_codigo") || ""; } catch(e){}
-
+// ===== AGENDA / ENVIO =====
 function pad(n){return String(n).padStart(2,'0');}
 function linkAgenda(grupo, data, hora, tema, descricao){
-  // data yyyy-mm-dd ; hora HH:MM (opcional)
-  const [Y,M,D] = data.split('-');
-  let dates;
+  const [Y,M,D] = data.split('-'); let dates;
   if (hora){ const [h,mi]=hora.split(':'); const ini=`${Y}${M}${D}T${pad(h)}${pad(mi)}00`;
-    const fim = new Date(Date.UTC(+Y,+M-1,+D,+h,+mi)); fim.setUTCMinutes(fim.getUTCMinutes()+90);
+    const fim=new Date(Date.UTC(+Y,+M-1,+D,+h,+mi)); fim.setUTCMinutes(fim.getUTCMinutes()+90);
     const f=`${fim.getUTCFullYear()}${pad(fim.getUTCMonth()+1)}${pad(fim.getUTCDate())}T${pad(fim.getUTCHours())}${pad(fim.getUTCMinutes())}00`;
     dates=`${ini}/${f}`;
   } else { const d2=new Date(Date.UTC(+Y,+M-1,+D)); d2.setUTCDate(d2.getUTCDate()+1);
     dates=`${Y}${M}${D}/${d2.getUTCFullYear()}${pad(d2.getUTCMonth()+1)}${pad(d2.getUTCDate())}`; }
-  const txt = encodeURIComponent(`${grupo} — ${tema}`);
-  const det = encodeURIComponent((descricao||'') + '\n\nLapidarium');
-  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${txt}&dates=${dates}&details=${det}&ctz=America/Boa_Vista`;
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(grupo+' — '+tema)}&dates=${dates}&details=${encodeURIComponent((descricao||'')+'\n\nLapidarium')}&ctz=America/Boa_Vista`;
 }
-
 $("formulario").addEventListener("submit", async (ev) => {
   ev.preventDefault();
   const aviso=$("aviso"); aviso.className=""; aviso.textContent=""; $("acoes").innerHTML="";
@@ -221,12 +240,12 @@ $("formulario").addEventListener("submit", async (ev) => {
   let corpo;
   if (modo==="video"){
     const origem = $("origem").value==="outro" ? $("origem-outro").value.trim() : $("origem").value;
-    corpo = { codigo:$("codigo").value.trim(), item:{ tipo:"video", url:$("url").value.trim(), titulo:$("titulo").value.trim(),
+    corpo = { codigo:codigoAtivo, item:{ tipo:"video", url:$("url").value.trim(), titulo:$("titulo").value.trim(),
       descricao:$("descricao").value.trim(), autor:$("autor").value.trim(), data:$("data").value, origem:origem,
       rito:$("rito").value.trim(), grau:$("grau").value.trim(),
       tags:$("tags").value.split(";").map(s=>s.trim()).filter(Boolean), perguntas_aprofundamento:$("perguntas").value.trim() } };
   } else {
-    corpo = { codigo:$("codigo").value.trim(), item:{ tipo:"reuniao", grupo:$("r-grupo").value, data:$("r-data").value,
+    corpo = { codigo:codigoAtivo, item:{ tipo:"reuniao", grupo:$("r-grupo").value, data:$("r-data").value,
       hora:$("r-hora").value, tema:$("r-tema").value.trim(), descricao:$("r-descricao").value.trim(), link:$("r-link").value.trim() } };
   }
   try {
@@ -234,28 +253,26 @@ $("formulario").addEventListener("submit", async (ev) => {
     const r = await fetch(CONFIG.API_URL, { method:"POST", body:JSON.stringify(corpo) });
     const resp = await r.json();
     if (!resp.ok) throw new Error(resp.erro || "Falha desconhecida.");
-    try { localStorage.setItem("lapidarium_codigo", corpo.codigo); } catch(e){}
     aviso.className="ok"; aviso.textContent="✓ "+resp.mensagem+" O site atualiza na próxima sincronização.";
-    // ações pós-publicação
     let msg;
     if (modo==="reuniao"){
       const it=corpo.item; const url=linkAgenda(it.grupo,it.data,it.hora,it.tema,it.descricao);
       const dataFmt=it.data.split('-').reverse().join('/');
-      msg='📅 *Próxima reunião — '+it.grupo+'*\n'+it.tema+'\n🕗 '+dataFmt+(it.hora?' às '+it.hora:'')+(it.link?'\n🔗 '+it.link:'')+'\n\n🔨 Acervo maçônico Lapidarium:\n'+CONFIG.SITE_URL;
+      msg='*Próxima reunião — '+it.grupo+'*\n'+it.tema+'\n'+dataFmt+(it.hora?' às '+it.hora:'')+(it.link?'\n> '+it.link:'')+'\n\n△ Acervo maçônico no Lapidarium:\n'+CONFIG.SITE_URL;
       window.__msg=msg;
       $("acoes").innerHTML =
-        '<a class="acao" href="'+url+'" target="_blank">+ Adicionar ao Google Agenda</a>'+
-        '<a class="acao" href="https://api.whatsapp.com/send?text='+encodeURIComponent(msg)+'" target="_blank">Compartilhar no WhatsApp</a>'+
-        '<button class="acao" type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText(window.__msg);this.textContent=\'Copiado ✓\'">Copiar convite</button>';
+        '<a class="acao" href="'+url+'" target="_blank">+ Google Agenda</a>'+
+        '<a class="acao" href="https://api.whatsapp.com/send?text='+encodeURIComponent(msg)+'" target="_blank">Compartilhar</a>'+
+        '<button class="acao" type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText(window.__msg);this.textContent=\'Copiado\'">Copiar convite</button>';
     } else {
       const v=corpo.item; const link=v.url;
-      msg='📜 *'+(v.titulo||'Novo vídeo')+'*'+(v.autor?'\n🗣 '+v.autor:'')+'\n\n▶️ Assista:\n'+link+'\n\n🔨 Todo o acervo maçônico no Lapidarium:\n'+CONFIG.SITE_URL;
+      msg='*'+(v.titulo||'Novo vídeo')+'*'+(v.autor?'\n'+v.autor:'')+'\n\n> Assista:\n'+link+'\n\n△ Todo o acervo maçônico no Lapidarium:\n'+CONFIG.SITE_URL;
       window.__msg=msg;
       $("acoes").innerHTML =
-        '<a class="acao" href="https://api.whatsapp.com/send?text='+encodeURIComponent(msg)+'" target="_blank">Compartilhar no WhatsApp</a>'+
-        '<button class="acao" type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText(window.__msg);this.textContent=\'Copiado ✓\'">Copiar convite</button>';
+        '<a class="acao" href="https://api.whatsapp.com/send?text='+encodeURIComponent(msg)+'" target="_blank">Compartilhar</a>'+
+        '<button class="acao" type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText(window.__msg);this.textContent=\'Copiado\'">Copiar convite</button>';
     }
-    $("formulario").reset(); $("codigo").value=corpo.codigo; $("previa").style.display="none";
+    $("formulario").reset(); $("previa").style.display="none"; $("sugestao").classList.add("oculto");
   } catch (erro){ aviso.className="erro"; aviso.textContent="✕ "+erro.message; }
   finally { $("botao").disabled=false; $("botao").textContent=rot; }
 });
