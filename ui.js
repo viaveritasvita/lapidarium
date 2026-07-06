@@ -1,0 +1,67 @@
+/* LAPIDARIUM — UI compartilhada: delta vivo + troca de tema */
+
+// ══ TEMA ══
+function toggleTheme(){
+  const l=document.body.classList.toggle('light');
+  const b=document.getElementById('themeBtn');
+  if(b)b.textContent=l?'☾':'☀';
+}
+
+// ══ DELTA — olho vivo (rastreio suave · deriva ociosa · piscar) ══
+(function(){
+  function init(){
+    const wrap=document.getElementById('deltaWrap');
+    if(!wrap) return;
+    const svgWrap=wrap.querySelector('.delta-svg-wrap');
+    const halo=wrap.querySelector('.delta-halo');
+    const rays=wrap.querySelector('.delta-rays');
+    const pupil=document.getElementById('pupil');
+    const iris=document.getElementById('iris');
+    const spec=document.getElementById('spec');
+    const eye=document.getElementById('eyeOutline');
+    const glow=document.getElementById('eyeGlow');
+    if(!pupil) return;
+    const EX=42,EY=54,MAX=3.0,SX=1.2,SY=-1.2;
+    const IRIS_RY=7.5,IRIS_R=5,PUP_R=2.2,GLOW_RY=8.5;
+    let tgtX=EX,tgtY=EY,curX=EX,curY=EY,tgtProx=0,curProx=0,tgtNb=0,curNb=0;
+    let lastMove=performance.now(),blinking=false,blinkStart=0,blink=1;
+    let nextBlink=performance.now()+2000+Math.random()*3000;
+    const lerp=(a,b,f)=>a+(b-a)*f;
+    document.addEventListener('mousemove',function(e){
+      lastMove=performance.now();
+      const r=wrap.getBoundingClientRect();
+      const cx=r.left+r.width/2, cy=r.top+r.height/2;
+      const dx=e.clientX-cx, dy=e.clientY-cy, dist=Math.hypot(dx,dy);
+      const t=Math.min(dist,140)/140;
+      tgtX=EX+(dx/Math.max(dist,1))*MAX*t;
+      tgtY=EY+(dy/Math.max(dist,1))*MAX*t;
+      const FULL=380;
+      tgtProx=Math.max(0,Math.min(1,(FULL-dist)/FULL));
+      tgtNb=Math.max(0,Math.min(1,(120-dist)/120));
+    });
+    function frame(now){
+      if(now-lastMove>2600){const w=now/1000;tgtX=EX+Math.cos(w*0.5)*1.4;tgtY=EY+Math.sin(w*0.7)*1.0;tgtProx=lerp(tgtProx,0.12,0.02);tgtNb=lerp(tgtNb,0,0.05);}
+      curX=lerp(curX,tgtX,0.14);curY=lerp(curY,tgtY,0.14);curProx=lerp(curProx,tgtProx,0.08);curNb=lerp(curNb,tgtNb,0.10);
+      if(!blinking&&now>=nextBlink){blinking=true;blinkStart=now;}
+      if(blinking){const bd=now-blinkStart,DUR=150;if(bd>=DUR){blinking=false;blink=1;nextBlink=now+2600+Math.random()*4200;}else{blink=Math.abs(Math.cos((bd/DUR)*Math.PI));}}
+      const breathe=0.5+0.5*Math.sin(now/1500);
+      pupil.setAttribute('cx',curX.toFixed(2));pupil.setAttribute('cy',curY.toFixed(2));
+      iris.setAttribute('cx',curX.toFixed(2));iris.setAttribute('cy',curY.toFixed(2));
+      spec.setAttribute('cx',(curX+SX).toFixed(2));spec.setAttribute('cy',(curY+SY).toFixed(2));
+      if(eye)eye.setAttribute('ry',(IRIS_RY*blink).toFixed(2));
+      if(glow)glow.setAttribute('ry',(GLOW_RY*Math.max(blink,0.2)).toFixed(2));
+      iris.setAttribute('r',(IRIS_R*Math.max(blink,0.05)).toFixed(2));
+      pupil.setAttribute('r',(PUP_R*Math.max(blink,0.05)).toFixed(2));
+      spec.style.opacity=blink.toFixed(2);
+      svgWrap.style.animation='none';
+      svgWrap.style.transform=`scale(${(1+curProx*0.05+curNb*0.05).toFixed(3)})`;
+      halo.style.background=`radial-gradient(circle,rgba(240,217,138,${(0.02+curProx*0.11).toFixed(3)}) 0%,rgba(201,168,76,${(0.01+curProx*0.06).toFixed(3)}) 45%,transparent 100%)`;
+      const s1=Math.round(3+curProx*11+curNb*5+breathe*2),s2=Math.round(10+curProx*24+curNb*12+breathe*4);
+      svgWrap.style.filter=`drop-shadow(0 0 ${s1}px rgba(240,217,138,${(0.26+curProx*0.34+curNb*0.15).toFixed(2)})) drop-shadow(0 0 ${s2}px rgba(201,168,76,${(0.06+curProx*0.2+curNb*0.08).toFixed(2)}))`;
+      rays.style.opacity=(curProx*0.45+curNb*0.30).toFixed(2);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  if(document.readyState!=='loading')init();else document.addEventListener('DOMContentLoaded',init);
+})();

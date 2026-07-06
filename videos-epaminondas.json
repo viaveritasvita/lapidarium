@@ -1,0 +1,96 @@
+{
+  "grupo": "EpaminondasOnline",
+  "tema": "epaminondas",
+  "cor_identidade": "#b87333",
+  "videos": [
+    {
+      "id": "nVSdPtFdxUY",
+      "titulo": "A Corda de 81 Nós",
+      "data": "2025-05-14",
+      "palestrante": "",
+      "youtube_id": "nVSdPtFdxUY",
+      "url": "https://www.youtube.com/watch?v=nVSdPtFdxUY",
+      "thumbnail": "https://img.youtube.com/vi/nVSdPtFdxUY/hqdefault.jpg",
+      "tags": [
+        "simbolismo",
+        "corda",
+        "cadeia de união"
+      ],
+      "transcricao_status": "pendente"
+    },
+    {
+      "id": "duWuJDlRazg",
+      "titulo": "O Templo Adonhiramita",
+      "data": "2025-05-07",
+      "palestrante": "",
+      "youtube_id": "duWuJDlRazg",
+      "url": "https://www.youtube.com/watch?v=duWuJDlRazg",
+      "thumbnail": "https://img.youtube.com/vi/duWuJDlRazg/hqdefault.jpg",
+      "tags": [
+        "adonhiramita",
+        "rito",
+        "templo"
+      ],
+      "transcricao_status": "pendente"
+    },
+    {
+      "id": "4h6b8lqTK7M",
+      "titulo": "Sinopse da História da Maçonaria no Brasil",
+      "data": "2025-04-27",
+      "palestrante": "",
+      "youtube_id": "4h6b8lqTK7M",
+      "url": "https://www.youtube.com/watch?v=4h6b8lqTK7M",
+      "thumbnail": "https://img.youtube.com/vi/4h6b8lqTK7M/hqdefault.jpg",
+      "tags": [
+        "história",
+        "Brasil"
+      ],
+      "transcricao_status": "pendente"
+    },
+    {
+      "id": "tykhet22-4Q",
+      "titulo": "LGPD na sua Vida e na Maçonaria",
+      "data": "2025-04-23",
+      "palestrante": "",
+      "youtube_id": "tykhet22-4Q",
+      "url": "https://www.youtube.com/watch?v=tykhet22-4Q",
+      "thumbnail": "https://img.youtube.com/vi/tykhet22-4Q/hqdefault.jpg",
+      "tags": [
+        "LGPD",
+        "direito",
+        "atualidade"
+      ],
+      "transcricao_status": "pendente"
+    },
+    {
+      "id": "U37oB2mNfpo",
+      "titulo": "A Jornada do Aprendiz Maçom",
+      "data": "2025-04-20",
+      "palestrante": "",
+      "youtube_id": "U37oB2mNfpo",
+      "url": "https://www.youtube.com/watch?v=U37oB2mNfpo",
+      "thumbnail": "https://img.youtube.com/vi/U37oB2mNfpo/hqdefault.jpg",
+      "tags": [
+        "aprendiz",
+        "grau",
+        "simbolismo"
+      ],
+      "transcricao_status": "pendente"
+    },
+    {
+      "id": "eij78d_Z374",
+      "titulo": "O Iluminismo",
+      "data": "2025-04-06",
+      "palestrante": "",
+      "youtube_id": "eij78d_Z374",
+      "url": "https://www.youtube.com/watch?v=eij78d_Z374",
+      "thumbnail": "https://img.youtube.com/vi/eij78d_Z374/hqdefault.jpg",
+      "tags": [
+        "iluminismo",
+        "história",
+        "filosofia"
+      ],
+      "transcricao_status": "pendente"
+    }
+  ]
+}

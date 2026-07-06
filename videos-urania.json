@@ -1,0 +1,95 @@
+{
+  "grupo": "Grupo de Estudos Urânia",
+  "tema": "urania",
+  "cor_identidade": "#4a7fa8",
+  "videos": [
+    {
+      "id": "WKbl-YqBAk8",
+      "titulo": "O Talento que a Maçonaria Perde",
+      "data": "2026-04-25",
+      "palestrante": "",
+      "youtube_id": "WKbl-YqBAk8",
+      "url": "https://www.youtube.com/watch?v=WKbl-YqBAk8",
+      "thumbnail": "https://img.youtube.com/vi/WKbl-YqBAk8/hqdefault.jpg",
+      "tags": [
+        "filosofia",
+        "reflexão"
+      ],
+      "transcricao_status": "pendente"
+    },
+    {
+      "id": "DaNG-EvrwCI",
+      "titulo": "Ordem Shriners: A Missão Mais Nobre",
+      "data": "2026-04-18",
+      "palestrante": "",
+      "youtube_id": "DaNG-EvrwCI",
+      "url": "https://www.youtube.com/watch?v=DaNG-EvrwCI",
+      "thumbnail": "https://img.youtube.com/vi/DaNG-EvrwCI/hqdefault.jpg",
+      "tags": [
+        "Shriners",
+        "ordens",
+        "caridade"
+      ],
+      "transcricao_status": "pendente"
+    },
+    {
+      "id": "fPTswT9CX8I",
+      "titulo": "Telhamento Maçônico",
+      "data": "2026-04-11",
+      "palestrante": "",
+      "youtube_id": "fPTswT9CX8I",
+      "url": "https://www.youtube.com/watch?v=fPTswT9CX8I",
+      "thumbnail": "https://img.youtube.com/vi/fPTswT9CX8I/hqdefault.jpg",
+      "tags": [
+        "telhamento",
+        "ritual"
+      ],
+      "transcricao_status": "pendente"
+    },
+    {
+      "id": "YpPmsfbnKBk",
+      "titulo": "Páscoa e Maçonaria: O Renascimento",
+      "data": "2026-04-04",
+      "palestrante": "",
+      "youtube_id": "YpPmsfbnKBk",
+      "url": "https://www.youtube.com/watch?v=YpPmsfbnKBk",
+      "thumbnail": "https://img.youtube.com/vi/YpPmsfbnKBk/hqdefault.jpg",
+      "tags": [
+        "páscoa",
+        "simbolismo",
+        "cristianismo"
+      ],
+      "transcricao_status": "pendente"
+    },
+    {
+      "id": "QzbKrXNpsZ4",
+      "titulo": "O Tronco de Beneficência",
+      "data": "2026-03-28",
+      "palestrante": "",
+      "youtube_id": "QzbKrXNpsZ4",
+      "url": "https://www.youtube.com/watch?v=QzbKrXNpsZ4",
+      "thumbnail": "https://img.youtube.com/vi/QzbKrXNpsZ4/hqdefault.jpg",
+      "tags": [
+        "beneficência",
+        "caridade",
+        "ritual"
+      ],
+      "transcricao_status": "pendente"
+    },
+    {
+      "id": "JysWVfA3RVo",
+      "titulo": "Jacques DeMolay e os Templários",
+      "data": "2026-03-21",
+      "palestrante": "",
+      "youtube_id": "JysWVfA3RVo",
+      "url": "https://www.youtube.com/watch?v=JysWVfA3RVo",
+      "thumbnail": "https://img.youtube.com/vi/JysWVfA3RVo/hqdefault.jpg",
+      "tags": [
+        "templários",
+        "história",
+        "DeMolay"
+      ],
+      "transcricao_status": "pendente"
+    }
+  ]
+}

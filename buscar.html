@@ -6,7 +6,7 @@
 <title>Buscar — Lapidarium</title>
 <meta name="description" content="Busca no acervo do Lapidarium — vídeos, temas, símbolos, ritos e graus.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'><polygon points='42,8 78,74 6,74' fill='none' stroke='%23c9a84c' stroke-width='4'/><ellipse cx='42' cy='54' rx='12' ry='8' fill='none' stroke='%23c9a84c' stroke-width='2.5'/><circle cx='42' cy='54' r='3' fill='%23c9a84c'/></svg>">
-<link rel="stylesheet" href="assets/css/lapidarium.css">
+<link rel="stylesheet" href="lapidarium.css">
 </head>
 <body>
 <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">☀</button>
@@ -60,15 +60,15 @@
 <footer><p>Lapidarium · In Nomine GADU · Omnia Vincit Lux</p></footer>
 </div>
 
-<script src="assets/js/busca.js"></script>
-<script src="assets/js/ui.js"></script>
+<script src="busca.js"></script>
+<script src="ui.js"></script>
 <script>
 (async () => {
   const $ = (id) => document.getElementById(id);
   let filtros = {};
   await LapidariumBusca.iniciar({
-    fontes: ["dados/videos-epaminondas.json", "dados/videos-urania.json"],
-    tesauro: "dados/tesauro.json"
+    fontes: ["videos-epaminondas.json", "videos-urania.json"],
+    tesauro: "tesauro.json"
   });
   const FACETAS = [["origem","GRUPO"],["ano","ANO"],["tags","TEMAS"],["autor","PALESTRANTE"],["rito","RITO"],["grau","GRAU"]];
   const badge = (o)=> (o||"").indexOf("pamin")>=0 ? "b-ep" : "b-ur";
