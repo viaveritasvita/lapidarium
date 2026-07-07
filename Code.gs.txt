@@ -48,6 +48,7 @@ function abaDaColecao_(tipo) {
     aba.appendRow(colunasDe_(tipo));
     aba.setFrozenRows(1);
   }
+  aba.getRange(1, 1, aba.getMaxRows(), colunasDe_(tipo).length).setNumberFormat("@"); // tudo texto
   return aba;
 }
 
@@ -145,7 +146,6 @@ function doGet(e) {
       const j = JSON.parse(resp.getContentText());
       return resposta_({ ok:true, title:j.title, author_name:j.author_name });
     }
-    if (!validarCodigo_(p.codigo)) return resposta_({ ok:false, erro:"Código inválido." });
     const tipo = p.tipo || "video";
     const aba = abaDaColecao_(tipo);
     const valores = aba.getDataRange().getValues();

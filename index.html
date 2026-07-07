@@ -451,7 +451,11 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
 </footer>
 </div>
 
+<script src="config.js"></script>
 <script>
+async function lapiFetch(tipo,extra){const cfg=window.LAPIDARIUM_CONFIG;if(!cfg||!cfg.API_URL||cfg.API_URL.indexOf('COLE_AQUI')>=0)return null;try{const r=await fetch(cfg.API_URL+'?tipo='+tipo+(extra||''));if(!r.ok)return null;const j=await r.json();return(j&&j.ok&&Array.isArray(j.itens))?j.itens:null;}catch(e){return null;}}
+function lapiData(d){return(''+(d||'')).slice(0,10);}
+function lapiHora(h){const s=''+(h||'');let m=s.match(/T(\d\d:\d\d)/);if(m)return m[1];m=s.match(/^(\d\d?:\d\d)/);return m?m[1]:'';}
 // ══ LOGOS ══
 (function(){
   // Epaminondas — brasão circular
@@ -550,8 +554,17 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
   requestAnimationFrame(frame);
 })();
 
-// ══ CAROUSEL ══
-const vids=[
+// ══ CAROUSEL (ao vivo, com fallback) ══
+(async function(){
+  let vids = await lapiFetch('video');
+  if (vids && vids.length){
+    vids = vids.slice().sort((a,b)=>(''+(b.data||'')).localeCompare(''+(a.data||''))).slice(0,14).map(v=>({
+      id:v.youtube_id, t:v.titulo, d:lapiData(v.data).split('-').reverse().join('/'),
+      g:(v.origem||'').replace('Grupo de Estudos ','').replace('EpaminondasOnline','Epaminondas'),
+      b:(v.origem||'').toLowerCase().indexOf('pamin')>=0?'b-ep':'b-ur'
+    }));
+  } else {
+  const _fb=[
   {id:'WKbl-YqBAk8',t:'O Talento que a Maçonaria Perde',d:'25/04/2026',g:'Urânia',b:'b-ur'},
   {id:'DaNG-EvrwCI',t:'Ordem Shriners: A Missão Mais Nobre',d:'18/04/2026',g:'Urânia',b:'b-ur'},
   {id:'4h6b8lqTK7M',t:'Sinopse da História da Maçonaria no Brasil',d:'27/04/2025',g:'Epaminondas',b:'b-ep'},
@@ -565,17 +578,41 @@ const vids=[
   {id:'nVSdPtFdxUY',t:'A Corda de 81 Nós',d:'14/05/2025',g:'Epaminondas',b:'b-ep'},
   {id:'tykhet22-4Q',t:'LGPD na sua Vida e na Maçonaria',d:'23/04/2025',g:'Epaminondas',b:'b-ep'},
 ];
-const tr=document.getElementById('ctrack');
-[...vids,...vids].forEach(v=>{
-  tr.innerHTML+=`<div class="vc" onclick="window.open('https://youtube.com/watch?v=${v.id}','_blank')">
-    <div class="vc-thumb"><img class="vc-img" src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" loading="lazy" alt="">
-    <span class="vc-badge ${v.b}">${v.g}</span></div>
-    <div class="vc-body"><p class="vc-title">${v.t}</p><p class="vc-meta">${v.d}</p></div></div>`;
-});
+  vids=_fb;
+  }
+  const tr=document.getElementById('ctrack');
+  if(!vids.length) return;
+  [...vids,...vids].forEach(v=>{
+    tr.innerHTML+=`<div class="vc" onclick="window.open('https://youtube.com/watch?v=${v.id}','_blank')">
+      <div class="vc-thumb"><img class="vc-img" src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" loading="lazy" alt="">
+      <span class="vc-badge ${v.b}">${v.g}</span></div>
+      <div class="vc-body"><p class="vc-title">${v.t}</p><p class="vc-meta">${v.d}</p></div></div>`;
+  });
+})();
 
-// ══ AGENDA — próximas sessões (auto-atualizável) ══
-(function(){
+// ══ AGENDA — reuniões reais (ao vivo) com fallback ══
+(async function(){
   const MES=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const al=document.getElementById('agList');
+  const pad=n=>String(n).padStart(2,'0');
+  const reais = await lapiFetch('reuniao','&futuras=1');
+  if (reais && reais.length){
+    const evtsL = reais.map(e=>{ const data=lapiData(e.data), hora=lapiHora(e.hora)||'20:00';
+      return {data,hora,dt:new Date(data+'T00:00:00'),grupo:e.grupo||'',tema:e.tema||'Sessão',
+        tl:(e.grupo||'').replace('Grupo de Estudos ','').replace('EpaminondasOnline','Epaminondas'),
+        tag:(e.grupo||'').toLowerCase().indexOf('pamin')>=0?'t-ep':'t-ur'};
+    }).sort((a,b)=>a.dt-b.dt).slice(0,5);
+    evtsL.forEach(e=>{ const pp=e.data.split('-'), Y=pp[0],M=pp[1],D=pp[2]; const hh=e.hora.split(':'),h=hh[0],mi=hh[1];
+      const iniS=`${Y}${M}${D}T${pad(h)}${pad(mi)}00`;
+      const fim=new Date(Date.UTC(+Y,+M-1,+D,+h,+mi)); fim.setUTCMinutes(fim.getUTCMinutes()+90);
+      const fimS=`${fim.getUTCFullYear()}${pad(fim.getUTCMonth()+1)}${pad(fim.getUTCDate())}T${pad(fim.getUTCHours())}${pad(fim.getUTCMinutes())}00`;
+      const u=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(e.grupo+' — '+e.tema)}&dates=${iniS}/${fimS}&details=Lapidarium&ctz=America/Boa_Vista`;
+      al.innerHTML+=`<div class="ag-item"><div class="ag-date"><span class="ag-day">${D}</span><span class="ag-month">${MES[(+M)-1]}</span></div>`
+        +`<div class="ag-info"><p class="ag-evt">${e.grupo}</p><p class="ag-sub">${e.tema}${e.hora?' · '+e.hora:''}</p></div>`
+        +`<span class="ag-tag ${e.tag}">${e.tl}</span><a class="ag-cal" href="${u}" target="_blank">+ Agenda</a></div>`;
+    });
+    return;
+  }
   const now=new Date();
   // Urânia: sextas (5) · Epaminondas: quartas (3) — sessões às 20h (23:00Z)
   function proximos(wd,count){
@@ -592,8 +629,6 @@ const tr=document.getElementById('ctrack');
   const ur=proximos(5,3).map(s=>({dt:s,evt:'Grupo de Estudos Urânia',sub:'Sessão semanal de estudos',tag:'t-ur',tl:'Urânia',dur:90,tt:'Grupo de Estudos Urânia'}));
   const ep=proximos(3,3).map(s=>({dt:s,evt:'EpaminondasOnline',sub:'Sessão ao vivo',tag:'t-ep',tl:'Epaminondas',dur:90,tt:'EpaminondasOnline — Sessão ao vivo'}));
   const evts=[...ur,...ep].sort((a,b)=>a.dt-b.dt).slice(0,4);
-  const al=document.getElementById('agList');
-  const pad=n=>String(n).padStart(2,'0');
   const fmt=d=>`${d.getUTCFullYear()}${pad(d.getUTCMonth()+1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}00Z`;
   evts.forEach(e=>{
     const end=new Date(e.dt.getTime()+e.dur*60000);

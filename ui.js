@@ -65,3 +65,17 @@ function toggleTheme(){
   }
   if(document.readyState!=='loading')init();else document.addEventListener('DOMContentLoaded',init);
 })();
+
+// ══ LEITURA DA API (planilha via Apps Script) ══
+async function lapiFetch(tipo, extra){
+  const cfg = window.LAPIDARIUM_CONFIG;
+  if (!cfg || !cfg.API_URL || cfg.API_URL.indexOf("COLE_AQUI") >= 0) return null;
+  try {
+    const r = await fetch(cfg.API_URL + "?tipo=" + tipo + (extra || ""));
+    if (!r.ok) return null;
+    const j = await r.json();
+    return (j && j.ok && Array.isArray(j.itens)) ? j.itens : null;
+  } catch(e){ return null; }
+}
+function lapiData(d){ return ("" + (d||"")).slice(0,10); }              // ISO ou yyyy-mm-dd -> yyyy-mm-dd
+function lapiHora(h){ const s=""+(h||""); let m=s.match(/T(\d\d:\d\d)/); if(m) return m[1]; m=s.match(/^(\d\d?:\d\d)/); return m?m[1]:""; }

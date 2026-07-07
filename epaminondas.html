@@ -34,20 +34,23 @@
 <footer><p>Lapidarium · In Nomine GADU · Omnia Vincit Lux</p></footer>
 </div>
 
+<script src="config.js"></script>
 <script src="ui.js"></script>
 <script>
 (async () => {
   const grade = document.getElementById('grade');
   try {
-    const dados = await (await fetch('videos-epaminondas.json')).json();
-    const vids = (dados.videos||[]).slice().sort((a,b)=>(b.data||'').localeCompare(a.data||''));
+    let vids = await lapiFetch('video');
+    if (vids && vids.length) { vids = vids.filter(v => (v.origem||'').toLowerCase().indexOf('pamin')>=0); }
+    else { const dados = await (await fetch('videos-epaminondas.json')).json(); vids = dados.videos||[]; }
+    vids = vids.slice().sort((a,b)=>(''+(b.data||'')).localeCompare(''+(a.data||'')));
     if (!vids.length) { grade.innerHTML = "<p class='vazio'>Acervo em preparação.</p>"; return; }
     grade.innerHTML = `<div class="vgrid">` + vids.map(v => `
       <a class="vc" href="${v.url||'#'}" target="_blank" rel="noopener">
         <div class="vc-thumb"><img class="vc-img" src="${v.thumbnail||('https://img.youtube.com/vi/'+v.youtube_id+'/hqdefault.jpg')}" alt="" loading="lazy">
           <span class="vc-badge b-ep">Epaminondas</span></div>
         <div class="vc-body"><p class="vc-title">${v.titulo||''}</p>
-          <p class="vc-meta">${(v.data||'').split('-').reverse().join('/')}${v.palestrante?' · '+v.palestrante:''}</p>
+          <p class="vc-meta">${lapiData(v.data).split('-').reverse().join('/')}${v.palestrante?' · '+v.palestrante:''}</p>
           ${(v.tags&&v.tags.length)?`<div class="vc-tags">${v.tags.slice(0,3).map(t=>`<span class="vtag">${t}</span>`).join('')}</div>`:''}
         </div></a>`).join('') + `</div>
       <p class="expansao" style="text-align:center">Acervo em expansão — em breve os ~400 vídeos completos e a busca por transcrição.</p>`;

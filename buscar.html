@@ -81,16 +81,19 @@
 </div>
 <footer><p>Lapidarium · In Nomine GADU · Omnia Vincit Lux</p></footer>
 </div>
+<script src="config.js"></script>
 <script src="busca.js"></script>
 <script src="ui.js"></script>
 <script>
 (async () => {
   const $ = (id) => document.getElementById(id);
   let filtros = {};
-  await LapidariumBusca.iniciar({
-    fontes: ["videos-epaminondas.json", "videos-urania.json"],
-    tesauro: "tesauro.json"
-  });
+  const vivos = await lapiFetch("video");
+  await LapidariumBusca.iniciar(
+    (vivos && vivos.length)
+      ? { itens: vivos, tesauro: "tesauro.json" }
+      : { fontes: ["videos-epaminondas.json", "videos-urania.json"], tesauro: "tesauro.json" }
+  );
   const FACETAS = [["ano","ANO"],["tags","TEMAS"],["autor","PALESTRANTE"],["rito","RITO"],["grau","GRAU"]];
   const badge = (o) => (o||"").indexOf("pamin")>=0 ? "b-ep" : "b-ur";
   const dataBR = (d) => (d||"").slice(0,10).split('-').reverse().join('/');

@@ -209,6 +209,12 @@ const LapidariumBusca = (() => {
   async function iniciar(config) {
     const fontes = config.fontes || [];
     if (config.tesauro) carregarTesauro(await carregarJSON(config.tesauro));
+    if (Array.isArray(config.itens)) {
+      config.itens.forEach(v => {
+        const item = Object.assign({ tipo: v.tipo || "video", origem: v.origem || "", autor: v.palestrante || v.autor || "" }, v);
+        const id = documentos.length; documentos.push(item); indexarDocumento(item, id);
+      });
+    }
     for (const url of fontes) {
       try {
         const dados = await carregarJSON(url);
