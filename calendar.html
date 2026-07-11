@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendário — Lapidarium</title>
+<meta name="description" content="Próximas reuniões e sessões dos grupos de estudo do Lapidarium.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'><polygon points='42,8 78,74 6,74' fill='none' stroke='%23c9a84c' stroke-width='4'/><ellipse cx='42' cy='54' rx='12' ry='8' fill='none' stroke='%23c9a84c' stroke-width='2.5'/><circle cx='42' cy='54' r='3' fill='%23c9a84c'/></svg>">
+<link rel="stylesheet" href="lapidarium.css">
+<style>
+  .cal-list{display:flex;flex-direction:column;gap:10px;max-width:740px;margin:0 auto 42px}
+  .cal-item{display:flex;align-items:center;gap:16px;border:1px solid var(--border);padding:14px 18px;background:var(--panel);transition:border-color .3s}
+  .cal-item:hover{border-color:var(--border-h)}
+  .cal-date{text-align:center;min-width:52px;border-right:1px solid var(--border);padding-right:15px}
+  .cal-day{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:700;color:var(--gold);line-height:1;display:block}
+  .cal-month{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;color:var(--text-d);text-transform:uppercase;display:block;margin-top:3px}
+  .cal-info{flex:1}
+  .cal-evt{font-family:'Cinzel',serif;font-size:.85rem;color:var(--text);letter-spacing:.03em;margin-bottom:2px}
+  .cal-sub{font-size:.9rem;color:var(--text-d);font-style:italic}
+  .cal-tag{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.12em;padding:3px 8px;border:1px solid;text-transform:uppercase;white-space:nowrap}
+  .t-ep{border-color:rgba(184,115,51,.4);color:var(--copper-l)}
+  .t-ur{border-color:rgba(74,127,168,.4);color:var(--blue-l)}
+  .cal-acts{display:flex;flex-direction:column;gap:6px}
+  .cal-btn{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:5px 10px;border:1px solid var(--border);color:var(--gold);white-space:nowrap;transition:.25s;text-align:center}
+  .cal-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.1)}
+  @media(max-width:520px){.cal-item{flex-wrap:wrap}.cal-info{flex-basis:60%}}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">☀</button>
+<div class="wrap">
+<header>
+  <a class="backlink" href="index.html">◂ Lapidarium</a>
+  <div class="delta-wrap" id="deltaWrap">
+    <div class="delta-halo"></div>
+    <svg class="delta-rays" viewBox="0 0 120 120" style="position:absolute;inset:-18px;width:calc(100% + 36px);height:calc(100% + 36px)">
+      <g transform="translate(60,60)" stroke="rgba(240,217,138,0.35)" stroke-width="0.8">
+        <line x1="0" y1="-52" x2="0" y2="-44"/><line x1="0" y1="44" x2="0" y2="52"/><line x1="-52" y1="0" x2="-44" y2="0"/><line x1="44" y1="0" x2="52" y2="0"/>
+        <line x1="-37" y1="-37" x2="-31" y2="-31"/><line x1="31" y1="-31" x2="37" y2="-37"/><line x1="-37" y1="37" x2="-31" y2="31"/><line x1="31" y1="31" x2="37" y2="37"/>
+      </g>
+    </svg>
+    <div class="delta-svg-wrap">
+      <svg viewBox="0 0 84 84" fill="none" style="width:100%;height:100%">
+        <defs>
+          <linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5e49a"/><stop offset="55%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#7a6230"/></linearGradient>
+          <radialGradient id="eyeRg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(240,217,138,0.28)"/><stop offset="100%" stop-color="rgba(201,168,76,0)"/></radialGradient>
+        </defs>
+        <polygon points="42,5 78,75 6,75" stroke="url(#dg)" stroke-width="2.2" fill="rgba(201,168,76,0.035)"/>
+        <polygon points="42,18 65,64 19,64" stroke="#c9a84c" stroke-width=".5" stroke-dasharray="2,3.5" fill="none" opacity=".25"/>
+        <ellipse id="eyeGlow" cx="42" cy="54" rx="13" ry="8.5" fill="url(#eyeRg)"/>
+        <ellipse id="eyeOutline" cx="42" cy="54" rx="12" ry="7.5" stroke="url(#dg)" stroke-width="1.3" fill="none"/>
+        <circle id="iris" cx="42" cy="54" r="5" fill="rgba(201,168,76,0.1)" stroke="url(#dg)" stroke-width="1"/>
+        <circle id="pupil" cx="42" cy="54" r="2.2" fill="url(#dg)" opacity=".92"/>
+        <circle id="spec" cx="43.2" cy="52.8" r=".7" fill="rgba(255,248,220,0.8)"/>
+      </svg>
+    </div>
+  </div>
+  <h1 class="site-name" style="font-size:clamp(1.4rem,4vw,2.2rem);letter-spacing:.4em">CALENDÁRIO</h1>
+  <p class="page-tagline">Próximas reuniões e sessões dos grupos de estudo</p>
+</header>
+<p class="sec-label">Próximas Reuniões</p>
+<main id="lista"><p class="vazio">Carregando o calendário…</p></main>
+<footer><p>Lapidarium · In Nomine GADU · Omnia Vincit Lux</p></footer>
+</div>
+<script src="config.js"></script>
+<script src="ui.js"></script>
+<script>
+(async () => {
+  const lista = document.getElementById('lista');
+  const MES=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const pad=n=>String(n).padStart(2,'0');
+  let evts = await lapiFetch('reuniao','&futuras=1');
+  if (!evts || !evts.length){ lista.innerHTML = "<p class='vazio'>Nenhuma reunião agendada no momento. Volte em breve.</p>"; return; }
+  evts = evts.map(e=>({data:lapiData(e.data),hora:lapiHora(e.hora)||'20:00',grupo:e.grupo||'',tema:e.tema||'Sessão',descricao:e.descricao||'',link:e.link||''}))
+    .sort((a,b)=>a.data.localeCompare(b.data));
+  lista.innerHTML = '<div class="cal-list">' + evts.map(e=>{
+    const pp=e.data.split('-'), Y=pp[0],M=pp[1],D=pp[2]; const hh=e.hora.split(':'),h=hh[0],mi=hh[1];
+    const iniS=`${Y}${M}${D}T${pad(h)}${pad(mi)}00`;
+    const fim=new Date(Date.UTC(+Y,+M-1,+D,+h,+mi)); fim.setUTCMinutes(fim.getUTCMinutes()+90);
+    const fimS=`${fim.getUTCFullYear()}${pad(fim.getUTCMonth()+1)}${pad(fim.getUTCDate())}T${pad(fim.getUTCHours())}${pad(fim.getUTCMinutes())}00`;
+    const gcal=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(e.grupo+' — '+e.tema)}&dates=${iniS}/${fimS}&details=${encodeURIComponent((e.descricao||'')+'\n\nLapidarium')}&ctz=America/Boa_Vista`;
+    const tag=(e.grupo||'').toLowerCase().indexOf('pamin')>=0?'t-ep':'t-ur';
+    const tl=(e.grupo||'').replace('Grupo de Estudos ','').replace('EpaminondasOnline','Epaminondas');
+    return `<div class="cal-item">
+      <div class="cal-date"><span class="cal-day">${D}</span><span class="cal-month">${MES[(+M)-1]}</span></div>
+      <div class="cal-info"><p class="cal-evt">${e.grupo}</p><p class="cal-sub">${e.tema} · ${e.hora}</p></div>
+      <span class="cal-tag ${tag}">${tl}</span>
+      <div class="cal-acts"><a class="cal-btn" href="${gcal}" target="_blank">+ Agenda</a>${e.link?`<a class="cal-btn" href="${e.link}" target="_blank">Assistir</a>`:''}</div>
+    </div>`;
+  }).join('') + '</div>';
+})();
+</script>
+</body>
+</html>
