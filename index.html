@@ -175,8 +175,14 @@ header{animation:fu .9s ease both}
 .ord-nm{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.07em;color:var(--text);text-transform:uppercase;margin-top:9px;line-height:1.25}
 .ord-or{font-size:.72rem;color:var(--text-d);font-style:italic;margin-top:2px}
 /* ── BOTÃO DE TEMA ── */
-.theme-btn{position:fixed;top:16px;right:16px;z-index:6;width:38px;height:38px;border-radius:50%;border:1px solid var(--border-h);background:rgba(0,0,0,.28);color:var(--gold);font-size:1rem;line-height:1;cursor:pointer;backdrop-filter:blur(6px);transition:all .3s;display:flex;align-items:center;justify-content:center}
-.theme-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.14)}
+.theme-btn{position:fixed;top:14px;right:14px;z-index:7;display:flex;align-items:center;gap:6px;padding:7px 13px;border-radius:20px;border:1px solid var(--border-h);background:rgba(0,0,0,.32);color:var(--gold);font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;line-height:1;cursor:pointer;backdrop-filter:blur(6px);transition:all .3s;animation:tema-chama 2.4s ease-in-out 3}
+.theme-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.16);box-shadow:0 0 15px rgba(201,168,76,.3)}
+@keyframes tema-chama{0%,100%{box-shadow:0 0 0 rgba(201,168,76,0)}50%{box-shadow:0 0 16px rgba(201,168,76,.45)}}
+.topnav{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 18px;padding:4px 0 24px}
+.topnav a{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;color:var(--text-d);text-decoration:none;text-transform:uppercase;padding:3px 1px;border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
+.topnav a:hover{color:var(--gold);border-color:var(--gold-d)}
+.topnav a.atual{color:var(--gold);border-color:var(--gold)}
+
 
 /* ── TEMA CLEAN (claro) ── */
 body.light{
@@ -213,7 +219,7 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
 </style>
 </head>
 <body>
-<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema (claro/escuro)" aria-label="Alternar tema">☀</button>
+<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema (claro/escuro)" aria-label="Alternar tema">☀ Tema</button>
 
 <!-- ══ BG ICONOGRÁFICO ══ -->
 <svg xmlns="http://www.w3.org/2000/svg"
@@ -327,10 +333,7 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
   <p class="site-tagline">Um lugar de estudo, reflexão e memória maçônica</p>
   <p class="site-lema">Lux · Sapientia · Opus</p>
   <div class="orn"><span class="ol"></span><span class="od"></span><span class="ol r"></span></div>
-  <nav>
-    <a href="#">Início</a><a class="soon">Pranchas</a><a href="calendar.html">Calendário</a>
-    <a class="soon">Glossário</a><a class="soon">Linha do Tempo</a><a href="publicar.html">Acesso Restrito</a>
-  </nav>
+  <nav class="topnav"><a href="index.html" class="atual">Início</a><a href="buscar.html">Acervo</a><a href="epaminondas.html">Epaminondas</a><a href="urania.html">Urânia</a><a href="calendar.html">Calendário</a><a href="publicar.html">Acesso Restrito</a></nav>
 </header>
 
 <div class="ai-bar">
@@ -447,7 +450,7 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
 
 <footer>
   <div class="orn" style="margin-bottom:13px"><span class="ol"></span><span class="od"></span><span class="ol r"></span></div>
-  <p>Lapidarium · In Nomine GADU · Omnia Vincit Lux</p>
+  <p>Lapidarium · In Nomine G∴A∴D∴U∴ · Omnia Vincit Lux</p>
 </footer>
 </div>
 

@@ -4,7 +4,7 @@
 function toggleTheme(){
   const l=document.body.classList.toggle('light');
   const b=document.getElementById('themeBtn');
-  if(b)b.textContent=l?'☾':'☀';
+  if(b)b.textContent=l?'☾ Tema':'☀ Tema';
 }
 
 // ══ DELTA — olho vivo (rastreio suave · deriva ociosa · piscar) ══
