@@ -36,6 +36,30 @@ const REUNIAO_COLUNAS = [
 
 function colunasDe_(tipo){ return tipo === "reuniao" ? REUNIAO_COLUNAS : COLUNAS; }
 
+const ANEXOS_FOLDER_ID = "1c0nt9U9qDuawQ-YPSSp-gu_qj0NJQ4vU"; // pasta "Materiais" no Drive
+
+// sobe os arquivos anexados para o Drive, libera o acesso e devolve "Rótulo|link"
+function salvarAnexos_(uploads) {
+  const partes = [];
+  (uploads || []).forEach(function(u) {
+    if (!u || !u.b64) return;
+    try {
+      const blob = Utilities.newBlob(Utilities.base64Decode(u.b64), u.mime || "application/octet-stream", u.filename || "arquivo");
+      const file = DriveApp.getFolderById(ANEXOS_FOLDER_ID).createFile(blob);
+      try { file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW); } catch (e) {}
+      partes.push((u.rotulo || "Material") + "|https://drive.google.com/file/d/" + file.getId() + "/view");
+    } catch (e) {}
+  });
+  return partes;
+}
+
+// junta links colados + arquivos enviados numa string só
+function montarAnexos_(item) {
+  const enviados = salvarAnexos_(item.uploads);
+  return [(item.anexos || ""), enviados.join(" ;; ")].filter(function(x){ return x; }).join(" ;; ");
+}
+
+
 /* ---------- utilidades ---------- */
 
 function abaDaColecao_(tipo) {
@@ -119,7 +143,7 @@ function doPost(e) {
         thumbnail: youtubeId ? "https://img.youtube.com/vi/" + youtubeId + "/hqdefault.jpg" : (item.thumbnail || ""),
         transcricao_status: "pendente",
         acesso: item.acesso || "publico",
-        anexos: item.anexos || "",
+        anexos: montarAnexos_(item),
         perguntas_aprofundamento: item.perguntas_aprofundamento || "",
         publicado_por: quem,
         publicado_em: agora.toISOString()
@@ -168,4 +192,10 @@ function doGet(e) {
   } catch (erro) {
     return resposta_({ ok:false, erro: String(erro) });
   }
+}
+
+/* ---------- autorização (rodar 1x no editor para conceder permissões) ---------- */
+function autorizar() {
+  UrlFetchApp.fetch('https://www.youtube.com/oembed?format=json&url=https://youtu.be/aqz-KE-bpKQ');
+  DriveApp.getFolderById(ANEXOS_FOLDER_ID).getName(); // força o escopo do Drive
 }

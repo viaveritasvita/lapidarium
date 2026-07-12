@@ -124,7 +124,7 @@
     <label>Perguntas de aprofundamento (opcional)</label>
     <textarea id="perguntas" placeholder="3 a 5 perguntas que este trabalho responde ou provoca."></textarea>
     <label>Materiais (opcional)</label>
-    <p class="nota">Preâmbulo, apresentação, anexos — cole links do Drive (com acesso "qualquer pessoa com o link"). Adicione quantos precisar.</p>
+    <p class="nota">Preâmbulo, apresentação, anexos. <b>Escolha o arquivo</b> que ele sobe sozinho para o Drive e fica ligado ao vídeo — não precisa configurar nada. (Ou cole um link, se preferir.)</p>
     <div id="materiais"></div>
     <button type="button" class="acao" style="margin-top:8px" onclick="addMaterial()">+ Adicionar material</button>
   </div>
@@ -177,6 +177,7 @@ function entrar(){
 $("btn-entrar").addEventListener("click", entrar);
 $("codigo-acesso").addEventListener("keydown", e => { if (e.key === "Enter") entrar(); });
 try { $("codigo-acesso").value = localStorage.getItem("lapidarium_codigo") || ""; } catch(e){}
+try { if($("data") && !$("data").value) $("data").value = new Date().toISOString().slice(0,10); } catch(e){}
 
 // ===== MODO =====
 document.querySelectorAll(".pm").forEach(b => b.onclick = () => {
@@ -228,17 +229,24 @@ $("origem").addEventListener("change", () => $("origem-outro").classList.toggle(
 // ===== MATERIAIS =====
 function addMaterial(){
   const div=document.createElement('div');
-  div.className='mat-row'; div.style.cssText='display:flex;gap:8px;margin-top:8px';
+  div.className='mat-row'; div.style.cssText='display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center;border:1px solid var(--border);padding:8px;background:rgba(255,255,255,.02)';
   div.innerHTML='<select class="mat-r" style="flex:0 0 140px"><option>Preâmbulo</option><option>Apresentação</option><option>Anexo</option><option>Prancha</option><option>Outro</option></select>'
-    +'<input class="mat-u" type="url" placeholder="Link do Drive/arquivo" style="flex:1">'
+    +'<input class="mat-f" type="file" style="flex:1 1 200px">'
+    +'<input class="mat-u" type="url" placeholder="ou cole um link" style="flex:1 1 160px">'
     +'<button type="button" class="acao" style="flex:0 0 auto" onclick="this.parentNode.remove()">×</button>';
   $("materiais").appendChild(div);
 }
-function coletarMateriais(){
-  return [...document.querySelectorAll('.mat-row')].map(r=>{
-    const rot=r.querySelector('.mat-r').value; const u=(r.querySelector('.mat-u').value||'').trim();
-    return u ? (rot+'|'+u) : null;
-  }).filter(Boolean).join(' ;; ');
+function fileToB64(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res((r.result+'').split(',')[1]); r.onerror=rej; r.readAsDataURL(file); }); }
+async function coletarMateriais(){
+  const links=[], uploads=[];
+  for(const r of [...document.querySelectorAll('.mat-row')]){
+    const rot=r.querySelector('.mat-r').value;
+    const f=r.querySelector('.mat-f').files[0];
+    const u=(r.querySelector('.mat-u').value||'').trim();
+    if(f){ uploads.push({rotulo:rot, filename:f.name, mime:f.type||'application/octet-stream', b64:await fileToB64(f)}); }
+    else if(u){ links.push(rot+'|'+u); }
+  }
+  return { links: links.join(' ;; '), uploads };
 }
 
 // ===== AGENDA / ENVIO =====
@@ -263,7 +271,8 @@ $("formulario").addEventListener("submit", async (ev) => {
     corpo = { codigo:codigoAtivo, item:{ tipo:"video", url:$("url").value.trim(), titulo:$("titulo").value.trim(),
       descricao:$("descricao").value.trim(), autor:$("autor").value.trim(), data:$("data").value, origem:origem,
       rito:$("rito").value.trim(), grau:$("grau").value.trim(),
-      tags:$("tags").value.split(";").map(s=>s.trim()).filter(Boolean), perguntas_aprofundamento:$("perguntas").value.trim(), anexos:coletarMateriais() } };
+      tags:$("tags").value.split(";").map(s=>s.trim()).filter(Boolean), perguntas_aprofundamento:$("perguntas").value.trim() } };
+    const _mat=await coletarMateriais(); corpo.item.anexos=_mat.links; corpo.item.uploads=_mat.uploads; if(_mat.uploads.length) $("botao").textContent="ENVIANDO ARQUIVOS…";
   } else {
     corpo = { codigo:codigoAtivo, item:{ tipo:"reuniao", grupo:$("r-grupo").value, data:$("r-data").value,
       hora:$("r-hora").value, tema:$("r-tema").value.trim(), descricao:$("r-descricao").value.trim(), link:$("r-link").value.trim() } };
