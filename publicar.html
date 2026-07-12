@@ -90,6 +90,7 @@
 <div class="pmode">
   <button class="pm ativa" data-m="video">Publicar Vídeo</button>
   <button class="pm" data-m="reuniao">Próxima Reunião</button>
+  <button class="pm" data-m="editar">Editar Vídeo</button>
 </div>
 <form id="formulario">
   <div id="bloco-video">
@@ -148,6 +149,11 @@
     <textarea id="r-descricao" placeholder="Detalhes da sessão."></textarea>
     <p class="nota">A próxima reunião cadastrada aqui alimenta a agenda da home. Para corrigir, cadastre de novo com a data certa.</p>
   </div>
+  <div id="bloco-editar" class="oculto">
+    <label>Buscar vídeo para editar</label>
+    <input id="edit-busca" type="search" placeholder="Título ou palestrante…" autocomplete="off" oninput="renderListaEdicao()">
+    <div id="edit-lista" style="margin-top:10px;max-height:300px;overflow:auto"></div>
+  </div>
   <button type="submit" id="botao">LANÇAR NO ACERVO</button>
   <div id="aviso"></div>
   <div class="acoes" id="acoes"></div>
@@ -164,6 +170,7 @@ const CONFIG = window.LAPIDARIUM_CONFIG || { API_URL: "COLE_AQUI_A_URL_DO_APPS_S
 const $ = (id) => document.getElementById(id);
 let modo = "video";
 let codigoAtivo = "";
+let editandoId = null, _videosEdit = [];
 
 // ===== PORTÃO =====
 function entrar(){
@@ -182,12 +189,46 @@ try { if($("data") && !$("data").value) $("data").value = new Date().toISOString
 // ===== MODO =====
 document.querySelectorAll(".pm").forEach(b => b.onclick = () => {
   document.querySelectorAll(".pm").forEach(x=>x.classList.remove("ativa"));
-  b.classList.add("ativa"); modo = b.dataset.m;
+  b.classList.add("ativa"); modo = b.dataset.m; editandoId = null;
+  $("bloco-editar").classList.toggle("oculto", modo!=="editar");
   $("bloco-video").classList.toggle("oculto", modo!=="video");
   $("bloco-reuniao").classList.toggle("oculto", modo!=="reuniao");
-  $("botao").textContent = modo==="video" ? "LANÇAR NO ACERVO" : "SALVAR PRÓXIMA REUNIÃO";
+  $("botao").style.display = (modo==="editar") ? "none" : "block";
+  $("botao").textContent = modo==="video" ? "LANÇAR NO ACERVO" : (modo==="reuniao" ? "SALVAR PRÓXIMA REUNIÃO" : "SALVAR ALTERAÇÕES");
   $("aviso").className=""; $("acoes").innerHTML="";
+  if(modo==="editar") carregarListaEdicao();
 });
+
+async function carregarListaEdicao(){
+  $("edit-lista").innerHTML='<p class="nota">Carregando acervo…</p>';
+  _videosEdit = await lapiFetch("video") || [];
+  renderListaEdicao();
+}
+function renderListaEdicao(){
+  const q=($("edit-busca").value||"").toLowerCase();
+  const arr=_videosEdit.filter(v=> (((v.titulo||"")+" "+(v.autor||v.palestrante||"")).toLowerCase().indexOf(q)>=0))
+    .sort((a,b)=>(""+(b.data||"")).localeCompare(""+(a.data||""))).slice(0,50);
+  $("edit-lista").innerHTML = arr.length ? arr.map(v=>
+    '<div class="edit-item" onclick="selecionarEdicao(\''+(v.id||"")+'\')" style="padding:9px 11px;border:1px solid var(--border);margin-bottom:6px;cursor:pointer">'
+    +'<b style="color:var(--text)">'+(v.titulo||"(sem título)")+'</b><br><span style="color:var(--text-d);font-size:.85rem">'+[(v.origem||"").replace("Grupo de Estudos ",""),v.autor||v.palestrante||"",lapiData(v.data)].filter(Boolean).join(" · ")+'</span></div>'
+  ).join("") : '<p class="nota">Nenhum vídeo encontrado.</p>';
+}
+function selecionarEdicao(id){
+  const v=_videosEdit.find(x=>(x.id||"")===id); if(!v) return;
+  editandoId=id;
+  $("url").value=v.url||""; $("titulo").value=v.titulo||""; $("descricao").value=v.descricao||"";
+  $("autor").value=v.autor||v.palestrante||""; $("data").value=lapiData(v.data)||"";
+  const og=v.origem||""; if(og==="EpaminondasOnline"||og==="Grupo de Estudos Urânia") $("origem").value=og;
+  $("rito").value=v.rito||""; $("grau").value=v.grau||"";
+  $("tags").value=Array.isArray(v.tags)?v.tags.join("; "):(v.tags||"");
+  $("perguntas").value=v.perguntas_aprofundamento||"";
+  $("materiais").innerHTML="";
+  (""+(v.anexos||"")).split(" ;; ").map(x=>x.trim()).filter(Boolean).forEach(x=>{const pp=x.split("|"); addMaterial((pp[0]||"").trim(),(pp[1]||"").trim());});
+  $("bloco-editar").classList.add("oculto");
+  $("bloco-video").classList.remove("oculto");
+  $("botao").style.display="block"; $("botao").textContent="SALVAR ALTERAÇÕES";
+  $("aviso").className=""; $("acoes").innerHTML=""; window.scrollTo(0,0);
+}
 
 // ===== AUTO-PREENCHER (oEmbed) =====
 let _tBusca;
@@ -227,7 +268,7 @@ window.__preencher = function(){
 $("origem").addEventListener("change", () => $("origem-outro").classList.toggle("oculto", $("origem").value!=="outro"));
 
 // ===== MATERIAIS =====
-function addMaterial(){
+function addMaterial(rot,url){
   const div=document.createElement('div');
   div.className='mat-row'; div.style.cssText='display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center;border:1px solid var(--border);padding:8px;background:rgba(255,255,255,.02)';
   div.innerHTML='<select class="mat-r" style="flex:0 0 140px"><option>Preâmbulo</option><option>Apresentação</option><option>Anexo</option><option>Prancha</option><option>Outro</option></select>'
@@ -235,6 +276,8 @@ function addMaterial(){
     +'<input class="mat-u" type="url" placeholder="ou cole um link" style="flex:1 1 160px">'
     +'<button type="button" class="acao" style="flex:0 0 auto" onclick="this.parentNode.remove()">×</button>';
   $("materiais").appendChild(div);
+  if(typeof rot==="string" && rot){ const sel=div.querySelector('.mat-r'); if(![...sel.options].some(o=>o.value===rot)){ const op=document.createElement('option'); op.textContent=rot; sel.appendChild(op); } sel.value=rot; }
+  if(url){ div.querySelector('.mat-u').value=url; }
 }
 function fileToB64(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res((r.result+'').split(',')[1]); r.onerror=rej; r.readAsDataURL(file); }); }
 async function coletarMateriais(){
@@ -243,6 +286,7 @@ async function coletarMateriais(){
     const rot=r.querySelector('.mat-r').value;
     const f=r.querySelector('.mat-f').files[0];
     const u=(r.querySelector('.mat-u').value||'').trim();
+    if(f && f.size>20*1024*1024){ throw new Error('O arquivo "'+f.name+'" passa de 20 MB. Suba no Drive e use o campo "ou cole um link".'); }
     if(f){ uploads.push({rotulo:rot, filename:f.name, mime:f.type||'application/octet-stream', b64:await fileToB64(f)}); }
     else if(u){ links.push(rot+'|'+u); }
   }
@@ -266,13 +310,13 @@ $("formulario").addEventListener("submit", async (ev) => {
   const aviso=$("aviso"); aviso.className=""; aviso.textContent=""; $("acoes").innerHTML="";
   $("botao").disabled=true; const rot=$("botao").textContent; $("botao").textContent="LAPIDANDO…";
   let corpo;
-  if (modo==="video"){
+  if (modo==="video" || editandoId){
     const origem = $("origem").value==="outro" ? $("origem-outro").value.trim() : $("origem").value;
     corpo = { codigo:codigoAtivo, item:{ tipo:"video", url:$("url").value.trim(), titulo:$("titulo").value.trim(),
       descricao:$("descricao").value.trim(), autor:$("autor").value.trim(), data:$("data").value, origem:origem,
       rito:$("rito").value.trim(), grau:$("grau").value.trim(),
       tags:$("tags").value.split(";").map(s=>s.trim()).filter(Boolean), perguntas_aprofundamento:$("perguntas").value.trim() } };
-    const _mat=await coletarMateriais(); corpo.item.anexos=_mat.links; corpo.item.uploads=_mat.uploads; if(_mat.uploads.length) $("botao").textContent="ENVIANDO ARQUIVOS…";
+    const _mat=await coletarMateriais(); corpo.item.anexos=_mat.links; corpo.item.uploads=_mat.uploads; if(_mat.uploads.length) $("botao").textContent="ENVIANDO ARQUIVOS…"; if(editandoId){ corpo.acao="atualizar"; corpo.item.id=editandoId; }
   } else {
     corpo = { codigo:codigoAtivo, item:{ tipo:"reuniao", grupo:$("r-grupo").value, data:$("r-data").value,
       hora:$("r-hora").value, tema:$("r-tema").value.trim(), descricao:$("r-descricao").value.trim(), link:$("r-link").value.trim() } };
@@ -301,7 +345,7 @@ $("formulario").addEventListener("submit", async (ev) => {
         '<a class="acao" href="https://api.whatsapp.com/send?text='+encodeURIComponent(msg)+'" target="_blank">Compartilhar</a>'+
         '<button class="acao" type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText(window.__msg);this.textContent=\'Copiado\'">Copiar convite</button>';
     }
-    $("formulario").reset(); $("previa").style.display="none"; $("sugestao").classList.add("oculto"); $("materiais").innerHTML="";
+    $("formulario").reset(); $("previa").style.display="none"; $("sugestao").classList.add("oculto"); $("materiais").innerHTML=""; editandoId=null;
   } catch (erro){ aviso.className="erro"; aviso.textContent="✕ "+erro.message; }
   finally { $("botao").disabled=false; $("botao").textContent=rot; }
 });

@@ -106,6 +106,8 @@ function doPost(e) {
     const quem = validarCodigo_(corpo.codigo);
     if (!quem) return resposta_({ ok:false, erro:"Código de publicação inválido." });
 
+    if (corpo.acao === "atualizar") return atualizarItem_(corpo, quem);
+
     const item = corpo.item || {};
     const tipo = item.tipo || "video";
     const aba = abaDaColecao_(tipo);
@@ -159,6 +161,30 @@ function doPost(e) {
   } catch (erro) {
     return resposta_({ ok:false, erro: String(erro) });
   }
+}
+
+/* ---------- editar item existente ---------- */
+function atualizarItem_(corpo, quem) {
+  const item = corpo.item || {};
+  const tipo = item.tipo || "video";
+  const aba = abaDaColecao_(tipo);
+  const dados = aba.getDataRange().getValues();
+  const cab = dados[0];
+  const idCol = cab.indexOf("id");
+  var linha = -1;
+  for (var i = 1; i < dados.length; i++) { if (dados[i][idCol] === item.id) { linha = i; break; } }
+  if (linha < 0) return resposta_({ ok:false, erro:"Vídeo não encontrado para editar." });
+  var novos = {};
+  for (var k in item) novos[k] = item[k];
+  novos.anexos = montarAnexos_(item);
+  cab.forEach(function(c, ci) {
+    if (novos[c] !== undefined && c !== "id" && c !== "tipo" && c !== "publicado_em") {
+      var val = novos[c];
+      if (Object.prototype.toString.call(val) === "[object Array]") val = val.join("; ");
+      aba.getRange(linha + 1, ci + 1).setValue(val);
+    }
+  });
+  return resposta_({ ok:true, id:item.id, mensagem:"Vídeo atualizado por " + quem + "." });
 }
 
 /* ---------- catálogo (GET) — sincronizar.py e agenda do site ---------- */
