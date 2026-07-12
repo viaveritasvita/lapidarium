@@ -46,7 +46,7 @@
     vids = vids.slice().sort((a,b)=>(''+(b.data||'')).localeCompare(''+(a.data||'')));
     if (!vids.length) { grade.innerHTML = "<p class='vazio'>Acervo em preparação.</p>"; return; }
     grade.innerHTML = `<div class="vgrid">` + vids.map(v => `
-      <a class="vc" href="${v.url||'#'}" target="_blank" rel="noopener">
+      <a class="vc" href="video.html?v=${v.youtube_id||''}">
         <div class="vc-thumb"><img class="vc-img" src="${v.thumbnail||('https://img.youtube.com/vi/'+v.youtube_id+'/hqdefault.jpg')}" alt="" loading="lazy">
           <span class="vc-badge b-ur">Urânia</span></div>
         <div class="vc-body"><p class="vc-title">${v.titulo||''}</p>

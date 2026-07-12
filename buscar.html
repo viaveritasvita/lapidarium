@@ -109,7 +109,7 @@
     } else {
       let html = '<p class="contagem">'+r.total+' '+(r.total===1?"video":"videos")+'</p><div class="vgrid">';
       r.resultados.forEach(({item}) => {
-        html += '<a class="vc" href="'+(item.url||'#')+'" target="_blank" rel="noopener">'
+        html += '<a class="vc" href="video.html?v='+(item.youtube_id||"")+'">'
           + '<div class="vc-thumb">'+(item.thumbnail?'<img class="vc-img" src="'+item.thumbnail+'" alt="" loading="lazy">':'')
           + '<span class="vc-badge '+badge(item.origem)+'">'+(item.origem||'').replace('Grupo de Estudos ','')+'</span></div>'
           + '<div class="vc-body"><p class="vc-title">'+(item.titulo||"(sem titulo)")+'</p>'

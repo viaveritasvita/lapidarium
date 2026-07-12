@@ -27,7 +27,7 @@ const COLECOES = {
 const COLUNAS = [
   "id","tipo","titulo","descricao","autor","data","origem","rito","grau","ordem",
   "tags","url","youtube_id","thumbnail","transcricao_status","acesso",
-  "perguntas_aprofundamento","publicado_por","publicado_em"
+  "perguntas_aprofundamento","publicado_por","publicado_em","anexos"
 ];
 
 const REUNIAO_COLUNAS = [
@@ -48,7 +48,10 @@ function abaDaColecao_(tipo) {
     aba.appendRow(colunasDe_(tipo));
     aba.setFrozenRows(1);
   }
-  aba.getRange(1, 1, aba.getMaxRows(), colunasDe_(tipo).length).setNumberFormat("@"); // tudo texto
+  var _cols = colunasDe_(tipo);
+  var _cab = aba.getRange(1, 1, 1, _cols.length).getValues()[0];
+  _cols.forEach(function(c, i){ if (_cab[i] !== c) aba.getRange(1, i+1).setValue(c); }); // adiciona colunas novas
+  aba.getRange(1, 1, aba.getMaxRows(), _cols.length).setNumberFormat("@"); // tudo texto
   return aba;
 }
 
@@ -116,6 +119,7 @@ function doPost(e) {
         thumbnail: youtubeId ? "https://img.youtube.com/vi/" + youtubeId + "/hqdefault.jpg" : (item.thumbnail || ""),
         transcricao_status: "pendente",
         acesso: item.acesso || "publico",
+        anexos: item.anexos || "",
         perguntas_aprofundamento: item.perguntas_aprofundamento || "",
         publicado_por: quem,
         publicado_em: agora.toISOString()

@@ -123,6 +123,10 @@
     </div>
     <label>Perguntas de aprofundamento (opcional)</label>
     <textarea id="perguntas" placeholder="3 a 5 perguntas que este trabalho responde ou provoca."></textarea>
+    <label>Materiais (opcional)</label>
+    <p class="nota">Preâmbulo, apresentação, anexos — cole links do Drive (com acesso "qualquer pessoa com o link"). Adicione quantos precisar.</p>
+    <div id="materiais"></div>
+    <button type="button" class="acao" style="margin-top:8px" onclick="addMaterial()">+ Adicionar material</button>
   </div>
   <div id="bloco-reuniao" class="oculto">
     <div class="linha">
@@ -221,6 +225,22 @@ window.__preencher = function(){
 };
 $("origem").addEventListener("change", () => $("origem-outro").classList.toggle("oculto", $("origem").value!=="outro"));
 
+// ===== MATERIAIS =====
+function addMaterial(){
+  const div=document.createElement('div');
+  div.className='mat-row'; div.style.cssText='display:flex;gap:8px;margin-top:8px';
+  div.innerHTML='<select class="mat-r" style="flex:0 0 140px"><option>Preâmbulo</option><option>Apresentação</option><option>Anexo</option><option>Prancha</option><option>Outro</option></select>'
+    +'<input class="mat-u" type="url" placeholder="Link do Drive/arquivo" style="flex:1">'
+    +'<button type="button" class="acao" style="flex:0 0 auto" onclick="this.parentNode.remove()">×</button>';
+  $("materiais").appendChild(div);
+}
+function coletarMateriais(){
+  return [...document.querySelectorAll('.mat-row')].map(r=>{
+    const rot=r.querySelector('.mat-r').value; const u=(r.querySelector('.mat-u').value||'').trim();
+    return u ? (rot+'|'+u) : null;
+  }).filter(Boolean).join(' ;; ');
+}
+
 // ===== AGENDA / ENVIO =====
 function pad(n){return String(n).padStart(2,'0');}
 function linkAgenda(grupo, data, hora, tema, descricao){
@@ -243,7 +263,7 @@ $("formulario").addEventListener("submit", async (ev) => {
     corpo = { codigo:codigoAtivo, item:{ tipo:"video", url:$("url").value.trim(), titulo:$("titulo").value.trim(),
       descricao:$("descricao").value.trim(), autor:$("autor").value.trim(), data:$("data").value, origem:origem,
       rito:$("rito").value.trim(), grau:$("grau").value.trim(),
-      tags:$("tags").value.split(";").map(s=>s.trim()).filter(Boolean), perguntas_aprofundamento:$("perguntas").value.trim() } };
+      tags:$("tags").value.split(";").map(s=>s.trim()).filter(Boolean), perguntas_aprofundamento:$("perguntas").value.trim(), anexos:coletarMateriais() } };
   } else {
     corpo = { codigo:codigoAtivo, item:{ tipo:"reuniao", grupo:$("r-grupo").value, data:$("r-data").value,
       hora:$("r-hora").value, tema:$("r-tema").value.trim(), descricao:$("r-descricao").value.trim(), link:$("r-link").value.trim() } };
@@ -272,7 +292,7 @@ $("formulario").addEventListener("submit", async (ev) => {
         '<a class="acao" href="https://api.whatsapp.com/send?text='+encodeURIComponent(msg)+'" target="_blank">Compartilhar</a>'+
         '<button class="acao" type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText(window.__msg);this.textContent=\'Copiado\'">Copiar convite</button>';
     }
-    $("formulario").reset(); $("previa").style.display="none"; $("sugestao").classList.add("oculto");
+    $("formulario").reset(); $("previa").style.display="none"; $("sugestao").classList.add("oculto"); $("materiais").innerHTML="";
   } catch (erro){ aviso.className="erro"; aviso.textContent="✕ "+erro.message; }
   finally { $("botao").disabled=false; $("botao").textContent=rot; }
 });

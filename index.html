@@ -588,7 +588,7 @@ function lapiHora(h){const s=''+(h||'');let m=s.match(/T(\d\d:\d\d)/);if(m)retur
   const tr=document.getElementById('ctrack');
   if(!vids.length) return;
   [...vids,...vids].forEach(v=>{
-    tr.innerHTML+=`<div class="vc" onclick="window.open('https://youtube.com/watch?v=${v.id}','_blank')">
+    tr.innerHTML+=`<div class="vc" onclick="location.href='video.html?v=${v.id}'">
       <div class="vc-thumb"><img class="vc-img" src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" loading="lazy" alt="">
       <span class="vc-badge ${v.b}">${v.g}</span></div>
       <div class="vc-body"><p class="vc-title">${v.t}</p><p class="vc-meta">${v.d}</p></div></div>`;
