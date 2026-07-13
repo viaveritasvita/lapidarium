@@ -1,0 +1,4 @@
+# PDFs das pranchas ficam no Google Drive (pasta Materiais), não no repo
+*.pdf
+# Índice local de trabalho
+_ÍNDICE.md
