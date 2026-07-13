@@ -3,145 +3,200 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buscar — Lapidarium</title>
-<meta name="description" content="Busca no acervo do Lapidarium.">
+<title>Acervo · LAPIDARIUM</title>
+<meta name="description" content="Busca no acervo maçônico do Lapidarium — vídeos e pranchas dos Grupos de Estudos Urânia e EpaminondasOnline.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'><polygon points='42,8 78,74 6,74' fill='none' stroke='%23c9a84c' stroke-width='4'/><ellipse cx='42' cy='54' rx='12' ry='8' fill='none' stroke='%23c9a84c' stroke-width='2.5'/><circle cx='42' cy='54' r='3' fill='%23c9a84c'/></svg>">
-<link rel="stylesheet" href="lapidarium.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
-  .grptoggle{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px;justify-content:center}
-  .gt{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-d);background:transparent;border:1px solid var(--border);padding:7px 16px;cursor:pointer;transition:all .25s}
-  .gt:hover{color:var(--text);border-color:var(--border-h)}
-  .gt.ativa{color:var(--s1);background:var(--gold);border-color:var(--gold);font-weight:600}
-  .chips-busca{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0 2px}
-  .chipb{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.1em;border:1px solid rgba(201,168,76,.28);color:#c2b189;padding:4px 10px;cursor:pointer;text-transform:uppercase;background:rgba(201,168,76,.05);transition:all .25s}
-  .chipb:hover{border-color:var(--gold);color:var(--gold-l)}
-  .limpar{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.14em;color:var(--text-d);text-transform:uppercase;cursor:pointer;border:none;background:none;margin-left:10px}
-  .limpar:hover{color:var(--gold)}
-  body.light .gt.ativa{color:#fff}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#c9a84c;--gold-l:#f0d98a;--gold-d:#7a6230;
+  --copper:#b87333;--copper-l:#d4905a;
+  --blue:#4a7fa8;--blue-l:#6ba3cc;
+  --s1:#171510;--s2:#1e1c14;--s3:#252118;
+  --text:#e0d0b0;--text-d:#9a8a6a;--text-dd:#524a3c;
+  --border:rgba(201,168,76,0.13);--border-h:rgba(201,168,76,0.34);
+}
+body{background:var(--s1);color:var(--text);font-family:'EB Garamond',serif;min-height:100vh;padding:0 0 60px}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+header{text-align:center;padding:34px 0 6px;border-bottom:1px solid var(--border)}
+.home{display:inline-flex;align-items:center;gap:7px;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.22em;color:var(--text-d);text-transform:uppercase;margin-bottom:16px;transition:color .3s}
+.home:hover{color:var(--gold)}
+.title{font-family:'Cinzel',serif;font-size:clamp(1.5rem,4vw,2.3rem);font-weight:700;letter-spacing:.22em;background:linear-gradient(170deg,#f5e49a,var(--gold) 45%,#8a6820 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{font-style:italic;color:var(--text-d);font-size:.95rem;margin-top:4px}
+/* search */
+.searchbar{display:flex;gap:9px;margin:26px 0 14px;flex-wrap:wrap}
+.searchbar input{flex:1;min-width:220px;background:var(--s2);border:1px solid var(--border-h);color:var(--text);font-family:'EB Garamond',serif;font-size:1rem;padding:12px 16px;border-radius:2px;outline:none}
+.searchbar input:focus{border-color:var(--gold-d)}
+.searchbar input::placeholder{color:var(--text-dd)}
+/* filter rows */
+.filters{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
+.frow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.flabel{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.18em;color:var(--text-dd);text-transform:uppercase;min-width:64px}
+.chip{background:var(--s2);border:1px solid var(--border);color:var(--text-d);font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.09em;padding:6px 13px;border-radius:20px;cursor:pointer;transition:.25s;text-transform:uppercase}
+.chip:hover{border-color:var(--border-h);color:var(--text)}
+.chip.on{background:linear-gradient(160deg,var(--gold),var(--gold-d));color:#1a1509;border-color:var(--gold);font-weight:600}
+.chip.on.ur{background:linear-gradient(160deg,var(--blue-l),#2f5878);color:#0c1620;border-color:var(--blue-l)}
+.chip.on.ep{background:linear-gradient(160deg,var(--copper-l),#7a4a1e);color:#1a0f06;border-color:var(--copper-l)}
+select.chip{-webkit-appearance:none;appearance:none;padding-right:26px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M1 2l3 3 3-3' stroke='%239a8a6a' fill='none' stroke-width='1.2'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.count{color:var(--text-dd);font-size:.85rem;margin:16px 2px 12px;font-style:italic}
+.count b{color:var(--gold);font-style:normal}
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:16px}
+.card{background:var(--s2);border:1px solid var(--border);border-radius:3px;overflow:hidden;display:flex;flex-direction:column;transition:.25s}
+.card:hover{border-color:var(--border-h);transform:translateY(-2px)}
+.thumb{position:relative;aspect-ratio:16/9;background:var(--s3);overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) brightness(.86)}
+.badge{position:absolute;top:8px;left:8px;font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.1em;padding:3px 9px;border-radius:12px;text-transform:uppercase;backdrop-filter:blur(3px)}
+.b-ur{background:rgba(74,127,168,.9);color:#fff}
+.b-ep{background:rgba(184,115,51,.9);color:#fff}
+.play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:.25s}
+.card:hover .play{opacity:1}
+.play svg{width:46px;height:46px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.prancha-thumb{aspect-ratio:16/9;background:linear-gradient(150deg,var(--s3),#1a1710);display:flex;align-items:center;justify-content:center;position:relative}
+.prancha-thumb .doc{font-size:2.4rem;opacity:.5}
+.body{padding:12px 13px 13px;display:flex;flex-direction:column;flex:1}
+.c-title{font-family:'Cinzel',serif;font-size:.82rem;line-height:1.35;color:var(--text);margin-bottom:6px;font-weight:600}
+.c-meta{font-size:.8rem;color:var(--text-d);margin-bottom:9px}
+.c-meta .dot{color:var(--text-dd);margin:0 5px}
+.c-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:11px}
+.c-tag{font-size:.62rem;color:var(--gold-d);border:1px solid var(--border);padding:1px 7px;border-radius:10px}
+.c-actions{margin-top:auto;display:flex;gap:7px}
+.act{flex:1;text-align:center;font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding:7px 6px;border-radius:2px;transition:.2s;border:1px solid var(--border-h)}
+.act-yt{background:rgba(201,168,76,.1);color:var(--gold-l)}
+.act-yt:hover{background:rgba(201,168,76,.22)}
+.act-pdf{background:rgba(74,127,168,.12);color:var(--blue-l);border-color:rgba(74,127,168,.3)}
+.act-pdf:hover{background:rgba(74,127,168,.24)}
+.empty{text-align:center;color:var(--text-dd);font-style:italic;padding:60px 0}
+footer{text-align:center;margin-top:46px;color:var(--text-dd);font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.3em;text-transform:uppercase}
+@media(max-width:430px){.wrap{padding:0 14px}.grid{grid-template-columns:1fr}.flabel{min-width:100%}}
 </style>
 </head>
 <body>
-<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">☀ Tema</button>
 <div class="wrap">
 <header>
-  <nav class="topnav"><a href="index.html">Início</a><a href="buscar.html" class="atual">Acervo</a><a href="epaminondas.html">Epaminondas</a><a href="urania.html">Urânia</a><a href="calendar.html">Calendário</a><a href="publicar.html">Acesso Restrito</a></nav>
-  <div class="delta-wrap" id="deltaWrap">
-    <div class="delta-halo"></div>
-    <svg class="delta-rays" viewBox="0 0 120 120" style="position:absolute;inset:-18px;width:calc(100% + 36px);height:calc(100% + 36px)">
-      <g transform="translate(60,60)" stroke="rgba(240,217,138,0.35)" stroke-width="0.8">
-        <line x1="0" y1="-52" x2="0" y2="-44"/><line x1="0" y1="44" x2="0" y2="52"/><line x1="-52" y1="0" x2="-44" y2="0"/><line x1="44" y1="0" x2="52" y2="0"/>
-        <line x1="-37" y1="-37" x2="-31" y2="-31"/><line x1="31" y1="-31" x2="37" y2="-37"/><line x1="-37" y1="37" x2="-31" y2="31"/><line x1="31" y1="31" x2="37" y2="37"/>
-      </g>
-    </svg>
-    <div class="delta-svg-wrap">
-      <svg viewBox="0 0 84 84" fill="none" style="width:100%;height:100%">
-        <defs>
-          <linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5e49a"/><stop offset="55%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#7a6230"/></linearGradient>
-          <radialGradient id="eyeRg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(240,217,138,0.28)"/><stop offset="100%" stop-color="rgba(201,168,76,0)"/></radialGradient>
-        </defs>
-        <polygon points="42,5 78,75 6,75" stroke="url(#dg)" stroke-width="2.2" fill="rgba(201,168,76,0.035)"/>
-        <polygon points="42,18 65,64 19,64" stroke="#c9a84c" stroke-width=".5" stroke-dasharray="2,3.5" fill="none" opacity=".25"/>
-        <ellipse id="eyeGlow" cx="42" cy="54" rx="13" ry="8.5" fill="url(#eyeRg)"/>
-        <ellipse id="eyeOutline" cx="42" cy="54" rx="12" ry="7.5" stroke="url(#dg)" stroke-width="1.3" fill="none"/>
-        <circle id="iris" cx="42" cy="54" r="5" fill="rgba(201,168,76,0.1)" stroke="url(#dg)" stroke-width="1"/>
-        <circle id="pupil" cx="42" cy="54" r="2.2" fill="url(#dg)" opacity=".92"/>
-        <circle id="spec" cx="43.2" cy="52.8" r=".7" fill="rgba(255,248,220,0.8)"/>
-        <line x1="42" y1="40" x2="42" y2="44" stroke="#c9a84c" stroke-width=".7" opacity=".4"/><line x1="42" y1="64" x2="42" y2="68" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
-        <line x1="28" y1="54" x2="32" y2="54" stroke="#c9a84c" stroke-width=".7" opacity=".4"/><line x1="52" y1="54" x2="56" y2="54" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
-      </svg>
-    </div>
-  </div>
-  <h1 class="site-name" style="font-size:clamp(1.5rem,4.5vw,2.4rem);letter-spacing:.4em">ACERVO</h1>
-  <p class="page-tagline">Qual pedra o Irmão deseja lapidar hoje?</p>
+  <a class="home" href="index.html">&#8592; Lapidarium</a>
+  <h1 class="title">ACERVO</h1>
+  <p class="sub">Vídeos e pranchas dos Grupos de Estudos Urânia e EpaminondasOnline</p>
 </header>
+
 <div class="searchbar">
-  <div class="search-row">
-    <span class="search-dot"></span>
-    <input class="search-input" id="consulta" type="search" placeholder="Ex: pedra bruta, grau de mestre, Templários, história…" autofocus autocomplete="off">
+  <input id="q" type="text" placeholder="Buscar por tema, orador, símbolo, rito, grau…" autocomplete="off">
+</div>
+
+<div class="filters">
+  <div class="frow"><span class="flabel">Grupo</span><div id="fgrupo"></div></div>
+  <div class="frow"><span class="flabel">Tipo</span><div id="ftipo"></div></div>
+  <div class="frow"><span class="flabel">Tema</span>
+    <select id="ftema" class="chip"></select>
+    <select id="fano" class="chip"></select>
+    <button id="clear" class="chip">Limpar filtros</button>
   </div>
 </div>
-<div class="grptoggle" id="grptoggle">
-  <button class="gt ativa" data-g="">Todos os acervos</button>
-  <button class="gt" data-g="EpaminondasOnline">Epaminondas</button>
-  <button class="gt" data-g="Grupo de Estudos Urânia">Urânia</button>
+
+<p class="count" id="count"></p>
+<div class="grid" id="grid"></div>
+<p class="empty" id="empty" style="display:none">Nenhum resultado. Tente outro termo ou limpe os filtros.</p>
+
+<footer>Lapidarium · In Nomine GADU · Omnia Vincit Lux</footer>
 </div>
-<div class="chips-busca">
-  <button class="chipb" data-q="Aprendiz">Aprendiz</button>
-  <button class="chipb" data-q="História">História</button>
-  <button class="chipb" data-q="Templários">Templários</button>
-  <button class="chipb" data-q="Simbolismo">Simbolismo</button>
-  <button class="chipb" data-q="Adonhiramita">Adonhiramita</button>
-  <button class="chipb" data-q="Beneficência">Beneficência</button>
-  <button class="chipb" data-q="Iluminismo">Iluminismo</button>
-</div>
-<div class="expansao" id="expansao"></div>
-<div class="searchgrid">
-  <aside class="facetas" id="facetas"></aside>
-  <main id="resultados"><p class="vazio">Carregando o acervo…</p></main>
-</div>
-<footer><p>Lapidarium · In Nomine G∴A∴D∴U∴ · Omnia Vincit Lux</p></footer>
-</div>
-<script src="config.js"></script>
-<script src="busca.js"></script>
-<script src="ui.js"></script>
+
 <script>
-(async () => {
-  const $ = (id) => document.getElementById(id);
-  let filtros = {};
-  const vivos = await lapiFetch("video");
-  await LapidariumBusca.iniciar(
-    (vivos && vivos.length)
-      ? { itens: vivos, tesauro: "tesauro.json" }
-      : { fontes: ["videos-epaminondas.json", "videos-urania.json"], tesauro: "tesauro.json" }
-  );
-  const FACETAS = [["ano","ANO"],["tags","TEMAS"],["autor","PALESTRANTE"],["rito","RITO"],["grau","GRAU"]];
-  const badge = (o) => (o||"").indexOf("pamin")>=0 ? "b-ep" : "b-ur";
-  const dataBR = (d) => (d||"").slice(0,10).split('-').reverse().join('/');
-  function render() {
-    const q = $("consulta").value;
-    const r = LapidariumBusca.buscar(q, filtros, { limite: 80 });
-    const ativos = Object.keys(filtros).filter(k=>filtros[k]);
-    let aviso = (r.expansao.gruposAtivados.length && q) ? "Busca ampliada pelo <b>tesauro maconico</b>." : "";
-    if (ativos.length) aviso += (aviso?"  ":"") + '<button class="limpar" onclick="window.__limpar()">limpar filtros</button>';
-    $("expansao").innerHTML = aviso;
-    if (!r.resultados.length) {
-      $("resultados").innerHTML = "<p class='vazio'>Nenhuma pedra encontrada neste acervo. Tente outro termo, ou volte para <b>Todos os acervos</b>.</p>";
-    } else {
-      let html = '<p class="contagem">'+r.total+' '+(r.total===1?"video":"videos")+'</p><div class="vgrid">';
-      r.resultados.forEach(({item}) => {
-        html += '<a class="vc" href="video.html?v='+(item.youtube_id||"")+'">'
-          + '<div class="vc-thumb">'+(item.thumbnail?'<img class="vc-img" src="'+item.thumbnail+'" alt="" loading="lazy">':'')
-          + '<span class="vc-badge '+badge(item.origem)+'">'+(item.origem||'').replace('Grupo de Estudos ','')+'</span></div>'
-          + '<div class="vc-body"><p class="vc-title">'+(item.titulo||"(sem titulo)")+'</p>'
-          + '<p class="vc-meta">'+[dataBR(item.data),item.autor].filter(Boolean).join(' · ')+'</p>'
-          + ((item.tags&&item.tags.length)?'<div class="vc-tags">'+item.tags.slice(0,3).map(t=>'<span class="vtag">'+t+'</span>').join('')+'</div>':'')
-          + '</div></a>';
-      });
-      $("resultados").innerHTML = html + '</div>';
-    }
-    let fh = '';
-    FACETAS.forEach(([chave,rot]) => {
-      const lista = (r.facetas[chave]||[]).slice(0,12);
-      if (!lista.length) return;
-      fh += '<h3>'+rot+'</h3>';
-      lista.forEach(f => { fh += '<button data-chave="'+chave+'" data-valor="'+f.valor+'" class="'+(filtros[chave]===f.valor?'ativa':'')+'">'+f.valor+'<span class="qtde">'+f.qtde+'</span></button>'; });
-    });
-    $("facetas").innerHTML = fh;
-    $("facetas").querySelectorAll("button").forEach(b => b.onclick = () => {
-      const c=b.dataset.chave, v=b.dataset.valor; filtros[c]=(filtros[c]===v)?null:v; render();
-    });
-  }
-  $("grptoggle").querySelectorAll(".gt").forEach(b => b.onclick = () => {
-    $("grptoggle").querySelectorAll(".gt").forEach(x=>x.classList.remove("ativa"));
-    b.classList.add("ativa"); filtros.origem = b.dataset.g || null; render();
+const ACERVO = [{"tipo":"video","titulo":"MAÇONARIA COMO RELIGIÃO FILOSÓFICA","autor":"Cídio Lopes de Almeida","data":"2026-07-05","grupo":"EpaminondasOnline","tags":["filosofia","religião","estudo"],"url":"https://www.youtube.com/watch?v=XjSWU8OQgPk","yt":"XjSWU8OQgPk","thumb":"https://img.youtube.com/vi/XjSWU8OQgPk/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Cavaleiros Templários Maçônicos","autor":"Valdir Anderson Silvério","data":"2025-02-16","grupo":"EpaminondasOnline","tags":["templários","história","cavalaria"],"url":"https://www.youtube.com/watch?v=iHVbTopDfmU","yt":"iHVbTopDfmU","thumb":"https://img.youtube.com/vi/iHVbTopDfmU/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Vaidade, o último vício a abandonar o templo","autor":"","data":"2026-07-11","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=1LletNOo_PY","yt":"1LletNOo_PY","thumb":"https://img.youtube.com/vi/1LletNOo_PY/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Entre a luz e a sombra: o simbolismo dos solstícios na maçonaria","autor":"","data":"2026-07-04","grupo":"Grupo de Estudos Urânia","tags":["simbolismo","instrumentos"],"url":"https://www.youtube.com/watch?v=K3q9qsFM-JQ","yt":"K3q9qsFM-JQ","thumb":"https://img.youtube.com/vi/K3q9qsFM-JQ/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1T22srxLzngP4wNR5Btv2JeMr82MLsvTu/view"},{"tipo":"video","titulo":"O Temerário","autor":"Ricardo Berdu","data":"2026-06-27","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=ttdJuwljYnI","yt":"ttdJuwljYnI","thumb":"https://img.youtube.com/vi/ttdJuwljYnI/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"O Tempo de Estudos é realmente bem aproveitado pelos Maçons?","autor":"","data":"2026-06-20","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=Vj2WOBY6tV0","yt":"Vj2WOBY6tV0","thumb":"https://img.youtube.com/vi/Vj2WOBY6tV0/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1izPC1_JwQhCzlUz7o8Vo6WxpIJjG2flC/view"},{"tipo":"video","titulo":"Reflexões sobre o \"Dono de Loja\"","autor":"","data":"2026-06-13","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=-726gWQogE8","yt":"-726gWQogE8","thumb":"https://img.youtube.com/vi/-726gWQogE8/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1yNCKvKm7PH9kCtEQctKKZHyonxzriXT1/view"},{"tipo":"video","titulo":"A Arte de Edificar a Loja","autor":"","data":"2026-06-06","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=vVXhckCpHVU","yt":"vVXhckCpHVU","thumb":"https://img.youtube.com/vi/vVXhckCpHVU/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1faOtcD8QebUdb7_jy8aB4Y6mNUMnCXot/view"},{"tipo":"video","titulo":"O Bastão na Liturgia Maçônica: Origem Histórica e Interpretações Simbólicas","autor":"","data":"2026-05-30","grupo":"Grupo de Estudos Urânia","tags":["simbolismo","história","instrumentos"],"url":"https://www.youtube.com/watch?v=B0yq2GFwZFA","yt":"B0yq2GFwZFA","thumb":"https://img.youtube.com/vi/B0yq2GFwZFA/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1aMYgmxTugcQg5IEccgpWa0pSFauDBwu8/view"},{"tipo":"video","titulo":"A Luz nas Trevas: o Simbolismo de João 1:5 na Abertura das Sessões Maçônicas","autor":"","data":"2026-05-16","grupo":"Grupo de Estudos Urânia","tags":["simbolismo","instrumentos"],"url":"https://www.youtube.com/watch?v=4eKA6oUqOIg","yt":"4eKA6oUqOIg","thumb":"https://img.youtube.com/vi/4eKA6oUqOIg/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1UQm581TpvyIXqVCuvW4vpjpb2-SD6Xzq/view"},{"tipo":"video","titulo":"O Significado Filosófico dos Três Pontos na Maçonaria","autor":"","data":"2026-05-09","grupo":"Grupo de Estudos Urânia","tags":["filosofia","instrumentos"],"url":"https://www.youtube.com/watch?v=tOXpP8l57KY","yt":"tOXpP8l57KY","thumb":"https://img.youtube.com/vi/tOXpP8l57KY/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1VcyQ16KmXXJW2CO7f8kPO5_5H53Xn02y/view"},{"tipo":"video","titulo":"Entre a cruz e o compasso","autor":"","data":"2026-05-02","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=pIMBukAGeJU","yt":"pIMBukAGeJU","thumb":"https://img.youtube.com/vi/pIMBukAGeJU/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1TW7sem1I8nnHuPdCgkQQ7kTqa4MmSpQ0/view"},{"tipo":"video","titulo":"O Talento que a Maçonaria Perde: Quando a Arrogância dos Líderes Afasta as Grandes Mentes","autor":"","data":"2026-04-25","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=WKbl-YqBAk8","yt":"WKbl-YqBAk8","thumb":"https://img.youtube.com/vi/WKbl-YqBAk8/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Ordem Shriners: Onde a Maçonaria Encontra sua Missão Mais Nobre","autor":"","data":"2026-04-18","grupo":"Grupo de Estudos Urânia","tags":["instrumentos","ordens"],"url":"https://www.youtube.com/watch?v=DaNG-EvrwCI","yt":"DaNG-EvrwCI","thumb":"https://img.youtube.com/vi/DaNG-EvrwCI/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Telhamento Maçônico: Entre o Reconhecimento e a Construção Interior","autor":"","data":"2026-04-11","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=fPTswT9CX8I","yt":"fPTswT9CX8I","thumb":"https://img.youtube.com/vi/fPTswT9CX8I/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1smT6qx75mZc6vTExRCbaosERf-abrsRr/view"},{"tipo":"video","titulo":"Páscoa e Maçonaria: O Renascimento do Homem Interior","autor":"","data":"2026-04-04","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=YpPmsfbnKBk","yt":"YpPmsfbnKBk","thumb":"https://img.youtube.com/vi/YpPmsfbnKBk/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1Qt1AKcNr0BK4UidqBIdYm82aSfDq47u0/view"},{"tipo":"video","titulo":"O Tronco de Beneficência: A Caridade como Pilar da Prática Maçônica","autor":"","data":"2026-03-28","grupo":"Grupo de Estudos Urânia","tags":["instrumentos","caridade"],"url":"https://www.youtube.com/watch?v=QzbKrXNpsZ4","yt":"QzbKrXNpsZ4","thumb":"https://img.youtube.com/vi/QzbKrXNpsZ4/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1QMZ3YVo4DXGWRg9ydcSH0sHtiuviPL3I/view"},{"tipo":"video","titulo":"Jacques DeMolay, a Ordem dos Cavaleiros Templários e a Ordem DeMolay","autor":"","data":"2026-03-21","grupo":"Grupo de Estudos Urânia","tags":["templários","DeMolay"],"url":"https://www.youtube.com/watch?v=JysWVfA3RVo","yt":"JysWVfA3RVo","thumb":"https://img.youtube.com/vi/JysWVfA3RVo/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Entre a Consciência Individual e a Moral Coletiva na Maçonaria","autor":"","data":"2026-03-14","grupo":"Grupo de Estudos Urânia","tags":["ética","instrumentos"],"url":"https://www.youtube.com/watch?v=YfQe_1mocoQ","yt":"YfQe_1mocoQ","thumb":"https://img.youtube.com/vi/YfQe_1mocoQ/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1P2e8WAK15jpPRlfpTPnzRKRqTbiZ9oMD/view"},{"tipo":"video","titulo":"Deísmo e Teísmo: A Concepção de Deus na Maçonaria","autor":"","data":"2026-03-07","grupo":"Grupo de Estudos Urânia","tags":["instrumentos","filosofia"],"url":"https://www.youtube.com/watch?v=MxZqsxts3hc","yt":"MxZqsxts3hc","thumb":"https://img.youtube.com/vi/MxZqsxts3hc/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1ziLr_ZPg_d2PpE08Ae0OfSXuGQcDKQJD/view"},{"tipo":"video","titulo":"O Espelho Hexagonal de Cristal e Prata","autor":"","data":"2026-02-28","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=Ohv9sTESTvc","yt":"Ohv9sTESTvc","thumb":"https://img.youtube.com/vi/Ohv9sTESTvc/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"22 de Fevereiro: Uma Data, Um Símbolo, Um Compromisso","autor":"","data":"2026-02-21","grupo":"Grupo de Estudos Urânia","tags":["simbolismo"],"url":"https://www.youtube.com/watch?v=nDdDN_Bwb5k","yt":"nDdDN_Bwb5k","thumb":"https://img.youtube.com/vi/nDdDN_Bwb5k/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Reflexões sobre os Landmarks na Maçonaria","autor":"","data":"2026-02-14","grupo":"Grupo de Estudos Urânia","tags":["landmarks","instrumentos"],"url":"https://www.youtube.com/watch?v=T0pnNHV2WoQ","yt":"T0pnNHV2WoQ","thumb":"https://img.youtube.com/vi/T0pnNHV2WoQ/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1qOyAcf_WRAEZ8LDMi2jjWBWoh8jB_OHK/view"},{"tipo":"video","titulo":"O Perdão e a Construção do Templo Interior","autor":"","data":"2026-02-07","grupo":"Grupo de Estudos Urânia","tags":["ética"],"url":"https://www.youtube.com/watch?v=jxVDZzqJdR8","yt":"jxVDZzqJdR8","thumb":"https://img.youtube.com/vi/jxVDZzqJdR8/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1tPs7a0SnQ_vXk-WwJck0G2MXfuTGdLnF/view"},{"tipo":"video","titulo":"O Mito de Sísifo e o Aperfeiçoamento Maçônico","autor":"","data":"2026-01-31","grupo":"Grupo de Estudos Urânia","tags":["instrumentos","filosofia"],"url":"https://www.youtube.com/watch?v=zOPDrjVqHuo","yt":"zOPDrjVqHuo","thumb":"https://img.youtube.com/vi/zOPDrjVqHuo/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1qUIbMGLNVJxS98I21fvz-7x5pudJz6gs/view"},{"tipo":"video","titulo":"As Colunas Zodiacais no Templo Maçônico","autor":"","data":"2026-01-24","grupo":"Grupo de Estudos Urânia","tags":["instrumentos","simbolismo"],"url":"https://www.youtube.com/watch?v=fgJAQ3Opq2M","yt":"fgJAQ3Opq2M","thumb":"https://img.youtube.com/vi/fgJAQ3Opq2M/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1kLXl0dnA0H11bakg3nwod2O0zBXR9Idy/view"},{"tipo":"video","titulo":"Para quê Moral?!?","autor":"Márcio Silva","data":"2026-01-17","grupo":"Grupo de Estudos Urânia","tags":["ética"],"url":"https://www.youtube.com/watch?v=9Qo0kLPA00Y","yt":"9Qo0kLPA00Y","thumb":"https://img.youtube.com/vi/9Qo0kLPA00Y/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"É Natal, e então?","autor":"Paulo Careta","data":"2025-12-20","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=adQza9RXoSc","yt":"adQza9RXoSc","thumb":"https://img.youtube.com/vi/adQza9RXoSc/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"O Papel das Comissões no Cotidiano de uma Loja Maçônica — Parte 1","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=gFZCwC40-Zc","yt":"gFZCwC40-Zc","thumb":"https://img.youtube.com/vi/gFZCwC40-Zc/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"O Papel das Comissões no Cotidiano de uma Loja Maçônica — Parte 2","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=W9EPXfH4AxQ","yt":"W9EPXfH4AxQ","thumb":"https://img.youtube.com/vi/W9EPXfH4AxQ/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Despojando-se dos metais: uma jornada de humildade","autor":"","data":"2025-12-06","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=EPktXJI2530","yt":"EPktXJI2530","thumb":"https://img.youtube.com/vi/EPktXJI2530/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1DvCnubiF6XRysxYq_ClTU71mGGDYxA4t/view"},{"tipo":"video","titulo":"O Livro da Lei: Luz Moral e Fundamento da Maçonaria","autor":"","data":"2025-11-29","grupo":"Grupo de Estudos Urânia","tags":["ética","instrumentos"],"url":"https://www.youtube.com/watch?v=NGNGVlokm-0","yt":"NGNGVlokm-0","thumb":"https://img.youtube.com/vi/NGNGVlokm-0/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1kQCrRws5bKvVzNOofvMz0BClxAVAEr3-/view"},{"tipo":"video","titulo":"Maçonaria hoje: estamos cultivando União ou Desunião Grupo de Estudos Urânia","autor":"","data":"2025-11-22","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=pCS_GHeDlNg","yt":"pCS_GHeDlNg","thumb":"https://img.youtube.com/vi/pCS_GHeDlNg/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"A Cisão de 1927","autor":"Roberto Souza Gonzalez","data":"2025-11-15","grupo":"Grupo de Estudos Urânia","tags":["história"],"url":"https://www.youtube.com/watch?v=VvbEsQK8U58","yt":"VvbEsQK8U58","thumb":"https://img.youtube.com/vi/VvbEsQK8U58/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"As sete virtudes de um não DeMolay","autor":"Marcio Silva","data":"2025-11-08","grupo":"Grupo de Estudos Urânia","tags":["DeMolay"],"url":"https://www.youtube.com/watch?v=UmqNcfAaFK4","yt":"UmqNcfAaFK4","thumb":"https://img.youtube.com/vi/UmqNcfAaFK4/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"O Sigilo na Maçonaria","autor":"","data":"2025-11-01","grupo":"Grupo de Estudos Urânia","tags":["instrumentos","ritualística"],"url":"https://www.youtube.com/watch?v=2V4BR5n__LA","yt":"2V4BR5n__LA","thumb":"https://img.youtube.com/vi/2V4BR5n__LA/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1dyplTF3u0r3Q8NiEyI9Q0reiaP1UvMOV/view"},{"tipo":"video","titulo":"O Pavimento Mosaico: Símbolo da Dualidade e da Harmonia Maçônica","autor":"","data":"2025-10-25","grupo":"Grupo de Estudos Urânia","tags":["simbolismo","instrumentos"],"url":"https://www.youtube.com/watch?v=pxNO3bwpT3M","yt":"pxNO3bwpT3M","thumb":"https://img.youtube.com/vi/pxNO3bwpT3M/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1gSjYaXVhTia5i0LfZE_ZBmjr45bH8H1Z/view"},{"tipo":"video","titulo":"O Escrutínio Secreto na Maçonaria","autor":"","data":"2025-10-18","grupo":"Grupo de Estudos Urânia","tags":["instrumentos","ritualística"],"url":"https://www.youtube.com/watch?v=1hloTol4VGI","yt":"1hloTol4VGI","thumb":"https://img.youtube.com/vi/1hloTol4VGI/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1Y_Y4ZrtNR0HBpoA_GXBt5zhAApcTHmnO/view"},{"tipo":"video","titulo":"Entre Colunas - o Espaço Sagrado da Verdade e do Equilíbrio Maçônico","autor":"","data":"2025-10-11","grupo":"Grupo de Estudos Urânia","tags":["instrumentos","simbolismo"],"url":"https://www.youtube.com/watch?v=1mHFEF9d564","yt":"1mHFEF9d564","thumb":"https://img.youtube.com/vi/1mHFEF9d564/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1Tg8OOubMrd8jNCVrhtXPRbx5COOW0tSg/view"},{"tipo":"video","titulo":"A Jornada Maçônica e o Significado do Aumento de Salário","autor":"","data":"2025-10-04","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=VVwSsEsVEgA","yt":"VVwSsEsVEgA","thumb":"https://img.youtube.com/vi/VVwSsEsVEgA/hqdefault.jpg","pdf":"https://drive.google.com/file/d/19JU7j0dbTmlRFQdwN5pxMv_IX9Mink-K/view"},{"tipo":"video","titulo":"O Significado do Perjúrio na Maçonaria","autor":"","data":"2025-09-27","grupo":"Grupo de Estudos Urânia","tags":["instrumentos","ritualística"],"url":"https://www.youtube.com/watch?v=PGtIV-COj2Y","yt":"PGtIV-COj2Y","thumb":"https://img.youtube.com/vi/PGtIV-COj2Y/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1km1g8iyGfQm5H1Py_TkbFIBWNePMRkej/view"},{"tipo":"video","titulo":"A Força e a Razão: O Simbolismo do Maço e do Cinzel","autor":"","data":"2025-09-20","grupo":"Grupo de Estudos Urânia","tags":["simbolismo","instrumentos"],"url":"https://www.youtube.com/watch?v=0L5FUQxIjvI","yt":"0L5FUQxIjvI","thumb":"https://img.youtube.com/vi/0L5FUQxIjvI/hqdefault.jpg","pdf":"https://drive.google.com/file/d/11qdpw9PMqUmD0XX9p8DYscSZsjGkh3n0/view"},{"tipo":"video","titulo":"A Régua Maçônica","autor":"","data":"2025-09-13","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=cMzMCaKVSns","yt":"cMzMCaKVSns","thumb":"https://img.youtube.com/vi/cMzMCaKVSns/hqdefault.jpg","pdf":"https://drive.google.com/file/d/1uO6O8FCgDf4i0VRctG1lzE5bF6Ncj09s/view"},{"tipo":"video","titulo":"O Compasso","autor":"","data":"2025-09-06","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=gNGRmqEmDqY","yt":"gNGRmqEmDqY","thumb":"https://img.youtube.com/vi/gNGRmqEmDqY/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"A Tolerância na Maçonaria","autor":"","data":"2025-08-30","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=hvwnooOen5k","yt":"hvwnooOen5k","thumb":"https://img.youtube.com/vi/hvwnooOen5k/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"VITRIOL: A Jornada Maçônica de Autoconhecimento e Transformação Interior","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["instrumentos","iniciação"],"url":"https://www.youtube.com/watch?v=AxD70ztJwZk","yt":"AxD70ztJwZk","thumb":"https://img.youtube.com/vi/AxD70ztJwZk/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"A Egrégora Maçônica: Entre o Simbolismo Iniciático e o Ceticismo Racional","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["simbolismo","instrumentos"],"url":"https://www.youtube.com/watch?v=5sKInIrVxiM","yt":"5sKInIrVxiM","thumb":"https://img.youtube.com/vi/5sKInIrVxiM/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Quebrando Paradigmas, os Landmarks e o Futuro da Maçonaria","autor":"Oduwaldo Álvaro","data":"2025-08-02","grupo":"Grupo de Estudos Urânia","tags":["landmarks","instrumentos"],"url":"https://www.youtube.com/watch?v=uhaZ2PW6EvA","yt":"uhaZ2PW6EvA","thumb":"https://img.youtube.com/vi/uhaZ2PW6EvA/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"A Palavra Sagrada do Grau de Aprendiz do REAA: da pronúncia ao significado","autor":"","data":"2025-07-26","grupo":"Grupo de Estudos Urânia","tags":["REAA","grau de aprendiz"],"url":"https://www.youtube.com/watch?v=PlEsf3eZY4U","yt":"PlEsf3eZY4U","thumb":"https://img.youtube.com/vi/PlEsf3eZY4U/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"No Tempo das Cruzadas","autor":"Márcio Silva","data":"2025-07-19","grupo":"Grupo de Estudos Urânia","tags":["história"],"url":"https://www.youtube.com/watch?v=ZFbColvnCq8","yt":"ZFbColvnCq8","thumb":"https://img.youtube.com/vi/ZFbColvnCq8/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Por que o Maçom não estuda?","autor":"","data":"2025-07-05","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=hQhCQCZ8n8o","yt":"hQhCQCZ8n8o","thumb":"https://img.youtube.com/vi/hQhCQCZ8n8o/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"O comportamento esperado do Visitante de Rito Diverso","autor":"","data":"2025-06-28","grupo":"Grupo de Estudos Urânia","tags":["rito"],"url":"https://www.youtube.com/watch?v=Rzw3SSbpxbo","yt":"Rzw3SSbpxbo","thumb":"https://img.youtube.com/vi/Rzw3SSbpxbo/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"As Frases na Câmara de Reflexões","autor":"","data":"2025-05-10","grupo":"Grupo de Estudos Urânia","tags":["iniciação"],"url":"https://www.youtube.com/watch?v=725aTz-6jp0","yt":"725aTz-6jp0","thumb":"https://img.youtube.com/vi/725aTz-6jp0/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Uma Visão da Iniciação","autor":"Márcio Silva","data":"2025-05-03","grupo":"Grupo de Estudos Urânia","tags":["iniciação"],"url":"https://www.youtube.com/watch?v=Uvud3P4KMec","yt":"Uvud3P4KMec","thumb":"https://img.youtube.com/vi/Uvud3P4KMec/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Premissas básicas para convite e admissão de candidatos à Ordem","autor":"","data":"2025-04-05","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=Qt3MN6Nor84","yt":"Qt3MN6Nor84","thumb":"https://img.youtube.com/vi/Qt3MN6Nor84/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Sindicância: Objetivos e Consequências","autor":"Ronaldo Fernandes","data":"2025-03-29","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=0a_8lGK0DuU","yt":"0a_8lGK0DuU","thumb":"https://img.youtube.com/vi/0a_8lGK0DuU/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"O Crescimento da Maçonaria e sua Influência na Evolução Social e Comercial da Europa","autor":"Erivelto Sousa","data":"2025-02-22","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=oNkeLmTUlTw","yt":"oNkeLmTUlTw","thumb":"https://img.youtube.com/vi/oNkeLmTUlTw/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"O Painel do Mestre Maçom: O Renascer além do Túmulo","autor":"Fuad Haddad","data":"2025-02-08","grupo":"Grupo de Estudos Urânia","tags":["grau de mestre","instrumentos"],"url":"https://www.youtube.com/watch?v=HNWF_92hPEw","yt":"HNWF_92hPEw","thumb":"https://img.youtube.com/vi/HNWF_92hPEw/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Em Busca do Universo","autor":"Márcio Latorraca","data":"2025-02-01","grupo":"Grupo de Estudos Urânia","tags":["ciência"],"url":"https://www.youtube.com/watch?v=9VaopK41e0c","yt":"9VaopK41e0c","thumb":"https://img.youtube.com/vi/9VaopK41e0c/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"A Metáfora do Anel de Giges de Platão","autor":"Nilton Beloti Filho","data":"2025-01-25","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=EZPlVN_RyQw","yt":"EZPlVN_RyQw","thumb":"https://img.youtube.com/vi/EZPlVN_RyQw/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Você o reconhecerá como tal?","autor":"Rodrigo Rosenthal","data":"2025-01-18","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=u4YEE5XDs5s","yt":"u4YEE5XDs5s","thumb":"https://img.youtube.com/vi/u4YEE5XDs5s/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Gestão Maçônica Inspiradora","autor":"Mario Vasconcelos","data":"2024-12-14","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=gmlTqmkrtrQ","yt":"gmlTqmkrtrQ","thumb":"https://img.youtube.com/vi/gmlTqmkrtrQ/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"A Prece Inicial","autor":"Manuel Pereira","data":"2024-12-07","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=DfqytmAKU_g","yt":"DfqytmAKU_g","thumb":"https://img.youtube.com/vi/DfqytmAKU_g/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"As Buscas dos Maçons e as Escolas de Pensamento Maçônico","autor":"Márcio Silva","data":"2024-11-30","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=l4SWAbWWbJw","yt":"l4SWAbWWbJw","thumb":"https://img.youtube.com/vi/l4SWAbWWbJw/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Perspectivas Maçônicas da Ópera \"A Flauta Mágica\" de Mozart","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=WKwOyus8Nd8","yt":"WKwOyus8Nd8","thumb":"https://img.youtube.com/vi/WKwOyus8Nd8/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"As Lojas Maçônicas e suas Finalidades - Aldino Brasil Souza","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=78lkB-H2eno","yt":"78lkB-H2eno","thumb":"https://img.youtube.com/vi/78lkB-H2eno/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"O Homem e o Maçom Bolha","autor":"José Maldonado Gualda","data":"2024-09-07","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=bSF7GI6JaZI","yt":"bSF7GI6JaZI","thumb":"https://img.youtube.com/vi/bSF7GI6JaZI/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"O Legado do Mestre Maçom","autor":"Márcio Latorraca","data":"","grupo":"Grupo de Estudos Urânia","tags":["grau de mestre","instrumentos"],"url":"https://www.youtube.com/watch?v=KvR_dDnft2Q","yt":"KvR_dDnft2Q","thumb":"https://img.youtube.com/vi/KvR_dDnft2Q/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"A Bobajada do Abóbado Celeste — Parte 1","autor":"Márcio Silva","data":"2024-07-06","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=OFvMBC1_K2g","yt":"OFvMBC1_K2g","thumb":"https://img.youtube.com/vi/OFvMBC1_K2g/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"A Bobajada do Abóbado Celeste — Parte 2","autor":"Márcio Silva","data":"2024-07-20","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=vdDSpCQW4Hw","yt":"vdDSpCQW4Hw","thumb":"https://img.youtube.com/vi/vdDSpCQW4Hw/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"O Valor","autor":"Márcio Silva","data":"2023-09-30","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=Fr3KTMgXFyQ","yt":"Fr3KTMgXFyQ","thumb":"https://img.youtube.com/vi/Fr3KTMgXFyQ/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Livre Arbítrio e Destino","autor":"Márcio Silva","data":"2023-04-08","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=Toz3g2fizas","yt":"Toz3g2fizas","thumb":"https://img.youtube.com/vi/Toz3g2fizas/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"O Silêncio Maçônico e outras formas de silêncio","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=imJU7qBYSc8","yt":"imJU7qBYSc8","thumb":"https://img.youtube.com/vi/imJU7qBYSc8/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Reflexão sobre a Páscoa","autor":"Marcos A. P. Noronha","data":"","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=C9LlD7BAcEU","yt":"C9LlD7BAcEU","thumb":"https://img.youtube.com/vi/C9LlD7BAcEU/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Da Sindicância à Câmara de Reflexões","autor":"Rodrigo Rosenthal","data":"","grupo":"Grupo de Estudos Urânia","tags":["iniciação"],"url":"https://www.youtube.com/watch?v=9xBj6dOnpr0","yt":"9xBj6dOnpr0","thumb":"https://img.youtube.com/vi/9xBj6dOnpr0/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"A Maçonaria Simbólica é incompleta?","autor":"Oduwaldo Álvaro","data":"","grupo":"Grupo de Estudos Urânia","tags":["simbolismo","instrumentos"],"url":"https://www.youtube.com/watch?v=ESctJa46wqk","yt":"ESctJa46wqk","thumb":"https://img.youtube.com/vi/ESctJa46wqk/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Amor e Afins","autor":"Márcio Silva","data":"","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=pwcoe7HtuBw","yt":"pwcoe7HtuBw","thumb":"https://img.youtube.com/vi/pwcoe7HtuBw/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"A Inteligência Artificial na Maçonaria","autor":"Marcelo Corsini","data":"2023-10-14","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=XPGHGI9f6hg","yt":"XPGHGI9f6hg","thumb":"https://img.youtube.com/vi/XPGHGI9f6hg/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"De Abraão ao Cativeiro da Babilônia","autor":"Gilson Mendonça","data":"2023-10-21","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=fut15ZjQKDk","yt":"fut15ZjQKDk","thumb":"https://img.youtube.com/vi/fut15ZjQKDk/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"O Propósito Existencial do Maçom - José Bandeira","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["instrumentos"],"url":"https://www.youtube.com/watch?v=UqGPlrh64p4","yt":"UqGPlrh64p4","thumb":"https://img.youtube.com/vi/UqGPlrh64p4/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"A Moral dos Fortes e dos Fracos","autor":"Márcio Silva","data":"2023-12-16","grupo":"Grupo de Estudos Urânia","tags":["ética"],"url":"https://www.youtube.com/watch?v=DRlRl9ux20w","yt":"DRlRl9ux20w","thumb":"https://img.youtube.com/vi/DRlRl9ux20w/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Combate ao Obscurantismo","autor":"Fuad Haddad","data":"","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=sDeQbpR0ul8","yt":"sDeQbpR0ul8","thumb":"https://img.youtube.com/vi/sDeQbpR0ul8/hqdefault.jpg","pdf":""},{"tipo":"video","titulo":"Os Aventais","autor":"José Maldonado","data":"","grupo":"Grupo de Estudos Urânia","tags":["estudo maçônico"],"url":"https://www.youtube.com/watch?v=HbuiJDJUVlA","yt":"HbuiJDJUVlA","thumb":"https://img.youtube.com/vi/HbuiJDJUVlA/hqdefault.jpg","pdf":""},{"tipo":"prancha","titulo":"A Maçonaria encontra-se em estado terminal","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["reflexão","crítica"],"url":"","yt":"","thumb":"","pdf":"https://drive.google.com/file/d/1fyGmL7NjDCKwdF77F_e1SXPdJUnJThIq/view"},{"tipo":"prancha","titulo":"A Simbologia da Morte na Maçonaria","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["simbolismo","morte"],"url":"","yt":"","thumb":"","pdf":"https://drive.google.com/file/d/1UufuHlXPHXwbojX8LSoyEHb8mJDifWqc/view"},{"tipo":"prancha","titulo":"Dia Internacional do Maçom","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["efeméride","fraternidade"],"url":"","yt":"","thumb":"","pdf":"https://drive.google.com/file/d/13gRpmRwpHq_L7oRE8YnEFwIQyzkdpIYx/view"},{"tipo":"prancha","titulo":"Enxertos na Maçonaria","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["crítica","ritualística"],"url":"","yt":"","thumb":"","pdf":"https://drive.google.com/file/d/1oatR38qiCNRNndze7xXYOVyx3ma7vtdT/view"},{"tipo":"prancha","titulo":"Reconhecimento e Regularidade","autor":"","data":"","grupo":"Grupo de Estudos Urânia","tags":["reconhecimento","regularidade"],"url":"","yt":"","thumb":"","pdf":"https://drive.google.com/file/d/1LsKse2D7TGWYYkcT6_FEXsauY6prb9vP/view"}];
+const state = {q:'', grupo:'', tipo:'', tema:'', ano:''};
+
+// read URL params
+const p = new URLSearchParams(location.search);
+if(p.get('q')) state.q = p.get('q');
+if(p.get('grupo')) state.grupo = p.get('grupo');
+if(p.get('tipo')) state.tipo = p.get('tipo');
+if(p.get('tema')) state.tema = p.get('tema');
+if(p.get('ano')) state.ano = p.get('ano');
+// tolerancia: aceitar grupo por nome aproximado (ex.: ?grupo=urania)
+if(state.grupo && !['Grupo de Estudos Ur\u00e2nia','EpaminondasOnline'].includes(state.grupo)){
+  const gq=state.grupo.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  if(gq.includes('urania')) state.grupo='Grupo de Estudos Ur\u00e2nia';
+  else if(gq.includes('epaminondas')) state.grupo='EpaminondasOnline';
+  else state.grupo='';
+}
+
+const GBADGE = {'Grupo de Estudos Urânia':'b-ur','EpaminondasOnline':'b-ep'};
+const GSHORT = {'Grupo de Estudos Urânia':'Urânia','EpaminondasOnline':'Epaminondas'};
+
+function norm(s){return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();}
+
+// build filter controls
+function chipRow(el, opts, key, classmap){
+  el.innerHTML='';
+  opts.forEach(o=>{
+    const b=document.createElement('button');
+    b.className='chip'+(state[key]===o.v?' on'+(classmap&&classmap[o.v]?' '+classmap[o.v]:''):'');
+    b.textContent=o.l;
+    b.onclick=()=>{state[key]=state[key]===o.v?'':o.v; render();};
+    el.appendChild(b);
   });
-  document.querySelectorAll(".chipb").forEach(b => b.onclick = () => { $("consulta").value = b.dataset.q; render(); $("consulta").focus(); });
-  window.__limpar = () => { filtros = {}; $("consulta").value=""; $("grptoggle").querySelectorAll(".gt").forEach((x,i)=>x.classList.toggle("ativa",i===0)); render(); };
-  const params = new URLSearchParams(location.search);
-  if (params.get('q')) $("consulta").value = params.get('q');
-  let t; $("consulta").oninput = () => { clearTimeout(t); t = setTimeout(render, 180); };
-  render();
-})();
+}
+const grupos=[{v:'',l:'Todos'},{v:'Grupo de Estudos Urânia',l:'Urânia'},{v:'EpaminondasOnline',l:'Epaminondas'}];
+const tipos=[{v:'',l:'Todos'},{v:'video',l:'Vídeos'},{v:'prancha',l:'Pranchas'}];
+const temas=[...new Set(ACERVO.flatMap(i=>i.tags))].sort((a,b)=>a.localeCompare(b,'pt'));
+const anos=[...new Set(ACERVO.filter(i=>i.data).map(i=>i.data.slice(0,4)))].sort().reverse();
+
+document.getElementById('ftema').innerHTML='<option value="">Todos os temas</option>'+temas.map(t=>`<option>${t}</option>`).join('');
+document.getElementById('fano').innerHTML='<option value="">Todos os anos</option>'+anos.map(a=>`<option>${a}</option>`).join('');
+document.getElementById('ftema').onchange=e=>{state.tema=e.target.value;render();};
+document.getElementById('fano').onchange=e=>{state.ano=e.target.value;render();};
+document.getElementById('q').value=state.q;
+document.getElementById('q').addEventListener('input',e=>{state.q=e.target.value;render();});
+document.getElementById('clear').onclick=()=>{state.q='';state.grupo='';state.tipo='';state.tema='';state.ano='';document.getElementById('q').value='';document.getElementById('ftema').value='';document.getElementById('fano').value='';render();};
+
+function match(i){
+  if(state.grupo && i.grupo!==state.grupo) return false;
+  if(state.tipo && i.tipo!==state.tipo) return false;
+  if(state.tema && !i.tags.includes(state.tema)) return false;
+  if(state.ano && (!i.data || i.data.slice(0,4)!==state.ano)) return false;
+  if(state.q){
+    const q=norm(state.q);
+    const hay=norm(i.titulo+' '+i.autor+' '+i.tags.join(' ')+' '+GSHORT[i.grupo]);
+    if(!hay.includes(q)) return false;
+  }
+  return true;
+}
+function fmtDate(d){if(!d)return '';const[y,m,dd]=d.split('-');const M=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];return `${dd} ${M[+m-1]} ${y}`;}
+
+function card(i){
+  const badge=`<span class="badge ${GBADGE[i.grupo]}">${GSHORT[i.grupo]}</span>`;
+  let thumb;
+  if(i.tipo==='video'){
+    thumb=`<div class="thumb"><img loading="lazy" src="https://img.youtube.com/vi/${i.yt}/mqdefault.jpg" alt="">${badge}
+      <div class="play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.1-5.9-5.9C55.3.5 34 .5 34 .5S12.7.5 7.4 1.8C4.5 2.6 2.3 4.8 1.5 7.7.2 13 .2 24 .2 24s0 11 1.3 16.3c.8 2.9 3 5.1 5.9 5.9C12.7 47.5 34 47.5 34 47.5s21.3 0 26.6-1.3c2.9-.8 5.1-3 5.9-5.9C67.8 35 67.8 24 67.8 24s0-11-1.3-16.3z" fill="#cc0000"/><path d="M27 34l18-10-18-10z" fill="#fff"/></svg></div></div>`;
+  } else {
+    thumb=`<div class="prancha-thumb"><span class="doc">&#128220;</span>${badge}</div>`;
+  }
+  const meta=[i.autor,fmtDate(i.data)].filter(Boolean).join('<span class="dot">·</span>');
+  const tags=i.tags.slice(0,3).map(t=>`<span class="c-tag">${t}</span>`).join('');
+  let actions='';
+  if(i.url) actions+=`<a class="act act-yt" href="${i.url}" target="_blank" rel="noopener">Assistir</a>`;
+  if(i.pdf) actions+=`<a class="act act-pdf" href="${i.pdf}" target="_blank" rel="noopener">Prancha PDF</a>`;
+  if(!actions) actions='<span class="act" style="opacity:.5">Em breve</span>';
+  return `<article class="card">${thumb}<div class="body"><p class="c-title">${i.titulo}</p>
+    <p class="c-meta">${meta||'&nbsp;'}</p><div class="c-tags">${tags}</div><div class="c-actions">${actions}</div></div></article>`;
+}
+
+function render(){
+  // sync group chips highlight class
+  chipRow(document.getElementById('fgrupo'),grupos,'grupo',{'Grupo de Estudos Urânia':'ur','EpaminondasOnline':'ep'});
+  chipRow(document.getElementById('ftipo'),tipos,'tipo');
+  document.getElementById('ftema').value=state.tema;
+  document.getElementById('fano').value=state.ano;
+  let res=ACERVO.filter(match);
+  res.sort((a,b)=>(b.data||'0').localeCompare(a.data||'0'));
+  const g=document.getElementById('grid'), e=document.getElementById('empty');
+  g.innerHTML=res.map(card).join('');
+  e.style.display=res.length?'none':'block';
+  document.getElementById('count').innerHTML=`<b>${res.length}</b> resultado${res.length===1?'':'s'}`+(state.grupo?` em ${GSHORT[state.grupo]}`:'');
+}
+render();
 </script>
 </body>
 </html>
