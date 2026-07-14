@@ -6,7 +6,11 @@
 <title>Buscar — Lapidarium</title>
 <meta name="description" content="Busca no acervo do Lapidarium.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'><polygon points='42,8 78,74 6,74' fill='none' stroke='%23c9a84c' stroke-width='4'/><ellipse cx='42' cy='54' rx='12' ry='8' fill='none' stroke='%23c9a84c' stroke-width='2.5'/><circle cx='42' cy='54' r='3' fill='%23c9a84c'/></svg>">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#171510">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="lapidarium.css">
+<link rel="stylesheet" href="app.css">
 <style>
   .grptoggle{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px;justify-content:center}
   .gt{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-d);background:transparent;border:1px solid var(--border);padding:7px 16px;cursor:pointer;transition:all .25s}
@@ -64,6 +68,8 @@
   <button class="gt ativa" data-g="">Todos os acervos</button>
   <button class="gt" data-g="EpaminondasOnline">Epaminondas</button>
   <button class="gt" data-g="Grupo de Estudos Urânia">Urânia</button>
+  <button class="gt gt-col" data-c="favoritas" title="Suas pedras favoritas (deste aparelho)">☆ Minhas pedras</button>
+  <button class="gt gt-col" data-c="lapidadas" title="Pedras que você já lapidou (vistas)">✓ Já lapidadas</button>
 </div>
 <div class="chips-busca">
   <button class="chipb" data-q="Aprendiz">Aprendiz</button>
@@ -84,10 +90,12 @@
 <script src="config.js"></script>
 <script src="busca.js"></script>
 <script src="ui.js"></script>
+<script src="app.js"></script>
 <script>
 (async () => {
   const $ = (id) => document.getElementById(id);
   let filtros = {};
+  let colecao = null;   // null | "favoritas" | "lapidadas"
   const vivos = await lapiFetch("video");
   await LapidariumBusca.iniciar(
     (vivos && vivos.length)
@@ -99,16 +107,29 @@
   const dataBR = (d) => (d||"").slice(0,10).split('-').reverse().join('/');
   function render() {
     const q = $("consulta").value;
-    const r = LapidariumBusca.buscar(q, filtros, { limite: 80 });
+    const r = LapidariumBusca.buscar(q, filtros, { limite: 500 });
     const ativos = Object.keys(filtros).filter(k=>filtros[k]);
+    let lista = r.resultados;
+    if (colecao && window.LapidariumApp) {
+      lista = lista.filter(({item}) => {
+        const k = LapidariumApp.chave(item);
+        return colecao === "favoritas" ? LapidariumApp.ehFavorita(k) : LapidariumApp.ehLapidada(k);
+      });
+    }
+    const total = colecao ? lista.length : r.total;
+    lista = lista.slice(0, 80);
     let aviso = (r.expansao.gruposAtivados.length && q) ? "Busca ampliada pelo <b>tesauro maconico</b>." : "";
-    if (ativos.length) aviso += (aviso?"  ":"") + '<button class="limpar" onclick="window.__limpar()">limpar filtros</button>';
+    if (ativos.length || colecao) aviso += (aviso?"  ":"") + '<button class="limpar-x" onclick="window.__limpar()"><span class="x">✕</span>Limpar filtros</button>';
     $("expansao").innerHTML = aviso;
-    if (!r.resultados.length) {
-      $("resultados").innerHTML = "<p class='vazio'>Nenhuma pedra encontrada neste acervo. Tente outro termo, ou volte para <b>Todos os acervos</b>.</p>";
+    if (!lista.length) {
+      $("resultados").innerHTML = colecao
+        ? "<p class='vazio'>"+(colecao==="favoritas"
+            ? "Nenhuma pedra favoritada ainda. Toque em <b>☆</b> num card para guardá-la aqui."
+            : "Nenhuma pedra lapidada ainda. Assista a um vídeo ou toque em <b>✓</b> num card.")+"</p>"
+        : "<p class='vazio'>Nenhuma pedra encontrada neste acervo. Tente outro termo, ou volte para <b>Todos os acervos</b>.</p>";
     } else {
-      let html = '<p class="contagem">'+r.total+' '+(r.total===1?"item":"itens")+'</p><div class="vgrid">';
-      r.resultados.forEach(({item}) => {
+      let html = '<p class="contagem">'+total+' '+(total===1?"item":"itens")+(colecao?(colecao==="favoritas"?" na sua coleção":" já lapidados por você"):"")+'</p><div class="vgrid">';
+      lista.forEach(({item}) => {
         html += '<a class="vc" href="'+(item.youtube_id?('video.html?v='+item.youtube_id):(item.anexo||item.anexos||'#'))+'"'+(item.youtube_id?'':' target="_blank" rel="noopener"')+'>'
           + '<div class="vc-thumb">'+(item.thumbnail?'<img class="vc-img" src="'+item.thumbnail+'" alt="" loading="lazy">':'')
           + '<span class="vc-badge '+badge(item.origem)+'">'+(item.origem||'').replace('Grupo de Estudos ','')+'</span></div>'
@@ -116,9 +137,11 @@
           + '<p class="vc-meta">'+[dataBR(item.data),item.autor].filter(Boolean).join(' · ')+'</p>'
           + ((item.tags&&item.tags.length)?'<div class="vc-tags">'+item.tags.slice(0,3).map(t=>'<span class="vtag">'+t+'</span>').join('')+'</div>':'')
           + lapiAnexoBtn(item)
+          + (window.LapidariumApp?LapidariumApp.botoesHtml(item):'')
           + '</div></a>';
       });
       $("resultados").innerHTML = html + '</div>';
+      if(window.LapidariumApp)LapidariumApp.decorarCards($("resultados"));
     }
     let fh = '';
     FACETAS.forEach(([chave,rot]) => {
@@ -132,14 +155,25 @@
       const c=b.dataset.chave, v=b.dataset.valor; filtros[c]=(filtros[c]===v)?null:v; render();
     });
   }
-  $("grptoggle").querySelectorAll(".gt").forEach(b => b.onclick = () => {
-    $("grptoggle").querySelectorAll(".gt").forEach(x=>x.classList.remove("ativa"));
+  $("grptoggle").querySelectorAll(".gt:not(.gt-col)").forEach(b => b.onclick = () => {
+    $("grptoggle").querySelectorAll(".gt:not(.gt-col)").forEach(x=>x.classList.remove("ativa"));
     b.classList.add("ativa"); filtros.origem = b.dataset.g || null; render();
   });
+  $("grptoggle").querySelectorAll(".gt-col").forEach(b => b.onclick = () => {
+    const nova = (colecao === b.dataset.c) ? null : b.dataset.c;
+    colecao = nova;
+    $("grptoggle").querySelectorAll(".gt-col").forEach(x=>x.classList.toggle("ativa", x.dataset.c===nova));
+    render();
+  });
   document.querySelectorAll(".chipb").forEach(b => b.onclick = () => { $("consulta").value = b.dataset.q; render(); $("consulta").focus(); });
-  window.__limpar = () => { filtros = {}; $("consulta").value=""; $("grptoggle").querySelectorAll(".gt").forEach((x,i)=>x.classList.toggle("ativa",i===0)); render(); };
+  window.__limpar = () => { filtros = {}; colecao = null; $("consulta").value=""; $("grptoggle").querySelectorAll(".gt").forEach((x,i)=>x.classList.toggle("ativa",i===0)); render(); };
   const params = new URLSearchParams(location.search);
   if (params.get('q')) $("consulta").value = params.get('q');
+  const ver = params.get('ver');
+  if (ver === 'favoritas' || ver === 'lapidadas') {
+    colecao = ver;
+    $("grptoggle").querySelectorAll(".gt-col").forEach(x=>x.classList.toggle("ativa", x.dataset.c===ver));
+  }
   let t; $("consulta").oninput = () => { clearTimeout(t); t = setTimeout(render, 180); };
   render();
 })();

@@ -4,19 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vídeo — Lapidarium</title>
-<meta name="description" content="Vídeo do acervo do Lapidarium.">
+<meta name="description" content="Bancada de estudo do Lapidarium — vídeo, prancha e pedras relacionadas.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'><polygon points='42,8 78,74 6,74' fill='none' stroke='%23c9a84c' stroke-width='4'/><ellipse cx='42' cy='54' rx='12' ry='8' fill='none' stroke='%23c9a84c' stroke-width='2.5'/><circle cx='42' cy='54' r='3' fill='%23c9a84c'/></svg>">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#171510">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="lapidarium.css">
+<link rel="stylesheet" href="app.css">
 <style>
   .vwrap{max-width:860px;margin:0 auto}
-  .v-player{position:relative;width:100%;aspect-ratio:16/9;background:#000;border:1px solid var(--border);margin-bottom:20px}
+  .v-player{position:relative;width:100%;aspect-ratio:16/9;background:#000;border:1px solid var(--border);margin-bottom:20px;animation:fu .7s ease both}
   .v-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
   .v-title{font-family:'Cinzel',serif;font-size:clamp(1.2rem,3vw,1.7rem);font-weight:600;color:var(--text);letter-spacing:.04em;margin-bottom:8px;line-height:1.3}
   .v-meta{color:var(--gold-d);font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
   .v-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
   .v-desc{color:var(--text-d);font-size:1.02rem;line-height:1.6;margin-bottom:8px;white-space:pre-wrap}
-  .mat-list{display:flex;flex-direction:column;gap:8px;max-width:520px;margin:0 auto 30px}
-  .mat-item{display:flex;align-items:center;gap:12px;border:1px solid var(--border);background:var(--panel);padding:12px 16px;text-decoration:none;color:var(--text);font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;transition:border-color .3s,background .3s}
+  .mat-list{display:flex;flex-direction:column;gap:8px;max-width:520px;margin:0 auto 14px}
+  .mat-item{display:flex;align-items:center;gap:12px;border:1px solid var(--border);background:var(--panel);padding:12px 16px;text-decoration:none;color:var(--text);font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;transition:border-color .3s,background .3s;cursor:pointer}
   .mat-item:hover{border-color:var(--gold);background:rgba(201,168,76,.06)}
   .mat-ico{color:var(--gold);font-size:1.1rem}
 </style>
@@ -27,38 +31,121 @@
 <header>
   <nav class="topnav"><a href="index.html">Início</a><a href="buscar.html">Acervo</a><a href="epaminondas.html">Epaminondas</a><a href="urania.html">Urânia</a><a href="calendar.html">Calendário</a><a href="publicar.html">Acesso Restrito</a></nav>
 </header>
-<div class="vwrap"><main id="video-box"><p class="vazio">Carregando o vídeo…</p></main></div>
+<div class="vwrap"><main id="video-box"><p class="vazio">Preparando a bancada…</p></main></div>
 <footer><p>Lapidarium · In Nomine G∴A∴D∴U∴ · Omnia Vincit Lux</p></footer>
 </div>
 <script src="config.js"></script>
 <script src="ui.js"></script>
+<script src="app.js"></script>
 <script>
 (async () => {
-  const box=document.getElementById('video-box');
-  const vid=new URLSearchParams(location.search).get('v')||new URLSearchParams(location.search).get('id');
-  if(!vid){ box.innerHTML="<p class='vazio'>Vídeo não especificado. <a href='buscar.html'>Ir ao acervo</a></p>"; return; }
-  let vids = await lapiFetch('video');
-  if(!vids){ try{ const a=await (await fetch('videos-epaminondas.json')).json(); const b=await (await fetch('videos-urania.json')).json(); vids=(a.videos||[]).concat(b.videos||[]); }catch(e){ vids=[]; } }
-  const v=(vids||[]).find(x=> (x.youtube_id||x.id)===vid);
-  if(!v){ box.innerHTML="<p class='vazio'>Vídeo não encontrado no acervo. <a href='buscar.html'>Voltar ao acervo</a></p>"; return; }
-  const yid=v.youtube_id||vid;
-  document.title=(v.titulo||'Vídeo')+' — Lapidarium';
-  let matsHtml='';
-  if(v.anexos){
-    const items=(''+v.anexos).split(' ;; ').map(s=>s.trim()).filter(Boolean)
-      .map(s=>{const p=s.split('|');return{r:(p[0]||'Material').trim(),u:(p[1]||'').trim()};}).filter(m=>m.u);
-    if(items.length) matsHtml='<p class="sec-label">Materiais que acompanham</p><div class="mat-list">'
-      +items.map(m=>'<a class="mat-item" href="'+m.u+'" target="_blank" rel="noopener"><span class="mat-ico">▤</span>'+m.r+'</a>').join('')+'</div>';
+  const box = document.getElementById('video-box');
+  const esc = LapidariumApp.esc;
+  const vid = new URLSearchParams(location.search).get('v') || new URLSearchParams(location.search).get('id');
+  if (!vid) { box.innerHTML = "<p class='vazio'>Pedra não especificada. <a href='buscar.html'>Ir ao acervo</a></p>"; return; }
+
+  const itens = await LapidariumApp.acervo();   // API viva → fallback JSON (mesma fonte das outras páginas)
+  const v = itens.find(x => LapidariumApp.chave(x) === vid || x.youtube_id === vid);
+  if (!v) { box.innerHTML = "<p class='vazio'>Pedra não encontrada no acervo. <a href='buscar.html'>Voltar ao acervo</a></p>"; return; }
+  const k = LapidariumApp.chave(v);
+  const yid = v.youtube_id || '';
+  document.title = (v.titulo || 'Vídeo') + ' — Lapidarium';
+
+  // marca como lapidada ao abrir a bancada + registra "continuar de onde parou"
+  LapidariumApp.marcarLapidada(k);
+  LapidariumApp.registrarUltima(v);
+
+  // ── anexos: aceita 'anexo' (JSON: url pura) e 'anexos' (API: "rótulo|url ;; …") ──
+  function anexosDe(item) {
+    const raw = item.anexo || item.anexos || '';
+    if (!raw) return [];
+    return ('' + raw).split(' ;; ').map(s => s.trim()).filter(Boolean).map(s => {
+      if (s.indexOf('|') >= 0) { const p = s.split('|'); return { r: (p[0] || 'Prancha PDF').trim(), u: (p[1] || '').trim() }; }
+      return { r: 'Prancha PDF', u: s };
+    }).filter(m => m.u);
   }
-  const tagsArr = Array.isArray(v.tags)?v.tags:(''+(v.tags||'')).split(';');
-  box.innerHTML=
-    '<div class="v-player"><iframe src="https://www.youtube.com/embed/'+yid+'" title="'+(v.titulo||'')+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>'
-    +'<h1 class="v-title">'+(v.titulo||'')+'</h1>'
-    +'<p class="v-meta">'+[(v.origem||'').replace('Grupo de Estudos ',''),v.palestrante||v.autor||'',lapiData(v.data).split('-').reverse().join('/')].filter(Boolean).join(' · ')+'</p>'
-    +((tagsArr.filter(t=>(''+t).trim()).length)?'<div class="v-tags">'+tagsArr.map(t=>(''+t).trim()).filter(Boolean).map(t=>'<span class="vtag">'+t+'</span>').join('')+'</div>':'')
-    +(v.descricao?'<p class="v-desc">'+v.descricao+'</p>':'')
-    +matsHtml
-    +'<p style="margin-top:22px;text-align:center"><a class="mat-item" style="display:inline-flex;max-width:none" href="https://www.youtube.com/watch?v='+yid+'" target="_blank" rel="noopener"><span class="mat-ico">▶</span>Assistir no YouTube</a></p>';
+  function drivePreview(u) {
+    const m = ('' + u).match(/drive\.google\.com\/file\/d\/([^\/]+)/);
+    return m ? ('https://drive.google.com/file/d/' + m[1] + '/preview') : '';
+  }
+  const mats = anexosDe(v);
+  const preview = mats.length ? drivePreview(mats[0].u) : '';
+
+  // ── player (ou a prancha como peça principal, se não houver vídeo) ──
+  let principal = '';
+  if (yid) {
+    principal = '<div class="v-player"><iframe src="https://www.youtube.com/embed/' + esc(yid) + '" title="' + esc(v.titulo || '') + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
+  } else if (preview) {
+    principal = '<div class="v-prancha"><iframe src="' + esc(preview) + '" title="' + esc(v.titulo || 'Prancha') + '" loading="lazy" allow="autoplay"></iframe></div>';
+  }
+
+  // ── materiais (lista + leitura embutida quando for vídeo com prancha) ──
+  let matsHtml = '';
+  if (mats.length) {
+    matsHtml = '<p class="sec-label">Prancha &amp; Materiais</p><div class="mat-list">'
+      + mats.map(m => '<a class="mat-item" href="' + esc(m.u) + '" target="_blank" rel="noopener"><span class="mat-ico">▤</span>' + esc(m.r) + '</a>').join('')
+      + '</div>';
+    if (yid && preview) {
+      matsHtml += '<div class="v-prancha" id="prancha-emb" hidden><iframe data-src="' + esc(preview) + '" title="Prancha" loading="lazy"></iframe></div>'
+        + '<p style="text-align:center;margin-bottom:20px"><button class="mat-item" style="display:inline-flex" id="lerPrancha"><span class="mat-ico">◫</span>Ler a prancha aqui</button></p>';
+    }
+  }
+
+  const tagsArr = (v.tags || []).map(t => ('' + t).trim()).filter(Boolean);
+
+  // ── relacionados e próxima pedra ──
+  const rel = LapidariumApp.relacionados(v, itens, 7);
+  const prox = rel.length ? rel[0] : null;
+  const cardRel = (o) => {
+    const href = o.youtube_id ? ('video.html?v=' + encodeURIComponent(LapidariumApp.chave(o))) : (o.anexo || '#');
+    const th = LapidariumApp.thumbDe(o);
+    const badge = (o.origem || '').indexOf('pamin') >= 0 ? 'b-ep' : 'b-ur';
+    return '<a class="vc" href="' + esc(href) + '"' + (o.youtube_id ? '' : ' target="_blank" rel="noopener"') + '>'
+      + '<div class="vc-thumb">' + (th ? '<img class="vc-img" src="' + esc(th) + '" alt="" loading="lazy">' : '')
+      + '<span class="vc-badge ' + badge + '">' + esc((o.origem || '').replace('Grupo de Estudos ', '').replace('EpaminondasOnline', 'Epaminondas')) + '</span></div>'
+      + '<div class="vc-body"><p class="vc-title">' + esc(o.titulo || '') + '</p>'
+      + '<p class="vc-meta">' + esc([(o.data || '').slice(0, 10).split('-').reverse().join('/'), o.autor].filter(Boolean).join(' · ')) + '</p>'
+      + lapiAnexoBtn(o) + LapidariumApp.botoesHtml(o) + '</div></a>';
+  };
+
+  box.innerHTML =
+    principal
+    + '<h1 class="v-title">' + esc(v.titulo || '') + '</h1>'
+    + '<p class="v-meta">' + esc([(v.origem || '').replace('Grupo de Estudos ', ''), v.autor,
+        (v.data || '').slice(0, 10).split('-').reverse().join('/'),
+        v.tipo === 'prancha' ? 'Prancha' : ''].filter(Boolean).join(' · ')) + '</p>'
+    + '<div class="v-acoes">' + LapidariumApp.botoesHtml(v).replace('la-acoes', 'la-acoes v-acoes-in')
+    + '<button type="button" class="la-btn" id="btnCompart" title="Copiar o link desta pedra">⎘ Compartilhar</button>'
+    + (yid ? '<a class="la-btn" style="text-decoration:none" href="https://www.youtube.com/watch?v=' + esc(yid) + '" target="_blank" rel="noopener">▶ No YouTube</a>' : '')
+    + '</div>'
+    + (tagsArr.length ? '<div class="v-tags">' + tagsArr.map(t => '<span class="vtag">' + esc(t) + '</span>').join('') + '</div>' : '')
+    + (v.descricao ? '<p class="v-desc">' + esc(v.descricao) + '</p>' : '')
+    + matsHtml
+    + (prox ? '<div class="v-prox"><a class="pdia-cta" href="' + esc(prox.youtube_id ? ('video.html?v=' + encodeURIComponent(LapidariumApp.chave(prox))) : (prox.anexo || '#')) + '">Próxima pedra ▸ ' + esc((prox.titulo || '').slice(0, 60)) + '</a></div>' : '')
+    + (rel.length ? '<div class="v-rel"><p class="sec-label">Pedras Relacionadas</p><div class="vgrid reduzida">' + rel.map(cardRel).join('') + '</div></div>' : '');
+
+  LapidariumApp.decorarCards(box);
+
+  // compartilhar: Web Share quando houver, senão copia o link
+  const btnC = document.getElementById('btnCompart');
+  if (btnC) btnC.addEventListener('click', async () => {
+    const url = (window.LAPIDARIUM_CONFIG && LAPIDARIUM_CONFIG.SITE_URL ? LAPIDARIUM_CONFIG.SITE_URL : location.origin + location.pathname.replace(/[^\/]*$/, '')) + 'video.html?v=' + encodeURIComponent(k);
+    try {
+      if (navigator.share) { await navigator.share({ title: v.titulo || 'Lapidarium', url: url }); return; }
+      await navigator.clipboard.writeText(url);
+      btnC.textContent = '✓ Link copiado'; setTimeout(() => { btnC.textContent = '⎘ Compartilhar'; }, 1800);
+    } catch (e) {}
+  });
+
+  // "ler a prancha aqui": só carrega o iframe quando pedirem (embed leve)
+  const ler = document.getElementById('lerPrancha');
+  if (ler) ler.addEventListener('click', () => {
+    const emb = document.getElementById('prancha-emb');
+    const ifr = emb.querySelector('iframe');
+    if (!ifr.src) ifr.src = ifr.dataset.src;
+    emb.hidden = !emb.hidden;
+    ler.innerHTML = emb.hidden ? '<span class="mat-ico">◫</span>Ler a prancha aqui' : '<span class="mat-ico">◫</span>Recolher a prancha';
+  });
 })();
 </script>
 </body>

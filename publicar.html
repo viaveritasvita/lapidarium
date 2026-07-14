@@ -6,7 +6,11 @@
 <title>Área Restrita — Lapidarium</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'><polygon points='42,8 78,74 6,74' fill='none' stroke='%23c9a84c' stroke-width='4'/><ellipse cx='42' cy='54' rx='12' ry='8' fill='none' stroke='%23c9a84c' stroke-width='2.5'/><circle cx='42' cy='54' r='3' fill='%23c9a84c'/></svg>">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#171510">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="lapidarium.css">
+<link rel="stylesheet" href="app.css">
 <style>
   .pmode{display:flex;gap:8px;justify-content:center;margin:14px 0}
   .pm{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-d);background:transparent;border:1px solid var(--border);padding:8px 18px;cursor:pointer;transition:all .25s}
@@ -165,6 +169,7 @@
 
 <script src="config.js"></script>
 <script src="ui.js"></script>
+<script src="app.js"></script>
 <script>
 const CONFIG = window.LAPIDARIUM_CONFIG || { API_URL: "COLE_AQUI_A_URL_DO_APPS_SCRIPT", SITE_URL: "https://viaveritasvita.github.io/lapidarium/" };
 const $ = (id) => document.getElementById(id);

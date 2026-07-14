@@ -6,7 +6,11 @@
 <title>EpaminondasOnline — Lapidarium</title>
 <meta name="description" content="Acervo em vídeo do grupo de estudos EpaminondasOnline, no Lapidarium.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'><polygon points='42,8 78,74 6,74' fill='none' stroke='%23c9a84c' stroke-width='4'/><ellipse cx='42' cy='54' rx='12' ry='8' fill='none' stroke='%23c9a84c' stroke-width='2.5'/><circle cx='42' cy='54' r='3' fill='%23c9a84c'/></svg>">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#171510">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="lapidarium.css">
+<link rel="stylesheet" href="app.css">
 </head>
 <body class="theme-ep">
 <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">☀ Tema</button>
@@ -36,6 +40,7 @@
 
 <script src="config.js"></script>
 <script src="ui.js"></script>
+<script src="app.js"></script>
 <script>
 (async () => {
   const grade = document.getElementById('grade');
@@ -52,8 +57,9 @@
         <div class="vc-body"><p class="vc-title">${v.titulo||''}</p>
           <p class="vc-meta">${lapiData(v.data).split('-').reverse().join('/')}${v.palestrante?' · '+v.palestrante:''}</p>
           ${(v.tags&&v.tags.length)?`<div class="vc-tags">${v.tags.slice(0,3).map(t=>`<span class="vtag">${t}</span>`).join('')}</div>`:''}
-        </div></a>`).join('') + `</div>
+        ${lapiAnexoBtn(v)}${window.LapidariumApp?LapidariumApp.botoesHtml(v):''}</div></a>`).join('') + `</div>
       <p class="expansao" style="text-align:center">Acervo em expansão — em breve os ~400 vídeos completos e a busca por transcrição.</p>`;
+    if(window.LapidariumApp)LapidariumApp.decorarCards(grade);
   } catch(e) {
     grade.innerHTML = "<p class='vazio'>Não foi possível carregar o acervo (verifique a conexão).</p>";
   }
