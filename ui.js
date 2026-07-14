@@ -3,8 +3,12 @@
 // ══ TEMA ══
 function toggleTheme(){
   const l=document.body.classList.toggle('light');
+  try{localStorage.setItem('lapidarium:tema',l?'light':'dark')}catch(e){}
   const b=document.getElementById('themeBtn');
-  if(b)b.textContent=l?'☾ Tema':'☀ Tema';
+  if(!b)return;
+  const i=b.querySelector('.tb-ico');
+  if(i)i.textContent=l?'☾':'☀';
+  else b.textContent=l?'☾ Tema':'☀ Tema';
 }
 
 // ══ DELTA — olho vivo (rastreio suave · deriva ociosa · piscar) ══

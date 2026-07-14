@@ -3,7 +3,8 @@
    - Favoritos ("minhas pedras") e Visto ("pedras lapidadas")
      em localStorage, por aparelho, sem login.
    - Pedra do Dia (determinística pela data) e Pedra ao Acaso
-     (roleta com o delta girando).
+     (o delta brilha, pisca e navega).
+   - Barra superior (delta + busca + Tema/Instalar/Acaso).
    - Tema claro/escuro persistente · registro do Service Worker.
    Chaves de localStorage:
      lapidarium:favoritos  → array de ids
@@ -14,10 +15,22 @@
 (function () {
   "use strict";
 
+  // ── PISCADA AMBIENTE do delta da barra — dosagem central ──
+  // PISCA_AMBIENTE: liga/desliga · PISCA_PRIMEIRA_MS: 1ª piscada após carregar
+  // PISCA_MIN_MS..PISCA_MAX_MS: intervalo aleatório entre as piscadas seguintes
+  var PISCA_AMBIENTE = true,
+      PISCA_PRIMEIRA_MS = 1500,
+      PISCA_MIN_MS = 50000,
+      PISCA_MAX_MS = 70000;
+
   var K_FAV = 'lapidarium:favoritos',
       K_VISTO = 'lapidarium:vistos',
       K_ULT = 'lapidarium:ultima',
       K_TEMA = 'lapidarium:tema';
+
+  function movReduzido() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
 
   // ---------- util ----------
   function esc(s) {
@@ -195,24 +208,54 @@
       + '</div></div>';
   }
 
-  // ---------- Pedra ao Acaso (roleta com o delta) ----------
-  var DELTA_SVG =
-    '<svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg">'
-    + '<polygon points="42,5 78,75 6,75" stroke="#c9a84c" stroke-width="2.4" fill="rgba(201,168,76,0.05)"/>'
-    + '<ellipse cx="42" cy="54" rx="12" ry="7.5" stroke="#f0d98a" stroke-width="1.4" fill="none"/>'
-    + '<circle cx="42" cy="54" r="5" stroke="#c9a84c" stroke-width="1" fill="rgba(201,168,76,0.12)"/>'
-    + '<circle cx="42" cy="54" r="2.2" fill="#f0d98a"/></svg>';
+  // ---------- Delta (SVG reutilizável, com olho piscável — sem ids p/ não
+  // conflitar com o delta-herói das subpáginas animado pelo ui.js) ----------
+  function deltaSvg() {
+    return '<svg viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
+      + '<polygon points="42,5 78,75 6,75" stroke="#c9a84c" stroke-width="2.4" fill="rgba(201,168,76,0.05)"/>'
+      + '<polygon points="42,18 65,64 19,64" stroke="#c9a84c" stroke-width=".5" stroke-dasharray="2,3.5" fill="none" opacity=".25"/>'
+      + '<g class="d-eye">'
+      + '<ellipse cx="42" cy="54" rx="12" ry="7.5" stroke="#f0d98a" stroke-width="1.4" fill="none"/>'
+      + '<circle cx="42" cy="54" r="5" stroke="#c9a84c" stroke-width="1" fill="rgba(201,168,76,0.12)"/>'
+      + '<circle cx="42" cy="54" r="2.2" fill="#f0d98a"/>'
+      + '<circle cx="43.2" cy="52.8" r=".7" fill="rgba(255,248,220,0.8)"/>'
+      + '</g></svg>';
+  }
+  var DELTA_SVG = deltaSvg();
 
+  // ---------- piscada do delta (reutilizável) ----------
+  // el = elemento que CONTÉM o svg do delta (ex.: .tb-delta, .la-acaso-delta)
+  function piscar(el) {
+    if (movReduzido()) return;
+    var alvo = el || document.querySelector('.tb-delta');
+    if (!alvo || !alvo.querySelector('.d-eye')) return;
+    alvo.classList.remove('piscando');
+    void alvo.offsetWidth;                      // reinicia a animação CSS
+    alvo.classList.add('piscando');
+  }
+  function agendarPiscadas() {
+    if (!PISCA_AMBIENTE || movReduzido()) return;
+    var d = document.getElementById('tbDelta');
+    if (!d) return;
+    setTimeout(function () { piscar(d); }, PISCA_PRIMEIRA_MS);
+    (function proxima() {
+      setTimeout(function () { piscar(d); proxima(); },
+        PISCA_MIN_MS + Math.random() * (PISCA_MAX_MS - PISCA_MIN_MS));
+    })();
+  }
+
+  // ---------- Pedra ao Acaso (o delta brilha forte, dá UMA piscada e navega) ----------
   var _sorteando = false;
   async function pedraAoAcaso() {
     if (_sorteando) return;
     _sorteando = true;
     var ov = document.createElement('div');
     ov.className = 'la-overlay';
-    ov.innerHTML = '<div class="la-roleta girando">' + DELTA_SVG
+    ov.innerHTML = '<div class="la-acaso">'
+      + '<span class="la-acaso-delta">' + DELTA_SVG + '</span>'
       + '<p class="la-rot-kicker">Lapide uma pedra ao acaso</p>'
       + '<p class="la-rot-title">O acaso escolhe. O Irmão lapida.</p>'
-      + '<p class="la-rot-sub">girando a pedra…</p></div>';
+      + '<p class="la-rot-sub">consultando o acaso…</p></div>';
     document.body.appendChild(ov);
     requestAnimationFrame(function () { ov.classList.add('on'); });
     function fechar() {
@@ -228,27 +271,24 @@
     var itens = await acervo();
     if (!itens.length) { fechar(); return; }
     var alvo = itens[Math.floor(Math.random() * itens.length)];
-    var titulo = ov.querySelector('.la-rot-title'), sub = ov.querySelector('.la-rot-sub');
-    var ticks = 0, max = 14;
-    var timer = setInterval(function () {
-      ticks++;
-      if (!document.body.contains(ov)) { clearInterval(timer); return; }
-      if (ticks < max) {
-        titulo.textContent = itens[Math.floor(Math.random() * itens.length)].titulo || '…';
-      } else {
-        clearInterval(timer);
-        titulo.textContent = alvo.titulo || '(sem título)';
-        titulo.classList.add('revelada');
-        sub.textContent = [(alvo.origem || '').replace('Grupo de Estudos ', ''),
-          alvo.tipo === 'prancha' ? 'prancha' : 'vídeo'].filter(Boolean).join(' · ');
-        setTimeout(function () {
-          if (!document.body.contains(ov)) return;
-          var url = destino(alvo);
-          if (!alvo.youtube_id && alvo.anexo) { window.open(url, '_blank', 'noopener'); fechar(); }
-          else location.href = url;
-        }, 1100);
-      }
-    }, 95);
+    var delta = ov.querySelector('.la-acaso-delta'),
+        titulo = ov.querySelector('.la-rot-title'),
+        sub = ov.querySelector('.la-rot-sub');
+    delta.classList.add('brilha');                       // brilho forte…
+    setTimeout(function () { piscar(delta); }, 280);     // …e UMA piscada
+    setTimeout(function () {
+      if (!document.body.contains(ov)) return;
+      titulo.textContent = alvo.titulo || '(sem título)';
+      titulo.classList.add('revelada');
+      sub.textContent = [(alvo.origem || '').replace('Grupo de Estudos ', ''),
+        alvo.tipo === 'prancha' ? 'prancha' : 'vídeo'].filter(Boolean).join(' · ');
+    }, 480);
+    setTimeout(function () {                             // ~1,1s: navega
+      if (!document.body.contains(ov)) return;
+      var url = destino(alvo);
+      if (!alvo.youtube_id && alvo.anexo) { window.open(url, '_blank', 'noopener'); fechar(); }
+      else location.href = url;
+    }, 1150);
   }
 
   // ---------- tema persistente ----------
@@ -258,7 +298,11 @@
       if (t === 'light') document.body.classList.add('light');
       else if (t === 'dark') document.body.classList.remove('light');
       var b = document.getElementById('themeBtn');
-      if (b && document.body.classList.contains('light')) b.textContent = '☾ Tema';
+      if (!b) return;
+      var claro = document.body.classList.contains('light');
+      var ico = b.querySelector('.tb-ico');
+      if (ico) ico.textContent = claro ? '☾' : '☀';
+      else if (claro) b.textContent = '☾ Tema';
     } catch (e) {}
   }
   function vigiarTema() {
@@ -290,17 +334,20 @@
       .map(function (r) { return r.o; });
   }
 
-  // ---------- botão fixo + atalho de teclado ----------
+  // ---------- barra superior (marca + delta, busca, ações) ----------
+  // O markup da barra é estático em cada página (.topbar); aqui a gente
+  // injeta o delta, liga o Acaso e agenda as piscadas ambiente.
+  function montarBarra() {
+    var d = document.getElementById('tbDelta');
+    if (d && !d.firstChild) d.innerHTML = DELTA_SVG;
+    var a = document.getElementById('btnAcaso');
+    if (a) a.addEventListener('click', pedraAoAcaso);
+    agendarPiscadas();
+  }
+
+  // ---------- atalho de teclado (A = Acaso) ----------
   function montarAtalhos() {
     if (location.pathname.indexOf('publicar') >= 0) return;
-    if (!document.querySelector('.acaso-btn')) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'acaso-btn';
-      b.title = 'Pedra ao Acaso (tecla A)';
-      b.innerHTML = '⟡ <span class="acaso-rotulo">Acaso</span>';
-      b.addEventListener('click', pedraAoAcaso);
-      document.body.appendChild(b);
-    }
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'a' && e.key !== 'A') return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -357,16 +404,10 @@
     ov.querySelector('.instalar-fechar').addEventListener('click', fechar);
   }
   function montarInstalar() {
-    if (location.pathname.indexOf('publicar') >= 0) return;
-    var rodape = document.querySelector('footer');
-    if (!rodape || document.getElementById('btnInstalar')) return;
+    var b = document.getElementById('btnInstalar');   // botão fixo da barra superior
+    if (!b) return;
     var jaInstalado = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
-    if (jaInstalado) return;
-    var b = document.createElement('button');
-    b.type = 'button'; b.id = 'btnInstalar'; b.className = 'instalar-btn';
-    b.innerHTML = '&#8681; Instalar app';
-    b.title = 'Instalar o Lapidarium como aplicativo';
-    rodape.appendChild(b);
+    if (jaInstalado) { b.hidden = true; return; }
     window.addEventListener('appinstalled', function () { _instEvt = null; b.hidden = true; });
     b.addEventListener('click', function () {
       if (_instEvt) {
@@ -390,7 +431,7 @@
 
   // ---------- init ----------
   function init() {
-    aplicarTema(); vigiarTema(); montarAtalhos(); montarPedraDia(); montarInstalar(); registrarSW();
+    aplicarTema(); vigiarTema(); montarBarra(); montarAtalhos(); montarPedraDia(); montarInstalar(); registrarSW();
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
@@ -402,6 +443,7 @@
     marcarLapidada: marcarLapidada, contadores: contadores,
     botoesHtml: botoesHtml, decorarCards: decorarCards,
     pedraDoDia: pedraDoDia, pedraAoAcaso: pedraAoAcaso,
+    piscar: piscar, montarBarra: montarBarra,
     relacionados: relacionados, registrarUltima: registrarUltima, ultima: ultima,
     esc: esc
   };

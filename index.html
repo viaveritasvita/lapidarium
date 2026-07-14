@@ -35,23 +35,14 @@ body{background:var(--s1);color:var(--text);font-family:'EB Garamond',serif;over
 /* ── LAYOUT ── */
 .wrap{position:relative;z-index:1;max-width:940px;margin:0 auto;padding:0 24px 60px}
 
-/* ── HEADER ── */
-header{text-align:center;padding:52px 0 0}
-
-.delta-wrap{width:84px;height:84px;margin:0 auto 22px;position:relative;cursor:default;display:flex;align-items:center;justify-content:center}
-.delta-halo{position:absolute;inset:-14px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,0) 35%,rgba(201,168,76,0) 100%);transition:background 0.7s ease;pointer-events:none}
-.delta-rays{position:absolute;inset:-20px;opacity:0;transition:opacity 0.5s ease;pointer-events:none}
-.delta-svg-wrap{position:relative;width:84px;height:84px;transition:transform 0.5s cubic-bezier(.34,1.4,.64,1)}
+/* ── HEADER (enxuto — a marca vive na barra superior) ── */
+header{text-align:center;padding:14px 0 0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @keyframes delta-breathe{
   0%,100%{filter:drop-shadow(0 0 4px rgba(201,168,76,0.3)) drop-shadow(0 0 14px rgba(201,168,76,0.08))}
   50%{filter:drop-shadow(0 0 9px rgba(201,168,76,0.5)) drop-shadow(0 0 28px rgba(201,168,76,0.15))}
 }
-.delta-svg-wrap{animation:delta-breathe 5s ease-in-out infinite}
-
-.site-name{font-family:'Cinzel',serif;font-size:clamp(2.1rem,6.6vw,3.7rem);font-weight:700;letter-spacing:0.34em;background:linear-gradient(170deg,#f5e49a 0%,var(--gold) 42%,#8a6820 78%,var(--gold-vd) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
-@media(max-width:480px){.site-name{font-size:clamp(1.5rem,8vw,2.2rem);letter-spacing:.22em}}
-.site-tagline{font-style:italic;font-size:clamp(.9rem,2.2vw,1.05rem);color:var(--text-d);letter-spacing:.06em;margin-bottom:5px;line-height:1.5}
-.site-lema{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.55em;color:var(--gold-d);text-transform:uppercase;margin-bottom:16px}
+.site-lema{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.55em;color:var(--gold-d);text-transform:uppercase;margin-bottom:4px}
 
 .orn{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px auto}
 .ol{width:65px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-d))}
@@ -188,11 +179,6 @@ header{animation:fu .9s ease both}
 .ordens .rer-dot{fill:#4f8a4f}
 .ord-nm{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.07em;color:var(--text);text-transform:uppercase;margin-top:9px;line-height:1.25}
 .ord-or{font-size:.72rem;color:var(--text-d);font-style:italic;margin-top:2px}
-/* ── BOTÃO DE TEMA ── */
-.theme-btn{position:fixed;top:14px;right:14px;z-index:7;display:flex;align-items:center;gap:7px;padding:11px 18px;border-radius:24px;border:1px solid var(--border-h);background:rgba(0,0,0,.4);color:var(--gold);font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;line-height:1;cursor:pointer;backdrop-filter:blur(6px);transition:all .3s;animation:tema-pulsa 2.8s ease-in-out infinite}
-.theme-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.16);box-shadow:0 0 15px rgba(201,168,76,.3)}
-@keyframes tema-pulsa{0%,100%{box-shadow:0 0 0 rgba(201,168,76,0)}50%{box-shadow:0 0 18px rgba(201,168,76,.5)}}
-@media(prefers-reduced-motion:reduce){.theme-btn{animation:none}}
 .topnav{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 18px;padding:4px 0 24px}
 .topnav a{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;color:var(--text-d);text-decoration:none;text-transform:uppercase;padding:3px 1px;border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
 .topnav a:hover{color:var(--gold);border-color:var(--gold-d)}
@@ -212,7 +198,6 @@ body.light .bgmood{fill:transparent!important}
 body.light .bgsyms{opacity:.15}
 body.light .bgsyms .s{stroke:#9a7a2e}
 body.light .bgsyms .f{fill:#9a7a2e}
-body.light .site-name{background:linear-gradient(170deg,#b8933f 0%,#9a7a2e 45%,#6a5018 100%);-webkit-background-clip:text;background-clip:text}
 body.light nav a{color:#6a5a36}
 body.light .sec-label{color:#8a6a24}
 body.light footer p{color:#7c6f54}
@@ -225,7 +210,6 @@ body.light .vc{background:rgba(255,251,242,.85)}
 body.light .vc-img{filter:brightness(.95) saturate(.82)}
 body.light .ag-item{background:rgba(255,251,242,.72)}
 body.light .feat{background:rgba(255,251,242,.6)}
-body.light .theme-btn{background:rgba(255,251,242,.6)}
 /* ── EM BREVE ── */
 nav a.soon{opacity:.4;pointer-events:none;cursor:not-allowed;position:relative}
 nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 1px);transform:translateX(-50%);font-size:.44rem;letter-spacing:.06em;color:var(--gold-d);font-style:italic;text-transform:none;white-space:nowrap}
@@ -234,53 +218,31 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
 </style>
 </head>
 <body>
-<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema (claro/escuro)" aria-label="Alternar tema">☀ Tema</button>
+<!-- ══ BARRA SUPERIOR (global, sticky — mesma em todas as páginas) ══ -->
+<div class="topbar" id="lapiTopbar">
+  <a class="tb-brand" href="index.html" aria-label="Lapidarium — Início">
+    <span class="tb-delta" id="tbDelta" aria-hidden="true"></span>
+    <span class="tb-name">LAPIDARIUM</span>
+  </a>
+  <form class="tb-search" action="buscar.html" method="get" role="search">
+    <input class="tb-input" name="q" type="search" placeholder="Qual pedra o Irmão deseja lapidar hoje?" aria-label="Buscar no acervo" autocomplete="off">
+  </form>
+  <div class="tb-actions">
+    <button type="button" class="tb-btn tb-tema" id="themeBtn" onclick="toggleTheme()" title="Alternar tema (claro/escuro)" aria-label="Alternar tema"><span class="tb-ico">☀</span><span class="tb-rot">Tema</span></button>
+    <button type="button" class="tb-btn" id="btnInstalar" title="Instalar o Lapidarium como aplicativo"><span class="tb-ico">⇩</span><span class="tb-rot">Instalar</span></button>
+    <button type="button" class="tb-btn" id="btnAcaso" title="Lapide uma pedra ao acaso (tecla A)"><span class="tb-ico">⟡</span><span class="tb-rot">Acaso</span></button>
+  </div>
+</div>
 
 <!-- ══ BG ICONOGRÁFICO (compartilhado) ══ -->
 <script src="fundo.js"></script>
 
 <div class="wrap">
 <header>
-  <div class="delta-wrap" id="deltaWrap">
-    <div class="delta-halo"></div>
-    <svg class="delta-rays" viewBox="0 0 120 120" style="position:absolute;inset:-18px;width:calc(100% + 36px);height:calc(100% + 36px)">
-      <g transform="translate(60,60)" stroke="rgba(240,217,138,0.35)" stroke-width="0.8">
-        <line x1="0" y1="-52" x2="0" y2="-44"/><line x1="0" y1="44" x2="0" y2="52"/>
-        <line x1="-52" y1="0" x2="-44" y2="0"/><line x1="44" y1="0" x2="52" y2="0"/>
-        <line x1="-37" y1="-37" x2="-31" y2="-31"/><line x1="31" y1="-31" x2="37" y2="-37"/>
-        <line x1="-37" y1="37" x2="-31" y2="31"/><line x1="31" y1="31" x2="37" y2="37"/>
-      </g>
-    </svg>
-    <div class="delta-svg-wrap">
-      <svg viewBox="0 0 84 84" fill="none" style="width:84px;height:84px">
-        <defs>
-          <linearGradient id="dg" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#f5e49a"/><stop offset="55%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#7a6230"/>
-          </linearGradient>
-          <radialGradient id="eyeRg" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="rgba(240,217,138,0.28)"/><stop offset="100%" stop-color="rgba(201,168,76,0)"/>
-          </radialGradient>
-        </defs>
-        <polygon points="42,5 78,75 6,75" stroke="url(#dg)" stroke-width="2.2" fill="rgba(201,168,76,0.035)"/>
-        <polygon points="42,18 65,64 19,64" stroke="#c9a84c" stroke-width=".5" stroke-dasharray="2,3.5" fill="none" opacity=".25"/>
-        <ellipse id="eyeGlow" cx="42" cy="54" rx="13" ry="8.5" fill="url(#eyeRg)"/>
-        <ellipse id="eyeOutline" cx="42" cy="54" rx="12" ry="7.5" stroke="url(#dg)" stroke-width="1.3" fill="none"/>
-        <circle id="iris" cx="42" cy="54" r="5" fill="rgba(201,168,76,0.1)" stroke="url(#dg)" stroke-width="1"/>
-        <circle id="pupil" cx="42" cy="54" r="2.2" fill="url(#dg)" opacity=".92"/>
-        <circle id="spec" cx="43.2" cy="52.8" r=".7" fill="rgba(255,248,220,0.8)"/>
-        <line x1="42" y1="40" x2="42" y2="44" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
-        <line x1="42" y1="64" x2="42" y2="68" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
-        <line x1="28" y1="54" x2="32" y2="54" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
-        <line x1="52" y1="54" x2="56" y2="54" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
-      </svg>
-    </div>
-  </div>
-
-  <h1 class="site-name">LAPIDARIUM</h1>
-  <p class="site-tagline">Um lugar de estudo, reflexão e memória maçônica</p>
-  <p class="site-lema">Lux · Sapientia · Opus</p>
-  <div class="orn"><span class="ol"></span><span class="od"></span><span class="ol r"></span></div>
+  <h1 class="sr-only">Lapidarium — Repositório Maçônico de Estudo</h1>
   <nav class="topnav"><a href="index.html" class="atual">Início</a><a href="buscar.html">Acervo</a><a href="epaminondas.html">Epaminondas</a><a href="urania.html">Urânia</a><a href="calendar.html">Calendário</a><a href="publicar.html">Acesso Restrito</a></nav>
+  <p class="site-lema">Lux · Sapientia · Opus</p>
+  <div class="orn" style="margin-top:6px"><span class="ol"></span><span class="od"></span><span class="ol r"></span></div>
 </header>
 
 <div class="destaque">
@@ -301,7 +263,7 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
 <div class="ai-bar">
   <div class="ai-row">
     <span class="ai-dot"></span>
-    <input class="ai-input" id="searchInput" type="text" placeholder="Qual pedra o Irmão deseja lapidar hoje?"/>
+    <input class="ai-input" id="searchInput" type="text" placeholder="Ex.: pedra bruta, telhamento, Templários, história…"/>
     <button class="ai-btn" onclick="doSearch()">Buscar</button>
   </div>
 </div>
@@ -428,81 +390,6 @@ function lapiHora(h){const s=''+(h||'');let m=s.match(/T(\d\d:\d\d)/);if(m)retur
   imgUr.onerror=function(){}; imgUr.src='urania.png';
 })();
 
-// ══ DELTA — olho vivo (rastreio suave · deriva ociosa · piscar) ══
-(function(){
-  const wrap=document.getElementById('deltaWrap');
-  if(!wrap) return;
-  const svgWrap=wrap.querySelector('.delta-svg-wrap');
-  const halo=wrap.querySelector('.delta-halo');
-  const rays=wrap.querySelector('.delta-rays');
-  const pupil=document.getElementById('pupil');
-  const iris=document.getElementById('iris');
-  const spec=document.getElementById('spec');
-  const eye=document.getElementById('eyeOutline');
-  const glow=document.getElementById('eyeGlow');
-  if(!pupil) return;
-  const EX=42,EY=54,MAX=3.0,SX=1.2,SY=-1.2;
-  const IRIS_RY=7.5,IRIS_R=5,PUP_R=2.2,GLOW_RY=8.5;
-  let tgtX=EX,tgtY=EY,curX=EX,curY=EY;
-  let tgtProx=0,curProx=0,tgtNb=0,curNb=0;
-  let lastMove=performance.now();
-  let blinking=false,blinkStart=0,blink=1;
-  let nextBlink=performance.now()+2000+Math.random()*3000;
-  const lerp=(a,b,f)=>a+(b-a)*f;
-  document.addEventListener('mousemove',function(e){
-    lastMove=performance.now();
-    const r=wrap.getBoundingClientRect();
-    const cx=r.left+r.width/2, cy=r.top+r.height/2;
-    const dx=e.clientX-cx, dy=e.clientY-cy;
-    const dist=Math.hypot(dx,dy);
-    const t=Math.min(dist,140)/140;
-    tgtX=EX+(dx/Math.max(dist,1))*MAX*t;
-    tgtY=EY+(dy/Math.max(dist,1))*MAX*t;
-    const FULL=380;
-    tgtProx=Math.max(0,Math.min(1,(FULL-dist)/FULL));
-    tgtNb=Math.max(0,Math.min(1,(120-dist)/120));
-  });
-  function frame(now){
-    // deriva ociosa: olhar vagueia devagar quando o mouse para
-    if(now-lastMove>2600){
-      const w=now/1000;
-      tgtX=EX+Math.cos(w*0.5)*1.4;
-      tgtY=EY+Math.sin(w*0.7)*1.0;
-      tgtProx=lerp(tgtProx,0.12,0.02);
-      tgtNb=lerp(tgtNb,0,0.05);
-    }
-    curX=lerp(curX,tgtX,0.14);
-    curY=lerp(curY,tgtY,0.14);
-    curProx=lerp(curProx,tgtProx,0.08);
-    curNb=lerp(curNb,tgtNb,0.10);
-    // piscar
-    if(!blinking && now>=nextBlink){blinking=true;blinkStart=now;}
-    if(blinking){
-      const bd=now-blinkStart,DUR=150;
-      if(bd>=DUR){blinking=false;blink=1;nextBlink=now+2600+Math.random()*4200;}
-      else{blink=Math.abs(Math.cos((bd/DUR)*Math.PI));}
-    }
-    // respiração sutil sempre ativa
-    const breathe=0.5+0.5*Math.sin(now/1500);
-    pupil.setAttribute('cx',curX.toFixed(2));pupil.setAttribute('cy',curY.toFixed(2));
-    iris.setAttribute('cx',curX.toFixed(2));iris.setAttribute('cy',curY.toFixed(2));
-    spec.setAttribute('cx',(curX+SX).toFixed(2));spec.setAttribute('cy',(curY+SY).toFixed(2));
-    if(eye) eye.setAttribute('ry',(IRIS_RY*blink).toFixed(2));
-    if(glow) glow.setAttribute('ry',(GLOW_RY*Math.max(blink,0.2)).toFixed(2));
-    iris.setAttribute('r',(IRIS_R*Math.max(blink,0.05)).toFixed(2));
-    pupil.setAttribute('r',(PUP_R*Math.max(blink,0.05)).toFixed(2));
-    spec.style.opacity=blink.toFixed(2);
-    svgWrap.style.animation='none';
-    svgWrap.style.transform=`scale(${(1+curProx*0.05+curNb*0.05).toFixed(3)})`;
-    halo.style.background=`radial-gradient(circle,rgba(240,217,138,${(0.02+curProx*0.11).toFixed(3)}) 0%,rgba(201,168,76,${(0.01+curProx*0.06).toFixed(3)}) 45%,transparent 100%)`;
-    const s1=Math.round(3+curProx*11+curNb*5+breathe*2), s2=Math.round(10+curProx*24+curNb*12+breathe*4);
-    svgWrap.style.filter=`drop-shadow(0 0 ${s1}px rgba(240,217,138,${(0.26+curProx*0.34+curNb*0.15).toFixed(2)})) drop-shadow(0 0 ${s2}px rgba(201,168,76,${(0.06+curProx*0.2+curNb*0.08).toFixed(2)}))`;
-    rays.style.opacity=(curProx*0.45+curNb*0.30).toFixed(2);
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-})();
-
 // ══ CAROUSEL (ao vivo, com fallback) ══
 (async function(){
   let vids = await lapiFetch('video');
@@ -597,7 +484,13 @@ function doSearch(){const q=document.getElementById('searchInput').value.trim();
 document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
 
 // ══ TEMA ══
-function toggleTheme(){const l=document.body.classList.toggle('light');const b=document.getElementById('themeBtn');if(b)b.textContent=l?'\u263e Tema':'\u2600 Tema';}
+function toggleTheme(){
+  const l=document.body.classList.toggle('light');
+  try{localStorage.setItem('lapidarium:tema',l?'light':'dark')}catch(e){}
+  const b=document.getElementById('themeBtn');if(!b)return;
+  const i=b.querySelector('.tb-ico');
+  if(i)i.textContent=l?'\u263e':'\u2600';else b.textContent=l?'\u263e Tema':'\u2600 Tema';
+}
 </script>
 </body>
 </html>

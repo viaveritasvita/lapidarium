@@ -48,7 +48,19 @@
 </style>
 </head>
 <body>
-<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">☀ Tema</button>
+<!-- ══ BARRA SUPERIOR (versão mínima do painel) ══ -->
+<div class="topbar" id="lapiTopbar">
+  <a class="tb-brand" href="index.html" aria-label="Lapidarium — Início">
+    <span class="tb-delta" id="tbDelta" aria-hidden="true"></span>
+    <span class="tb-name">LAPIDARIUM</span>
+  </a>
+  <form class="tb-search" action="buscar.html" method="get" role="search">
+    <input class="tb-input" name="q" type="search" placeholder="Qual pedra o Irmão deseja lapidar hoje?" aria-label="Buscar no acervo" autocomplete="off">
+  </form>
+  <div class="tb-actions">
+    <button type="button" class="tb-btn tb-tema" id="themeBtn" onclick="toggleTheme()" title="Alternar tema (claro/escuro)" aria-label="Alternar tema"><span class="tb-ico">☀</span><span class="tb-rot">Tema</span></button>
+  </div>
+</div>
 <div class="wrap">
 <header>
   <nav class="topnav"><a href="index.html">Início</a><a href="buscar.html">Acervo</a><a href="epaminondas.html">Epaminondas</a><a href="urania.html">Urânia</a><a href="calendar.html">Calendário</a><a href="publicar.html" class="atual">Acesso Restrito</a></nav>
