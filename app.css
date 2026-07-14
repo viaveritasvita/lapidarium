@@ -7,7 +7,7 @@
 /* ── FAVORITAR / LAPIDADA (nos cards e na bancada) ── */
 .la-acoes{display:flex;gap:6px;margin-top:9px}
 .la-btn{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.06em;line-height:1;
-  background:rgba(201,168,76,.04);border:1px solid var(--border);color:var(--text-d);
+  background:rgba(201,168,76,.06);border:1px solid var(--border-h);color:var(--text-d);
   padding:4px 9px;border-radius:2px;cursor:pointer;text-transform:uppercase;
   transition:color .25s,border-color .25s,background .25s,transform .15s}
 .la-btn:hover{color:var(--gold-l);border-color:var(--border-h);transform:translateY(-1px)}
