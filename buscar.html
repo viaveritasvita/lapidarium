@@ -13,19 +13,20 @@
 <link rel="stylesheet" href="app.css">
 <style>
   .grptoggle{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px;justify-content:center}
-  .gt{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-d);background:transparent;border:1px solid var(--border);padding:7px 16px;cursor:pointer;transition:all .25s}
+  .gt{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-d);background:transparent;border:1px solid var(--border);padding:9px 17px;cursor:pointer;transition:all .25s}
   .gt:hover{color:var(--text);border-color:var(--border-h)}
   .gt.ativa{color:var(--s1);background:var(--gold);border-color:var(--gold);font-weight:600}
   .chips-busca{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0 2px}
-  .chipb{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.1em;border:1px solid rgba(201,168,76,.28);color:#c2b189;padding:4px 10px;cursor:pointer;text-transform:uppercase;background:rgba(201,168,76,.05);transition:all .25s}
+  .chipb{font-family:'Cinzel',serif;font-size:.64rem;letter-spacing:.1em;border:1px solid rgba(201,168,76,.32);color:#d6c69e;padding:6px 12px;cursor:pointer;text-transform:uppercase;background:rgba(201,168,76,.06);transition:all .25s}
   .chipb:hover{border-color:var(--gold);color:var(--gold-l)}
-  .limpar{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.14em;color:var(--text-d);text-transform:uppercase;cursor:pointer;border:none;background:none;margin-left:10px}
+  .limpar{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.14em;color:var(--text-d);text-transform:uppercase;cursor:pointer;border:none;background:none;margin-left:10px}
   .limpar:hover{color:var(--gold)}
   body.light .gt.ativa{color:#fff}
 </style>
 </head>
 <body>
 <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">☀ Tema</button>
+<script src="fundo.js"></script>
 <div class="wrap">
 <header>
   <nav class="topnav"><a href="index.html">Início</a><a href="buscar.html" class="atual">Acervo</a><a href="epaminondas.html">Epaminondas</a><a href="urania.html">Urânia</a><a href="calendar.html">Calendário</a><a href="publicar.html">Acesso Restrito</a></nav>

@@ -310,6 +310,44 @@
     });
   }
 
+  // ---------- Instalar app (PWA) ----------
+  var _instEvt = null;
+  function montarInstalar() {
+    if (location.pathname.indexOf('publicar') >= 0) return;
+    var rodape = document.querySelector('footer');
+    if (!rodape || document.getElementById('btnInstalar')) return;
+    var ehIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    var jaInstalado = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+    if (jaInstalado) return;
+    var b = document.createElement('button');
+    b.type = 'button'; b.id = 'btnInstalar'; b.className = 'instalar-btn'; b.hidden = true;
+    b.innerHTML = '&#8681; Instalar o app';
+    b.title = 'Instalar o Lapidarium como aplicativo';
+    rodape.appendChild(b);
+    window.addEventListener('beforeinstallprompt', function (e) {
+      e.preventDefault(); _instEvt = e; b.hidden = false;
+    });
+    window.addEventListener('appinstalled', function () { _instEvt = null; b.hidden = true; });
+    if (ehIOS) b.hidden = false;  // Safari/iOS não dispara beforeinstallprompt
+    b.addEventListener('click', function () {
+      if (_instEvt) {
+        var ev = _instEvt; _instEvt = null;
+        ev.prompt();
+        if (ev.userChoice && ev.userChoice.then) ev.userChoice.then(function (r) {
+          if (r && r.outcome === 'accepted') b.hidden = true; else _instEvt = ev;
+        });
+        return;
+      }
+      var d = document.getElementById('dicaInstalar');
+      if (!d) {
+        d = document.createElement('p');
+        d.id = 'dicaInstalar'; d.className = 'instalar-dica';
+        d.textContent = 'No iPhone: toque em Compartilhar e depois em "Adicionar à Tela de Início".';
+        b.insertAdjacentElement('afterend', d);
+      } else { d.hidden = !d.hidden; }
+    });
+  }
+
   // ---------- Service Worker ----------
   function registrarSW() {
     if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
@@ -319,7 +357,7 @@
 
   // ---------- init ----------
   function init() {
-    aplicarTema(); vigiarTema(); montarAtalhos(); montarPedraDia(); registrarSW();
+    aplicarTema(); vigiarTema(); montarAtalhos(); montarPedraDia(); montarInstalar(); registrarSW();
   }
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);

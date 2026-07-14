@@ -9,7 +9,7 @@
    Para forçar atualização geral: suba o CACHE_VERSION abaixo.
    ============================================================ */
 
-const CACHE_VERSION = 'lapidarium-v2';
+const CACHE_VERSION = 'lapidarium-v3';
 const CACHE_STATIC  = CACHE_VERSION + '-static';
 const CACHE_PAGES   = CACHE_VERSION + '-pages';
 const CACHE_EXT     = CACHE_VERSION + '-ext';
@@ -19,7 +19,7 @@ const APP_SHELL = [
   'index.html', 'buscar.html', 'urania.html', 'epaminondas.html',
   'video.html', 'calendar.html', 'publicar.html',
   'lapidarium.css', 'app.css',
-  'config.js', 'ui.js', 'busca.js', 'app.js',
+  'config.js', 'ui.js', 'busca.js', 'app.js', 'fundo.js',
   'tesauro.json', 'videos-urania.json', 'videos-epaminondas.json',
   'manifest.json', 'icon-192.png', 'icon-512.png',
   'urania.png', 'epaminondas.png'

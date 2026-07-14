@@ -23,10 +23,14 @@
   .mat-item{display:flex;align-items:center;gap:12px;border:1px solid var(--border);background:var(--panel);padding:12px 16px;text-decoration:none;color:var(--text);font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;transition:border-color .3s,background .3s;cursor:pointer}
   .mat-item:hover{border-color:var(--gold);background:rgba(201,168,76,.06)}
   .mat-ico{color:var(--gold);font-size:1.1rem}
+  .v-ytbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:-6px 0 20px;animation:fu .7s .1s ease both}
+  .v-ytbar .pdia-cta{text-decoration:none}
+  .v-ytnote{color:var(--gold-l);font-style:italic;font-size:1rem}
 </style>
 </head>
 <body>
 <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">☀ Tema</button>
+<script src="fundo.js"></script>
 <div class="wrap">
 <header>
   <nav class="topnav"><a href="index.html">Início</a><a href="buscar.html">Acervo</a><a href="epaminondas.html">Epaminondas</a><a href="urania.html">Urânia</a><a href="calendar.html">Calendário</a><a href="publicar.html">Acesso Restrito</a></nav>
@@ -74,7 +78,7 @@
   // ── player (ou a prancha como peça principal, se não houver vídeo) ──
   let principal = '';
   if (yid) {
-    principal = '<div class="v-player"><iframe src="https://www.youtube.com/embed/' + esc(yid) + '" title="' + esc(v.titulo || '') + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
+    principal = '<div class="v-player"><iframe id="ytp" src="https://www.youtube.com/embed/' + esc(yid) + '?enablejsapi=1" title="' + esc(v.titulo || '') + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
   } else if (preview) {
     principal = '<div class="v-prancha"><iframe src="' + esc(preview) + '" title="' + esc(v.titulo || 'Prancha') + '" loading="lazy" allow="autoplay"></iframe></div>';
   }
@@ -108,15 +112,21 @@
       + lapiAnexoBtn(o) + LapidariumApp.botoesHtml(o) + '</div></a>';
   };
 
+  // botão de destaque: alguns vídeos têm o embed desativado pelo dono — o YouTube é o caminho garantido
+  const ytBar = yid
+    ? '<div class="v-ytbar"><a class="pdia-cta" href="https://www.youtube.com/watch?v=' + esc(yid) + '" target="_blank" rel="noopener">▶ Assistir no YouTube</a>'
+      + '<span class="v-ytnote" id="ytNote" hidden>Este vídeo só reproduz no YouTube.</span></div>'
+    : '';
+
   box.innerHTML =
     principal
+    + ytBar
     + '<h1 class="v-title">' + esc(v.titulo || '') + '</h1>'
     + '<p class="v-meta">' + esc([(v.origem || '').replace('Grupo de Estudos ', ''), v.autor,
         (v.data || '').slice(0, 10).split('-').reverse().join('/'),
         v.tipo === 'prancha' ? 'Prancha' : ''].filter(Boolean).join(' · ')) + '</p>'
     + '<div class="v-acoes">' + LapidariumApp.botoesHtml(v).replace('la-acoes', 'la-acoes v-acoes-in')
     + '<button type="button" class="la-btn" id="btnCompart" title="Copiar o link desta pedra">⎘ Compartilhar</button>'
-    + (yid ? '<a class="la-btn" style="text-decoration:none" href="https://www.youtube.com/watch?v=' + esc(yid) + '" target="_blank" rel="noopener">▶ No YouTube</a>' : '')
     + '</div>'
     + (tagsArr.length ? '<div class="v-tags">' + tagsArr.map(t => '<span class="vtag">' + esc(t) + '</span>').join('') + '</div>' : '')
     + (v.descricao ? '<p class="v-desc">' + esc(v.descricao) + '</p>' : '')
@@ -125,6 +135,24 @@
     + (rel.length ? '<div class="v-rel"><p class="sec-label">Pedras Relacionadas</p><div class="vgrid reduzida">' + rel.map(cardRel).join('') + '</div></div>' : '');
 
   LapidariumApp.decorarCards(box);
+
+  // detecção de embed desativado (erros 101/150 da API do YouTube) → mostra o aviso
+  if (yid) {
+    window.onYouTubeIframeAPIReady = function () {
+      try {
+        new YT.Player('ytp', { events: { onError: function (ev) {
+          const c = ev && ev.data;
+          if (c === 101 || c === 150 || c === 100) {
+            const n = document.getElementById('ytNote');
+            if (n) n.hidden = false;
+          }
+        } } });
+      } catch (e) {}
+    };
+    const ytApi = document.createElement('script');
+    ytApi.src = 'https://www.youtube.com/iframe_api'; ytApi.async = true;
+    document.head.appendChild(ytApi);
+  }
 
   // compartilhar: Web Share quando houver, senão copia o link
   const btnC = document.getElementById('btnCompart');

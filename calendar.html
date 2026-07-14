@@ -17,21 +17,22 @@
   .cal-item:hover{border-color:var(--border-h)}
   .cal-date{text-align:center;min-width:52px;border-right:1px solid var(--border);padding-right:15px}
   .cal-day{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:700;color:var(--gold);line-height:1;display:block}
-  .cal-month{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;color:var(--text-d);text-transform:uppercase;display:block;margin-top:3px}
+  .cal-month{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.2em;color:var(--text-d);text-transform:uppercase;display:block;margin-top:3px}
   .cal-info{flex:1}
-  .cal-evt{font-family:'Cinzel',serif;font-size:.85rem;color:var(--text);letter-spacing:.03em;margin-bottom:2px}
+  .cal-evt{font-family:'Cinzel',serif;font-size:.95rem;color:var(--text);letter-spacing:.03em;margin-bottom:2px}
   .cal-sub{font-size:.9rem;color:var(--text-d);font-style:italic}
-  .cal-tag{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.12em;padding:3px 8px;border:1px solid;text-transform:uppercase;white-space:nowrap}
+  .cal-tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;padding:3px 8px;border:1px solid;text-transform:uppercase;white-space:nowrap}
   .t-ep{border-color:rgba(184,115,51,.4);color:var(--copper-l)}
   .t-ur{border-color:rgba(74,127,168,.4);color:var(--blue-l)}
   .cal-acts{display:flex;flex-direction:column;gap:6px}
-  .cal-btn{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:5px 10px;border:1px solid var(--border);color:var(--gold);white-space:nowrap;transition:.25s;text-align:center}
+  .cal-btn{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:7px 12px;border:1px solid var(--border-h);color:var(--gold);white-space:nowrap;transition:.25s;text-align:center}
   .cal-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.1)}
   @media(max-width:520px){.cal-item{flex-wrap:wrap}.cal-info{flex-basis:60%}}
 </style>
 </head>
 <body>
 <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">☀ Tema</button>
+<script src="fundo.js"></script>
 <div class="wrap">
 <header>
   <nav class="topnav"><a href="index.html">Início</a><a href="buscar.html">Acervo</a><a href="epaminondas.html">Epaminondas</a><a href="urania.html">Urânia</a><a href="calendar.html" class="atual">Calendário</a><a href="publicar.html">Acesso Restrito</a></nav>
