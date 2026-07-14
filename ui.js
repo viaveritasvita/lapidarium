@@ -79,3 +79,11 @@ async function lapiFetch(tipo, extra){
 }
 function lapiData(d){ return ("" + (d||"")).slice(0,10); }              // ISO ou yyyy-mm-dd -> yyyy-mm-dd
 function lapiHora(h){ const s=""+(h||""); let m=s.match(/T(\d\d:\d\d)/); if(m) return m[1]; m=s.match(/^(\d\d?:\d\d)/); return m?m[1]:""; }
+
+// ══ ANEXO — botão "Prancha PDF" (campo item.anexo = link do PDF no Drive) ══
+function lapiAnexoBtn(item){
+  const a = item && (item.anexo || item.anexos);   // JSON modular usa 'anexo'; API da planilha, 'anexos'
+  if (!a) return "";
+  return '<span class="vc-pdf" data-pdf="' + a + '" role="link" tabindex="0" '
+    + 'onclick="event.preventDefault();event.stopPropagation();window.open(this.dataset.pdf,\'_blank\',\'noopener\')">Prancha PDF</span>';
+}

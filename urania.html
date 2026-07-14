@@ -19,9 +19,9 @@
     <h1 class="ghero-name">Urânia</h1>
     <p class="ghero-sub">Grupo de Estudos Urânia</p>
     <div class="ghero-stats">
-      <div><span class="gs-n">60+</span><span class="gs-l">Vídeos</span></div>
+      <div><span class="gs-n">81</span><span class="gs-l">Vídeos</span></div>
       <div><span class="gs-n">2023</span><span class="gs-l">Desde</span></div>
-      <div><span class="gs-n">20+</span><span class="gs-l">Oradores</span></div>
+      <div><span class="gs-n">19</span><span class="gs-l">Oradores</span></div>
     </div>
     <div class="orn"><span class="ol"></span><span class="od"></span><span class="ol r"></span></div>
     <a class="backlink" href="buscar.html?q=" style="margin-bottom:0">Buscar em todo o acervo ▸</a>
@@ -46,13 +46,13 @@
     vids = vids.slice().sort((a,b)=>(''+(b.data||'')).localeCompare(''+(a.data||'')));
     if (!vids.length) { grade.innerHTML = "<p class='vazio'>Acervo em preparação.</p>"; return; }
     grade.innerHTML = `<div class="vgrid">` + vids.map(v => `
-      <a class="vc" href="video.html?v=${v.youtube_id||''}">
-        <div class="vc-thumb"><img class="vc-img" src="${v.thumbnail||('https://img.youtube.com/vi/'+v.youtube_id+'/hqdefault.jpg')}" alt="" loading="lazy">
+      <a class="vc" href="${v.youtube_id?('video.html?v='+v.youtube_id):(v.anexo||v.anexos||'#')}"${v.youtube_id?'':' target="_blank" rel="noopener"'}>
+        <div class="vc-thumb">${(v.thumbnail||v.youtube_id)?`<img class="vc-img" src="${v.thumbnail||('https://img.youtube.com/vi/'+v.youtube_id+'/hqdefault.jpg')}" alt="" loading="lazy">`:''}
           <span class="vc-badge b-ur">Urânia</span></div>
         <div class="vc-body"><p class="vc-title">${v.titulo||''}</p>
           <p class="vc-meta">${lapiData(v.data).split('-').reverse().join('/')}${v.palestrante?' · '+v.palestrante:''}</p>
           ${(v.tags&&v.tags.length)?`<div class="vc-tags">${v.tags.slice(0,3).map(t=>`<span class="vtag">${t}</span>`).join('')}</div>`:''}
-        </div></a>`).join('') + `</div>
+        ${lapiAnexoBtn(v)}</div></a>`).join('') + `</div>
       <p class="expansao" style="text-align:center">Acervo em expansão — em breve os vídeos completos e a busca por transcrição.</p>`;
   } catch(e) {
     grade.innerHTML = "<p class='vazio'>Não foi possível carregar o acervo (verifique a conexão).</p>";

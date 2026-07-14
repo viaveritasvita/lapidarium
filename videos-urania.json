@@ -4,81 +4,251 @@
   "cor_identidade": "#4a7fa8",
   "videos": [
     {
+      "id": "1LletNOo_PY",
+      "titulo": "Vaidade, o último vício a abandonar o templo",
+      "data": "2026-07-11",
+      "palestrante": "",
+      "youtube_id": "1LletNOo_PY",
+      "url": "https://www.youtube.com/watch?v=1LletNOo_PY",
+      "thumbnail": "https://img.youtube.com/vi/1LletNOo_PY/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "K3q9qsFM-JQ",
+      "titulo": "Entre a luz e a sombra: o simbolismo dos solstícios na maçonaria",
+      "data": "2026-07-04",
+      "palestrante": "",
+      "youtube_id": "K3q9qsFM-JQ",
+      "url": "https://www.youtube.com/watch?v=K3q9qsFM-JQ",
+      "thumbnail": "https://img.youtube.com/vi/K3q9qsFM-JQ/hqdefault.jpg",
+      "tags": [
+        "simbolismo",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1T22srxLzngP4wNR5Btv2JeMr82MLsvTu/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "ttdJuwljYnI",
+      "titulo": "O Temerário",
+      "data": "2026-06-27",
+      "palestrante": "Ricardo Berdu",
+      "youtube_id": "ttdJuwljYnI",
+      "url": "https://www.youtube.com/watch?v=ttdJuwljYnI",
+      "thumbnail": "https://img.youtube.com/vi/ttdJuwljYnI/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "Vj2WOBY6tV0",
+      "titulo": "O Tempo de Estudos é realmente bem aproveitado pelos Maçons?",
+      "data": "2026-06-20",
+      "palestrante": "",
+      "youtube_id": "Vj2WOBY6tV0",
+      "url": "https://www.youtube.com/watch?v=Vj2WOBY6tV0",
+      "thumbnail": "https://img.youtube.com/vi/Vj2WOBY6tV0/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1izPC1_JwQhCzlUz7o8Vo6WxpIJjG2flC/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "-726gWQogE8",
+      "titulo": "Reflexões sobre o \"Dono de Loja\"",
+      "data": "2026-06-13",
+      "palestrante": "",
+      "youtube_id": "-726gWQogE8",
+      "url": "https://www.youtube.com/watch?v=-726gWQogE8",
+      "thumbnail": "https://img.youtube.com/vi/-726gWQogE8/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1yNCKvKm7PH9kCtEQctKKZHyonxzriXT1/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "vVXhckCpHVU",
+      "titulo": "A Arte de Edificar a Loja",
+      "data": "2026-06-06",
+      "palestrante": "",
+      "youtube_id": "vVXhckCpHVU",
+      "url": "https://www.youtube.com/watch?v=vVXhckCpHVU",
+      "thumbnail": "https://img.youtube.com/vi/vVXhckCpHVU/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1faOtcD8QebUdb7_jy8aB4Y6mNUMnCXot/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "B0yq2GFwZFA",
+      "titulo": "O Bastão na Liturgia Maçônica: Origem Histórica e Interpretações Simbólicas",
+      "data": "2026-05-30",
+      "palestrante": "",
+      "youtube_id": "B0yq2GFwZFA",
+      "url": "https://www.youtube.com/watch?v=B0yq2GFwZFA",
+      "thumbnail": "https://img.youtube.com/vi/B0yq2GFwZFA/hqdefault.jpg",
+      "tags": [
+        "simbolismo",
+        "história",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1aMYgmxTugcQg5IEccgpWa0pSFauDBwu8/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "4eKA6oUqOIg",
+      "titulo": "A Luz nas Trevas: o Simbolismo de João 1:5 na Abertura das Sessões Maçônicas",
+      "data": "2026-05-16",
+      "palestrante": "",
+      "youtube_id": "4eKA6oUqOIg",
+      "url": "https://www.youtube.com/watch?v=4eKA6oUqOIg",
+      "thumbnail": "https://img.youtube.com/vi/4eKA6oUqOIg/hqdefault.jpg",
+      "tags": [
+        "simbolismo",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1UQm581TpvyIXqVCuvW4vpjpb2-SD6Xzq/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "tOXpP8l57KY",
+      "titulo": "O Significado Filosófico dos Três Pontos na Maçonaria",
+      "data": "2026-05-09",
+      "palestrante": "",
+      "youtube_id": "tOXpP8l57KY",
+      "url": "https://www.youtube.com/watch?v=tOXpP8l57KY",
+      "thumbnail": "https://img.youtube.com/vi/tOXpP8l57KY/hqdefault.jpg",
+      "tags": [
+        "filosofia",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1VcyQ16KmXXJW2CO7f8kPO5_5H53Xn02y/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "pIMBukAGeJU",
+      "titulo": "Entre a cruz e o compasso",
+      "data": "2026-05-02",
+      "palestrante": "",
+      "youtube_id": "pIMBukAGeJU",
+      "url": "https://www.youtube.com/watch?v=pIMBukAGeJU",
+      "thumbnail": "https://img.youtube.com/vi/pIMBukAGeJU/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1TW7sem1I8nnHuPdCgkQQ7kTqa4MmSpQ0/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
       "id": "WKbl-YqBAk8",
-      "titulo": "O Talento que a Maçonaria Perde",
+      "titulo": "O Talento que a Maçonaria Perde: Quando a Arrogância dos Líderes Afasta as Grandes Mentes",
       "data": "2026-04-25",
       "palestrante": "",
       "youtube_id": "WKbl-YqBAk8",
       "url": "https://www.youtube.com/watch?v=WKbl-YqBAk8",
       "thumbnail": "https://img.youtube.com/vi/WKbl-YqBAk8/hqdefault.jpg",
       "tags": [
-        "filosofia",
-        "reflexão"
+        "instrumentos"
       ],
-      "transcricao_status": "pendente"
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
     },
     {
       "id": "DaNG-EvrwCI",
-      "titulo": "Ordem Shriners: A Missão Mais Nobre",
+      "titulo": "Ordem Shriners: Onde a Maçonaria Encontra sua Missão Mais Nobre",
       "data": "2026-04-18",
       "palestrante": "",
       "youtube_id": "DaNG-EvrwCI",
       "url": "https://www.youtube.com/watch?v=DaNG-EvrwCI",
       "thumbnail": "https://img.youtube.com/vi/DaNG-EvrwCI/hqdefault.jpg",
       "tags": [
-        "Shriners",
-        "ordens",
-        "caridade"
+        "instrumentos",
+        "ordens"
       ],
-      "transcricao_status": "pendente"
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
     },
     {
       "id": "fPTswT9CX8I",
-      "titulo": "Telhamento Maçônico",
+      "titulo": "Telhamento Maçônico: Entre o Reconhecimento e a Construção Interior",
       "data": "2026-04-11",
       "palestrante": "",
       "youtube_id": "fPTswT9CX8I",
       "url": "https://www.youtube.com/watch?v=fPTswT9CX8I",
       "thumbnail": "https://img.youtube.com/vi/fPTswT9CX8I/hqdefault.jpg",
       "tags": [
-        "telhamento",
-        "ritual"
+        "instrumentos"
       ],
-      "transcricao_status": "pendente"
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1smT6qx75mZc6vTExRCbaosERf-abrsRr/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
     },
     {
       "id": "YpPmsfbnKBk",
-      "titulo": "Páscoa e Maçonaria: O Renascimento",
+      "titulo": "Páscoa e Maçonaria: O Renascimento do Homem Interior",
       "data": "2026-04-04",
       "palestrante": "",
       "youtube_id": "YpPmsfbnKBk",
       "url": "https://www.youtube.com/watch?v=YpPmsfbnKBk",
       "thumbnail": "https://img.youtube.com/vi/YpPmsfbnKBk/hqdefault.jpg",
       "tags": [
-        "páscoa",
-        "simbolismo",
-        "cristianismo"
+        "instrumentos"
       ],
-      "transcricao_status": "pendente"
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1Qt1AKcNr0BK4UidqBIdYm82aSfDq47u0/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
     },
     {
       "id": "QzbKrXNpsZ4",
-      "titulo": "O Tronco de Beneficência",
+      "titulo": "O Tronco de Beneficência: A Caridade como Pilar da Prática Maçônica",
       "data": "2026-03-28",
       "palestrante": "",
       "youtube_id": "QzbKrXNpsZ4",
       "url": "https://www.youtube.com/watch?v=QzbKrXNpsZ4",
       "thumbnail": "https://img.youtube.com/vi/QzbKrXNpsZ4/hqdefault.jpg",
       "tags": [
-        "beneficência",
-        "caridade",
-        "ritual"
+        "instrumentos",
+        "caridade"
       ],
-      "transcricao_status": "pendente"
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1QMZ3YVo4DXGWRg9ydcSH0sHtiuviPL3I/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
     },
     {
       "id": "JysWVfA3RVo",
-      "titulo": "Jacques DeMolay e os Templários",
+      "titulo": "Jacques DeMolay, a Ordem dos Cavaleiros Templários e a Ordem DeMolay",
       "data": "2026-03-21",
       "palestrante": "",
       "youtube_id": "JysWVfA3RVo",
@@ -86,10 +256,1058 @@
       "thumbnail": "https://img.youtube.com/vi/JysWVfA3RVo/hqdefault.jpg",
       "tags": [
         "templários",
-        "história",
         "DeMolay"
       ],
-      "transcricao_status": "pendente"
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "YfQe_1mocoQ",
+      "titulo": "Entre a Consciência Individual e a Moral Coletiva na Maçonaria",
+      "data": "2026-03-14",
+      "palestrante": "",
+      "youtube_id": "YfQe_1mocoQ",
+      "url": "https://www.youtube.com/watch?v=YfQe_1mocoQ",
+      "thumbnail": "https://img.youtube.com/vi/YfQe_1mocoQ/hqdefault.jpg",
+      "tags": [
+        "ética",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1P2e8WAK15jpPRlfpTPnzRKRqTbiZ9oMD/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "MxZqsxts3hc",
+      "titulo": "Deísmo e Teísmo: A Concepção de Deus na Maçonaria",
+      "data": "2026-03-07",
+      "palestrante": "",
+      "youtube_id": "MxZqsxts3hc",
+      "url": "https://www.youtube.com/watch?v=MxZqsxts3hc",
+      "thumbnail": "https://img.youtube.com/vi/MxZqsxts3hc/hqdefault.jpg",
+      "tags": [
+        "instrumentos",
+        "filosofia"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1ziLr_ZPg_d2PpE08Ae0OfSXuGQcDKQJD/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "Ohv9sTESTvc",
+      "titulo": "O Espelho Hexagonal de Cristal e Prata",
+      "data": "2026-02-28",
+      "palestrante": "",
+      "youtube_id": "Ohv9sTESTvc",
+      "url": "https://www.youtube.com/watch?v=Ohv9sTESTvc",
+      "thumbnail": "https://img.youtube.com/vi/Ohv9sTESTvc/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1oatR38qiCNRNndze7xXYOVyx3ma7vtdT/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "nDdDN_Bwb5k",
+      "titulo": "22 de Fevereiro: Uma Data, Um Símbolo, Um Compromisso",
+      "data": "2026-02-21",
+      "palestrante": "",
+      "youtube_id": "nDdDN_Bwb5k",
+      "url": "https://www.youtube.com/watch?v=nDdDN_Bwb5k",
+      "thumbnail": "https://img.youtube.com/vi/nDdDN_Bwb5k/hqdefault.jpg",
+      "tags": [
+        "simbolismo"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/13gRpmRwpHq_L7oRE8YnEFwIQyzkdpIYx/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "T0pnNHV2WoQ",
+      "titulo": "Reflexões sobre os Landmarks na Maçonaria",
+      "data": "2026-02-14",
+      "palestrante": "",
+      "youtube_id": "T0pnNHV2WoQ",
+      "url": "https://www.youtube.com/watch?v=T0pnNHV2WoQ",
+      "thumbnail": "https://img.youtube.com/vi/T0pnNHV2WoQ/hqdefault.jpg",
+      "tags": [
+        "landmarks",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1qOyAcf_WRAEZ8LDMi2jjWBWoh8jB_OHK/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "jxVDZzqJdR8",
+      "titulo": "O Perdão e a Construção do Templo Interior",
+      "data": "2026-02-07",
+      "palestrante": "",
+      "youtube_id": "jxVDZzqJdR8",
+      "url": "https://www.youtube.com/watch?v=jxVDZzqJdR8",
+      "thumbnail": "https://img.youtube.com/vi/jxVDZzqJdR8/hqdefault.jpg",
+      "tags": [
+        "ética"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1tPs7a0SnQ_vXk-WwJck0G2MXfuTGdLnF/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "zOPDrjVqHuo",
+      "titulo": "O Mito de Sísifo e o Aperfeiçoamento Maçônico",
+      "data": "2026-01-31",
+      "palestrante": "",
+      "youtube_id": "zOPDrjVqHuo",
+      "url": "https://www.youtube.com/watch?v=zOPDrjVqHuo",
+      "thumbnail": "https://img.youtube.com/vi/zOPDrjVqHuo/hqdefault.jpg",
+      "tags": [
+        "instrumentos",
+        "filosofia"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1qUIbMGLNVJxS98I21fvz-7x5pudJz6gs/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "fgJAQ3Opq2M",
+      "titulo": "As Colunas Zodiacais no Templo Maçônico",
+      "data": "2026-01-24",
+      "palestrante": "",
+      "youtube_id": "fgJAQ3Opq2M",
+      "url": "https://www.youtube.com/watch?v=fgJAQ3Opq2M",
+      "thumbnail": "https://img.youtube.com/vi/fgJAQ3Opq2M/hqdefault.jpg",
+      "tags": [
+        "instrumentos",
+        "simbolismo"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1kLXl0dnA0H11bakg3nwod2O0zBXR9Idy/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "9Qo0kLPA00Y",
+      "titulo": "Para quê Moral?!?",
+      "data": "2026-01-17",
+      "palestrante": "Márcio Silva",
+      "youtube_id": "9Qo0kLPA00Y",
+      "url": "https://www.youtube.com/watch?v=9Qo0kLPA00Y",
+      "thumbnail": "https://img.youtube.com/vi/9Qo0kLPA00Y/hqdefault.jpg",
+      "tags": [
+        "ética"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "adQza9RXoSc",
+      "titulo": "É Natal, e então?",
+      "data": "2025-12-20",
+      "palestrante": "Paulo Careta",
+      "youtube_id": "adQza9RXoSc",
+      "url": "https://www.youtube.com/watch?v=adQza9RXoSc",
+      "thumbnail": "https://img.youtube.com/vi/adQza9RXoSc/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "EPktXJI2530",
+      "titulo": "Despojando-se dos metais: uma jornada de humildade",
+      "data": "2025-12-06",
+      "palestrante": "",
+      "youtube_id": "EPktXJI2530",
+      "url": "https://www.youtube.com/watch?v=EPktXJI2530",
+      "thumbnail": "https://img.youtube.com/vi/EPktXJI2530/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1DvCnubiF6XRysxYq_ClTU71mGGDYxA4t/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "NGNGVlokm-0",
+      "titulo": "O Livro da Lei: Luz Moral e Fundamento da Maçonaria",
+      "data": "2025-11-29",
+      "palestrante": "",
+      "youtube_id": "NGNGVlokm-0",
+      "url": "https://www.youtube.com/watch?v=NGNGVlokm-0",
+      "thumbnail": "https://img.youtube.com/vi/NGNGVlokm-0/hqdefault.jpg",
+      "tags": [
+        "ética",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1kQCrRws5bKvVzNOofvMz0BClxAVAEr3-/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "pCS_GHeDlNg",
+      "titulo": "Maçonaria hoje: estamos cultivando União ou Desunião Grupo de Estudos Urânia",
+      "data": "2025-11-22",
+      "palestrante": "",
+      "youtube_id": "pCS_GHeDlNg",
+      "url": "https://www.youtube.com/watch?v=pCS_GHeDlNg",
+      "thumbnail": "https://img.youtube.com/vi/pCS_GHeDlNg/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "VvbEsQK8U58",
+      "titulo": "A Cisão de 1927",
+      "data": "2025-11-15",
+      "palestrante": "Roberto Souza Gonzalez",
+      "youtube_id": "VvbEsQK8U58",
+      "url": "https://www.youtube.com/watch?v=VvbEsQK8U58",
+      "thumbnail": "https://img.youtube.com/vi/VvbEsQK8U58/hqdefault.jpg",
+      "tags": [
+        "história"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "UmqNcfAaFK4",
+      "titulo": "As sete virtudes de um não DeMolay",
+      "data": "2025-11-08",
+      "palestrante": "Marcio Silva",
+      "youtube_id": "UmqNcfAaFK4",
+      "url": "https://www.youtube.com/watch?v=UmqNcfAaFK4",
+      "thumbnail": "https://img.youtube.com/vi/UmqNcfAaFK4/hqdefault.jpg",
+      "tags": [
+        "DeMolay"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "2V4BR5n__LA",
+      "titulo": "O Sigilo na Maçonaria",
+      "data": "2025-11-01",
+      "palestrante": "",
+      "youtube_id": "2V4BR5n__LA",
+      "url": "https://www.youtube.com/watch?v=2V4BR5n__LA",
+      "thumbnail": "https://img.youtube.com/vi/2V4BR5n__LA/hqdefault.jpg",
+      "tags": [
+        "instrumentos",
+        "ritualística"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1dyplTF3u0r3Q8NiEyI9Q0reiaP1UvMOV/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "pxNO3bwpT3M",
+      "titulo": "O Pavimento Mosaico: Símbolo da Dualidade e da Harmonia Maçônica",
+      "data": "2025-10-25",
+      "palestrante": "",
+      "youtube_id": "pxNO3bwpT3M",
+      "url": "https://www.youtube.com/watch?v=pxNO3bwpT3M",
+      "thumbnail": "https://img.youtube.com/vi/pxNO3bwpT3M/hqdefault.jpg",
+      "tags": [
+        "simbolismo",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1gSjYaXVhTia5i0LfZE_ZBmjr45bH8H1Z/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "1hloTol4VGI",
+      "titulo": "O Escrutínio Secreto na Maçonaria",
+      "data": "2025-10-18",
+      "palestrante": "",
+      "youtube_id": "1hloTol4VGI",
+      "url": "https://www.youtube.com/watch?v=1hloTol4VGI",
+      "thumbnail": "https://img.youtube.com/vi/1hloTol4VGI/hqdefault.jpg",
+      "tags": [
+        "instrumentos",
+        "ritualística"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1Y_Y4ZrtNR0HBpoA_GXBt5zhAApcTHmnO/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "1mHFEF9d564",
+      "titulo": "Entre Colunas - o Espaço Sagrado da Verdade e do Equilíbrio Maçônico",
+      "data": "2025-10-11",
+      "palestrante": "",
+      "youtube_id": "1mHFEF9d564",
+      "url": "https://www.youtube.com/watch?v=1mHFEF9d564",
+      "thumbnail": "https://img.youtube.com/vi/1mHFEF9d564/hqdefault.jpg",
+      "tags": [
+        "instrumentos",
+        "simbolismo"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1Tg8OOubMrd8jNCVrhtXPRbx5COOW0tSg/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "VVwSsEsVEgA",
+      "titulo": "A Jornada Maçônica e o Significado do Aumento de Salário",
+      "data": "2025-10-04",
+      "palestrante": "",
+      "youtube_id": "VVwSsEsVEgA",
+      "url": "https://www.youtube.com/watch?v=VVwSsEsVEgA",
+      "thumbnail": "https://img.youtube.com/vi/VVwSsEsVEgA/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/19JU7j0dbTmlRFQdwN5pxMv_IX9Mink-K/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "PGtIV-COj2Y",
+      "titulo": "O Significado do Perjúrio na Maçonaria",
+      "data": "2025-09-27",
+      "palestrante": "",
+      "youtube_id": "PGtIV-COj2Y",
+      "url": "https://www.youtube.com/watch?v=PGtIV-COj2Y",
+      "thumbnail": "https://img.youtube.com/vi/PGtIV-COj2Y/hqdefault.jpg",
+      "tags": [
+        "instrumentos",
+        "ritualística"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1km1g8iyGfQm5H1Py_TkbFIBWNePMRkej/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "0L5FUQxIjvI",
+      "titulo": "A Força e a Razão: O Simbolismo do Maço e do Cinzel",
+      "data": "2025-09-20",
+      "palestrante": "",
+      "youtube_id": "0L5FUQxIjvI",
+      "url": "https://www.youtube.com/watch?v=0L5FUQxIjvI",
+      "thumbnail": "https://img.youtube.com/vi/0L5FUQxIjvI/hqdefault.jpg",
+      "tags": [
+        "simbolismo",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/11qdpw9PMqUmD0XX9p8DYscSZsjGkh3n0/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "cMzMCaKVSns",
+      "titulo": "A Régua Maçônica",
+      "data": "2025-09-13",
+      "palestrante": "",
+      "youtube_id": "cMzMCaKVSns",
+      "url": "https://www.youtube.com/watch?v=cMzMCaKVSns",
+      "thumbnail": "https://img.youtube.com/vi/cMzMCaKVSns/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1uO6O8FCgDf4i0VRctG1lzE5bF6Ncj09s/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "gNGRmqEmDqY",
+      "titulo": "O Compasso",
+      "data": "2025-09-06",
+      "palestrante": "",
+      "youtube_id": "gNGRmqEmDqY",
+      "url": "https://www.youtube.com/watch?v=gNGRmqEmDqY",
+      "thumbnail": "https://img.youtube.com/vi/gNGRmqEmDqY/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "hvwnooOen5k",
+      "titulo": "A Tolerância na Maçonaria",
+      "data": "2025-08-30",
+      "palestrante": "",
+      "youtube_id": "hvwnooOen5k",
+      "url": "https://www.youtube.com/watch?v=hvwnooOen5k",
+      "thumbnail": "https://img.youtube.com/vi/hvwnooOen5k/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "uhaZ2PW6EvA",
+      "titulo": "Quebrando Paradigmas, os Landmarks e o Futuro da Maçonaria",
+      "data": "2025-08-02",
+      "palestrante": "Oduwaldo Álvaro",
+      "youtube_id": "uhaZ2PW6EvA",
+      "url": "https://www.youtube.com/watch?v=uhaZ2PW6EvA",
+      "thumbnail": "https://img.youtube.com/vi/uhaZ2PW6EvA/hqdefault.jpg",
+      "tags": [
+        "landmarks",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "PlEsf3eZY4U",
+      "titulo": "A Palavra Sagrada do Grau de Aprendiz do REAA: da pronúncia ao significado",
+      "data": "2025-07-26",
+      "palestrante": "",
+      "youtube_id": "PlEsf3eZY4U",
+      "url": "https://www.youtube.com/watch?v=PlEsf3eZY4U",
+      "thumbnail": "https://img.youtube.com/vi/PlEsf3eZY4U/hqdefault.jpg",
+      "tags": [
+        "REAA",
+        "grau de aprendiz"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "ZFbColvnCq8",
+      "titulo": "No Tempo das Cruzadas",
+      "data": "2025-07-19",
+      "palestrante": "Márcio Silva",
+      "youtube_id": "ZFbColvnCq8",
+      "url": "https://www.youtube.com/watch?v=ZFbColvnCq8",
+      "thumbnail": "https://img.youtube.com/vi/ZFbColvnCq8/hqdefault.jpg",
+      "tags": [
+        "história"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "hQhCQCZ8n8o",
+      "titulo": "Por que o Maçom não estuda?",
+      "data": "2025-07-05",
+      "palestrante": "",
+      "youtube_id": "hQhCQCZ8n8o",
+      "url": "https://www.youtube.com/watch?v=hQhCQCZ8n8o",
+      "thumbnail": "https://img.youtube.com/vi/hQhCQCZ8n8o/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "anexo": "https://drive.google.com/file/d/1fyGmL7NjDCKwdF77F_e1SXPdJUnJThIq/view",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "Rzw3SSbpxbo",
+      "titulo": "O comportamento esperado do Visitante de Rito Diverso",
+      "data": "2025-06-28",
+      "palestrante": "",
+      "youtube_id": "Rzw3SSbpxbo",
+      "url": "https://www.youtube.com/watch?v=Rzw3SSbpxbo",
+      "thumbnail": "https://img.youtube.com/vi/Rzw3SSbpxbo/hqdefault.jpg",
+      "tags": [
+        "rito"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "725aTz-6jp0",
+      "titulo": "As Frases na Câmara de Reflexões",
+      "data": "2025-05-10",
+      "palestrante": "",
+      "youtube_id": "725aTz-6jp0",
+      "url": "https://www.youtube.com/watch?v=725aTz-6jp0",
+      "thumbnail": "https://img.youtube.com/vi/725aTz-6jp0/hqdefault.jpg",
+      "tags": [
+        "iniciação"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "Uvud3P4KMec",
+      "titulo": "Uma Visão da Iniciação",
+      "data": "2025-05-03",
+      "palestrante": "Márcio Silva",
+      "youtube_id": "Uvud3P4KMec",
+      "url": "https://www.youtube.com/watch?v=Uvud3P4KMec",
+      "thumbnail": "https://img.youtube.com/vi/Uvud3P4KMec/hqdefault.jpg",
+      "tags": [
+        "iniciação"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "Qt3MN6Nor84",
+      "titulo": "Premissas básicas para convite e admissão de candidatos à Ordem",
+      "data": "2025-04-05",
+      "palestrante": "",
+      "youtube_id": "Qt3MN6Nor84",
+      "url": "https://www.youtube.com/watch?v=Qt3MN6Nor84",
+      "thumbnail": "https://img.youtube.com/vi/Qt3MN6Nor84/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "0a_8lGK0DuU",
+      "titulo": "Sindicância: Objetivos e Consequências",
+      "data": "2025-03-29",
+      "palestrante": "Ronaldo Fernandes",
+      "youtube_id": "0a_8lGK0DuU",
+      "url": "https://www.youtube.com/watch?v=0a_8lGK0DuU",
+      "thumbnail": "https://img.youtube.com/vi/0a_8lGK0DuU/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "oNkeLmTUlTw",
+      "titulo": "O Crescimento da Maçonaria e sua Influência na Evolução Social e Comercial da Europa",
+      "data": "2025-02-22",
+      "palestrante": "Erivelto Sousa",
+      "youtube_id": "oNkeLmTUlTw",
+      "url": "https://www.youtube.com/watch?v=oNkeLmTUlTw",
+      "thumbnail": "https://img.youtube.com/vi/oNkeLmTUlTw/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "HNWF_92hPEw",
+      "titulo": "O Painel do Mestre Maçom: O Renascer além do Túmulo",
+      "data": "2025-02-08",
+      "palestrante": "Fuad Haddad",
+      "youtube_id": "HNWF_92hPEw",
+      "url": "https://www.youtube.com/watch?v=HNWF_92hPEw",
+      "thumbnail": "https://img.youtube.com/vi/HNWF_92hPEw/hqdefault.jpg",
+      "tags": [
+        "grau de mestre",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "9VaopK41e0c",
+      "titulo": "Em Busca do Universo",
+      "data": "2025-02-01",
+      "palestrante": "Márcio Latorraca",
+      "youtube_id": "9VaopK41e0c",
+      "url": "https://www.youtube.com/watch?v=9VaopK41e0c",
+      "thumbnail": "https://img.youtube.com/vi/9VaopK41e0c/hqdefault.jpg",
+      "tags": [
+        "ciência"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "EZPlVN_RyQw",
+      "titulo": "A Metáfora do Anel de Giges de Platão",
+      "data": "2025-01-25",
+      "palestrante": "Nilton Beloti Filho",
+      "youtube_id": "EZPlVN_RyQw",
+      "url": "https://www.youtube.com/watch?v=EZPlVN_RyQw",
+      "thumbnail": "https://img.youtube.com/vi/EZPlVN_RyQw/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "u4YEE5XDs5s",
+      "titulo": "Você o reconhecerá como tal?",
+      "data": "2025-01-18",
+      "palestrante": "Rodrigo Rosenthal",
+      "youtube_id": "u4YEE5XDs5s",
+      "url": "https://www.youtube.com/watch?v=u4YEE5XDs5s",
+      "thumbnail": "https://img.youtube.com/vi/u4YEE5XDs5s/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "gmlTqmkrtrQ",
+      "titulo": "Gestão Maçônica Inspiradora",
+      "data": "2024-12-14",
+      "palestrante": "Mario Vasconcelos",
+      "youtube_id": "gmlTqmkrtrQ",
+      "url": "https://www.youtube.com/watch?v=gmlTqmkrtrQ",
+      "thumbnail": "https://img.youtube.com/vi/gmlTqmkrtrQ/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "DfqytmAKU_g",
+      "titulo": "A Prece Inicial",
+      "data": "2024-12-07",
+      "palestrante": "Manuel Pereira",
+      "youtube_id": "DfqytmAKU_g",
+      "url": "https://www.youtube.com/watch?v=DfqytmAKU_g",
+      "thumbnail": "https://img.youtube.com/vi/DfqytmAKU_g/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "l4SWAbWWbJw",
+      "titulo": "As Buscas dos Maçons e as Escolas de Pensamento Maçônico",
+      "data": "2024-11-30",
+      "palestrante": "Márcio Silva",
+      "youtube_id": "l4SWAbWWbJw",
+      "url": "https://www.youtube.com/watch?v=l4SWAbWWbJw",
+      "thumbnail": "https://img.youtube.com/vi/l4SWAbWWbJw/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "bSF7GI6JaZI",
+      "titulo": "O Homem e o Maçom Bolha",
+      "data": "2024-09-07",
+      "palestrante": "José Maldonado Gualda",
+      "youtube_id": "bSF7GI6JaZI",
+      "url": "https://www.youtube.com/watch?v=bSF7GI6JaZI",
+      "thumbnail": "https://img.youtube.com/vi/bSF7GI6JaZI/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "vdDSpCQW4Hw",
+      "titulo": "A Bobajada do Abóbado Celeste — Parte 2",
+      "data": "2024-07-20",
+      "palestrante": "Márcio Silva",
+      "youtube_id": "vdDSpCQW4Hw",
+      "url": "https://www.youtube.com/watch?v=vdDSpCQW4Hw",
+      "thumbnail": "https://img.youtube.com/vi/vdDSpCQW4Hw/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "OFvMBC1_K2g",
+      "titulo": "A Bobajada do Abóbado Celeste — Parte 1",
+      "data": "2024-07-06",
+      "palestrante": "Márcio Silva",
+      "youtube_id": "OFvMBC1_K2g",
+      "url": "https://www.youtube.com/watch?v=OFvMBC1_K2g",
+      "thumbnail": "https://img.youtube.com/vi/OFvMBC1_K2g/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "DRlRl9ux20w",
+      "titulo": "A Moral dos Fortes e dos Fracos",
+      "data": "2023-12-16",
+      "palestrante": "Márcio Silva",
+      "youtube_id": "DRlRl9ux20w",
+      "url": "https://www.youtube.com/watch?v=DRlRl9ux20w",
+      "thumbnail": "https://img.youtube.com/vi/DRlRl9ux20w/hqdefault.jpg",
+      "tags": [
+        "ética"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "fut15ZjQKDk",
+      "titulo": "De Abraão ao Cativeiro da Babilônia",
+      "data": "2023-10-21",
+      "palestrante": "Gilson Mendonça",
+      "youtube_id": "fut15ZjQKDk",
+      "url": "https://www.youtube.com/watch?v=fut15ZjQKDk",
+      "thumbnail": "https://img.youtube.com/vi/fut15ZjQKDk/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "XPGHGI9f6hg",
+      "titulo": "A Inteligência Artificial na Maçonaria",
+      "data": "2023-10-14",
+      "palestrante": "Marcelo Corsini",
+      "youtube_id": "XPGHGI9f6hg",
+      "url": "https://www.youtube.com/watch?v=XPGHGI9f6hg",
+      "thumbnail": "https://img.youtube.com/vi/XPGHGI9f6hg/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "Fr3KTMgXFyQ",
+      "titulo": "O Valor",
+      "data": "2023-09-30",
+      "palestrante": "Márcio Silva",
+      "youtube_id": "Fr3KTMgXFyQ",
+      "url": "https://www.youtube.com/watch?v=Fr3KTMgXFyQ",
+      "thumbnail": "https://img.youtube.com/vi/Fr3KTMgXFyQ/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "Toz3g2fizas",
+      "titulo": "Livre Arbítrio e Destino",
+      "data": "2023-04-08",
+      "palestrante": "Márcio Silva",
+      "youtube_id": "Toz3g2fizas",
+      "url": "https://www.youtube.com/watch?v=Toz3g2fizas",
+      "thumbnail": "https://img.youtube.com/vi/Toz3g2fizas/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "gFZCwC40-Zc",
+      "titulo": "O Papel das Comissões no Cotidiano de uma Loja Maçônica — Parte 1",
+      "data": "",
+      "palestrante": "",
+      "youtube_id": "gFZCwC40-Zc",
+      "url": "https://www.youtube.com/watch?v=gFZCwC40-Zc",
+      "thumbnail": "https://img.youtube.com/vi/gFZCwC40-Zc/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "W9EPXfH4AxQ",
+      "titulo": "O Papel das Comissões no Cotidiano de uma Loja Maçônica — Parte 2",
+      "data": "",
+      "palestrante": "",
+      "youtube_id": "W9EPXfH4AxQ",
+      "url": "https://www.youtube.com/watch?v=W9EPXfH4AxQ",
+      "thumbnail": "https://img.youtube.com/vi/W9EPXfH4AxQ/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "AxD70ztJwZk",
+      "titulo": "VITRIOL: A Jornada Maçônica de Autoconhecimento e Transformação Interior",
+      "data": "",
+      "palestrante": "",
+      "youtube_id": "AxD70ztJwZk",
+      "url": "https://www.youtube.com/watch?v=AxD70ztJwZk",
+      "thumbnail": "https://img.youtube.com/vi/AxD70ztJwZk/hqdefault.jpg",
+      "tags": [
+        "instrumentos",
+        "iniciação"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "5sKInIrVxiM",
+      "titulo": "A Egrégora Maçônica: Entre o Simbolismo Iniciático e o Ceticismo Racional",
+      "data": "",
+      "palestrante": "",
+      "youtube_id": "5sKInIrVxiM",
+      "url": "https://www.youtube.com/watch?v=5sKInIrVxiM",
+      "thumbnail": "https://img.youtube.com/vi/5sKInIrVxiM/hqdefault.jpg",
+      "tags": [
+        "simbolismo",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "WKwOyus8Nd8",
+      "titulo": "Perspectivas Maçônicas da Ópera \"A Flauta Mágica\" de Mozart",
+      "data": "",
+      "palestrante": "",
+      "youtube_id": "WKwOyus8Nd8",
+      "url": "https://www.youtube.com/watch?v=WKwOyus8Nd8",
+      "thumbnail": "https://img.youtube.com/vi/WKwOyus8Nd8/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "78lkB-H2eno",
+      "titulo": "As Lojas Maçônicas e suas Finalidades - Aldino Brasil Souza",
+      "data": "",
+      "palestrante": "",
+      "youtube_id": "78lkB-H2eno",
+      "url": "https://www.youtube.com/watch?v=78lkB-H2eno",
+      "thumbnail": "https://img.youtube.com/vi/78lkB-H2eno/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "KvR_dDnft2Q",
+      "titulo": "O Legado do Mestre Maçom",
+      "data": "",
+      "palestrante": "Márcio Latorraca",
+      "youtube_id": "KvR_dDnft2Q",
+      "url": "https://www.youtube.com/watch?v=KvR_dDnft2Q",
+      "thumbnail": "https://img.youtube.com/vi/KvR_dDnft2Q/hqdefault.jpg",
+      "tags": [
+        "grau de mestre",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "imJU7qBYSc8",
+      "titulo": "O Silêncio Maçônico e outras formas de silêncio",
+      "data": "",
+      "palestrante": "",
+      "youtube_id": "imJU7qBYSc8",
+      "url": "https://www.youtube.com/watch?v=imJU7qBYSc8",
+      "thumbnail": "https://img.youtube.com/vi/imJU7qBYSc8/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "C9LlD7BAcEU",
+      "titulo": "Reflexão sobre a Páscoa",
+      "data": "",
+      "palestrante": "Marcos A. P. Noronha",
+      "youtube_id": "C9LlD7BAcEU",
+      "url": "https://www.youtube.com/watch?v=C9LlD7BAcEU",
+      "thumbnail": "https://img.youtube.com/vi/C9LlD7BAcEU/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "9xBj6dOnpr0",
+      "titulo": "Da Sindicância à Câmara de Reflexões",
+      "data": "",
+      "palestrante": "Rodrigo Rosenthal",
+      "youtube_id": "9xBj6dOnpr0",
+      "url": "https://www.youtube.com/watch?v=9xBj6dOnpr0",
+      "thumbnail": "https://img.youtube.com/vi/9xBj6dOnpr0/hqdefault.jpg",
+      "tags": [
+        "iniciação"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "ESctJa46wqk",
+      "titulo": "A Maçonaria Simbólica é incompleta?",
+      "data": "",
+      "palestrante": "Oduwaldo Álvaro",
+      "youtube_id": "ESctJa46wqk",
+      "url": "https://www.youtube.com/watch?v=ESctJa46wqk",
+      "thumbnail": "https://img.youtube.com/vi/ESctJa46wqk/hqdefault.jpg",
+      "tags": [
+        "simbolismo",
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "pwcoe7HtuBw",
+      "titulo": "Amor e Afins",
+      "data": "",
+      "palestrante": "Márcio Silva",
+      "youtube_id": "pwcoe7HtuBw",
+      "url": "https://www.youtube.com/watch?v=pwcoe7HtuBw",
+      "thumbnail": "https://img.youtube.com/vi/pwcoe7HtuBw/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "UqGPlrh64p4",
+      "titulo": "O Propósito Existencial do Maçom - José Bandeira",
+      "data": "",
+      "palestrante": "",
+      "youtube_id": "UqGPlrh64p4",
+      "url": "https://www.youtube.com/watch?v=UqGPlrh64p4",
+      "thumbnail": "https://img.youtube.com/vi/UqGPlrh64p4/hqdefault.jpg",
+      "tags": [
+        "instrumentos"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "sDeQbpR0ul8",
+      "titulo": "Combate ao Obscurantismo",
+      "data": "",
+      "palestrante": "Fuad Haddad",
+      "youtube_id": "sDeQbpR0ul8",
+      "url": "https://www.youtube.com/watch?v=sDeQbpR0ul8",
+      "thumbnail": "https://img.youtube.com/vi/sDeQbpR0ul8/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "HbuiJDJUVlA",
+      "titulo": "Os Aventais",
+      "data": "",
+      "palestrante": "José Maldonado",
+      "youtube_id": "HbuiJDJUVlA",
+      "url": "https://www.youtube.com/watch?v=HbuiJDJUVlA",
+      "thumbnail": "https://img.youtube.com/vi/HbuiJDJUVlA/hqdefault.jpg",
+      "tags": [
+        "estudo maçônico"
+      ],
+      "transcricao_status": "pendente",
+      "tipo": "video",
+      "descricao": "Sessão de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "prancha-u002",
+      "titulo": "A Simbologia da Morte na Maçonaria",
+      "data": "",
+      "palestrante": "",
+      "youtube_id": "",
+      "url": "",
+      "thumbnail": "",
+      "tags": [
+        "simbolismo",
+        "morte"
+      ],
+      "transcricao_status": "nao_aplicavel",
+      "tipo": "prancha",
+      "anexo": "https://drive.google.com/file/d/1UufuHlXPHXwbojX8LSoyEHb8mJDifWqc/view",
+      "descricao": "Prancha de estudos do Grupo de Estudos Urânia."
+    },
+    {
+      "id": "prancha-u005",
+      "titulo": "Reconhecimento e Regularidade",
+      "data": "",
+      "palestrante": "",
+      "youtube_id": "",
+      "url": "",
+      "thumbnail": "",
+      "tags": [
+        "reconhecimento",
+        "regularidade"
+      ],
+      "transcricao_status": "nao_aplicavel",
+      "tipo": "prancha",
+      "anexo": "https://drive.google.com/file/d/1LsKse2D7TGWYYkcT6_FEXsauY6prb9vP/view",
+      "descricao": "Prancha do Grupo de Estudos Urânia. Sessão não gravada a pedido dos presentes."
     }
   ]
 }

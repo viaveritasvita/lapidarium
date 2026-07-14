@@ -3,217 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Acervo · LAPIDARIUM</title>
-<meta name="description" content="Busca no acervo maçônico do Lapidarium — vídeos e pranchas dos Grupos de Estudos Urânia e EpaminondasOnline.">
+<title>Buscar — Lapidarium</title>
+<meta name="description" content="Busca no acervo do Lapidarium.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 84'><polygon points='42,8 78,74 6,74' fill='none' stroke='%23c9a84c' stroke-width='4'/><ellipse cx='42' cy='54' rx='12' ry='8' fill='none' stroke='%23c9a84c' stroke-width='2.5'/><circle cx='42' cy='54' r='3' fill='%23c9a84c'/></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lapidarium.css">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --gold:#c9a84c;--gold-l:#f0d98a;--gold-d:#7a6230;
-  --copper:#b87333;--copper-l:#d4905a;
-  --blue:#4a7fa8;--blue-l:#6ba3cc;
-  --s1:#171510;--s2:#1e1c14;--s3:#252118;
-  --text:#e0d0b0;--text-d:#9a8a6a;--text-dd:#524a3c;
-  --border:rgba(201,168,76,0.13);--border-h:rgba(201,168,76,0.34);
-}
-body{background:var(--s1);color:var(--text);font-family:'EB Garamond',serif;min-height:100vh;padding:0 0 60px}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
-header{text-align:center;padding:34px 0 6px;border-bottom:1px solid var(--border)}
-.home{display:inline-flex;align-items:center;gap:7px;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.22em;color:var(--text-d);text-transform:uppercase;margin-bottom:16px;transition:color .3s}
-.home:hover{color:var(--gold)}
-.title{font-family:'Cinzel',serif;font-size:clamp(1.5rem,4vw,2.3rem);font-weight:700;letter-spacing:.22em;background:linear-gradient(170deg,#f5e49a,var(--gold) 45%,#8a6820 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sub{font-style:italic;color:var(--text-d);font-size:.95rem;margin-top:4px}
-/* nav (igual à home) */
-nav{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;padding:18px 0 12px}
-nav a{font-family:'Cinzel',serif;font-size:.64rem;letter-spacing:.22em;color:#b0a079;text-decoration:none;text-transform:uppercase;padding:2px 0;border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
-nav a:hover{color:var(--gold);border-color:var(--gold-d)}
-nav a.soon{opacity:.4;pointer-events:none;cursor:not-allowed;position:relative}
-nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 1px);transform:translateX(-50%);font-size:.44rem;letter-spacing:.06em;color:var(--gold-d);font-style:italic;text-transform:none;white-space:nowrap}
-/* search */
-.searchbar{display:flex;gap:9px;margin:26px 0 14px;flex-wrap:wrap}
-.searchbar input{flex:1;min-width:220px;background:var(--s2);border:1px solid var(--border-h);color:var(--text);font-family:'EB Garamond',serif;font-size:1rem;padding:12px 16px;border-radius:2px;outline:none}
-.searchbar input:focus{border-color:var(--gold-d)}
-.searchbar input::placeholder{color:var(--text-d);opacity:.75}
-/* filter rows */
-.filters{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
-.frow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.flabel{font-family:'Cinzel',serif;font-size:.6rem;font-weight:600;letter-spacing:.18em;color:var(--text-d);text-transform:uppercase;min-width:64px}
-.chip{background:var(--s2);border:1px solid var(--border);color:var(--text-d);font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.09em;padding:6px 13px;border-radius:20px;cursor:pointer;transition:.25s;text-transform:uppercase}
-.chip:hover{border-color:var(--border-h);color:var(--text)}
-.chip.on{background:linear-gradient(160deg,var(--gold),var(--gold-d));color:#1a1509;border-color:var(--gold);font-weight:600}
-.chip.on.ur{background:linear-gradient(160deg,var(--blue-l),#2f5878);color:#0c1620;border-color:var(--blue-l)}
-.chip.on.ep{background:linear-gradient(160deg,var(--copper-l),#7a4a1e);color:#1a0f06;border-color:var(--copper-l)}
-select.chip{-webkit-appearance:none;appearance:none;padding-right:26px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M1 2l3 3 3-3' stroke='%239a8a6a' fill='none' stroke-width='1.2'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
-.count{color:var(--text-d);font-size:.85rem;margin:16px 2px 12px;font-style:italic}
-.count b{color:var(--gold);font-style:normal}
-/* grid */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:16px}
-.card{background:var(--s2);border:1px solid var(--border);border-radius:3px;overflow:hidden;display:flex;flex-direction:column;transition:.25s}
-.card:hover{border-color:var(--border-h);transform:translateY(-2px)}
-.thumb{position:relative;aspect-ratio:16/9;background:var(--s3);overflow:hidden}
-.thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) brightness(.86)}
-.badge{position:absolute;top:8px;left:8px;font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.1em;padding:3px 9px;border-radius:12px;text-transform:uppercase;backdrop-filter:blur(3px)}
-.b-ur{background:rgba(74,127,168,.9);color:#fff}
-.b-ep{background:rgba(184,115,51,.9);color:#fff}
-.play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:.25s}
-.card:hover .play{opacity:1}
-.play svg{width:46px;height:46px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
-.prancha-thumb{aspect-ratio:16/9;background:linear-gradient(150deg,var(--s3),#1a1710);display:flex;align-items:center;justify-content:center;position:relative}
-.prancha-thumb .doc{font-size:2.4rem;opacity:.5}
-.body{padding:12px 13px 13px;display:flex;flex-direction:column;flex:1}
-.c-title{font-family:'Cinzel',serif;font-size:.82rem;line-height:1.35;color:var(--text);margin-bottom:6px;font-weight:600}
-.c-meta{font-size:.8rem;color:var(--text-d);margin-bottom:9px}
-.c-meta .dot{color:var(--text-dd);margin:0 5px}
-.c-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:11px}
-.c-tag{font-size:.62rem;color:var(--gold-d);border:1px solid var(--border);padding:1px 7px;border-radius:10px}
-.c-actions{margin-top:auto;display:flex;gap:7px}
-.act{flex:1;text-align:center;font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding:7px 6px;border-radius:2px;transition:.2s;border:1px solid var(--border-h)}
-.act-yt{background:rgba(201,168,76,.1);color:var(--gold-l)}
-.act-yt:hover{background:rgba(201,168,76,.22)}
-.act-pdf{background:rgba(74,127,168,.12);color:var(--blue-l);border-color:rgba(74,127,168,.3)}
-.act-pdf:hover{background:rgba(74,127,168,.24)}
-.empty{text-align:center;color:var(--text-d);font-style:italic;padding:60px 0}
-footer{text-align:center;margin-top:46px;color:var(--text-dd);font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.3em;text-transform:uppercase}
-@media(max-width:430px){.wrap{padding:0 14px}.grid{grid-template-columns:1fr}.flabel{min-width:100%}}
+  .grptoggle{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px;justify-content:center}
+  .gt{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-d);background:transparent;border:1px solid var(--border);padding:7px 16px;cursor:pointer;transition:all .25s}
+  .gt:hover{color:var(--text);border-color:var(--border-h)}
+  .gt.ativa{color:var(--s1);background:var(--gold);border-color:var(--gold);font-weight:600}
+  .chips-busca{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0 2px}
+  .chipb{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.1em;border:1px solid rgba(201,168,76,.28);color:#c2b189;padding:4px 10px;cursor:pointer;text-transform:uppercase;background:rgba(201,168,76,.05);transition:all .25s}
+  .chipb:hover{border-color:var(--gold);color:var(--gold-l)}
+  .limpar{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.14em;color:var(--text-d);text-transform:uppercase;cursor:pointer;border:none;background:none;margin-left:10px}
+  .limpar:hover{color:var(--gold)}
+  body.light .gt.ativa{color:#fff}
 </style>
 </head>
 <body>
+<button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">☀ Tema</button>
 <div class="wrap">
 <header>
-  <a class="home" href="index.html">&#8592; Lapidarium</a>
-  <h1 class="title">ACERVO</h1>
-  <p class="sub">Vídeos e pranchas dos Grupos de Estudos Urânia e EpaminondasOnline</p>
-  <nav>
-    <a href="index.html">Início</a><a href="buscar.html?tipo=prancha">Pranchas</a><a class="soon">Calendário</a>
-    <a class="soon">Glossário</a><a class="soon">Linha do Tempo</a><a class="soon">Acesso Restrito</a>
-  </nav>
+  <nav class="topnav"><a href="index.html">Início</a><a href="buscar.html" class="atual">Acervo</a><a href="epaminondas.html">Epaminondas</a><a href="urania.html">Urânia</a><a href="calendar.html">Calendário</a><a href="publicar.html">Acesso Restrito</a></nav>
+  <div class="delta-wrap" id="deltaWrap">
+    <div class="delta-halo"></div>
+    <svg class="delta-rays" viewBox="0 0 120 120" style="position:absolute;inset:-18px;width:calc(100% + 36px);height:calc(100% + 36px)">
+      <g transform="translate(60,60)" stroke="rgba(240,217,138,0.35)" stroke-width="0.8">
+        <line x1="0" y1="-52" x2="0" y2="-44"/><line x1="0" y1="44" x2="0" y2="52"/><line x1="-52" y1="0" x2="-44" y2="0"/><line x1="44" y1="0" x2="52" y2="0"/>
+        <line x1="-37" y1="-37" x2="-31" y2="-31"/><line x1="31" y1="-31" x2="37" y2="-37"/><line x1="-37" y1="37" x2="-31" y2="31"/><line x1="31" y1="31" x2="37" y2="37"/>
+      </g>
+    </svg>
+    <div class="delta-svg-wrap">
+      <svg viewBox="0 0 84 84" fill="none" style="width:100%;height:100%">
+        <defs>
+          <linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5e49a"/><stop offset="55%" stop-color="#c9a84c"/><stop offset="100%" stop-color="#7a6230"/></linearGradient>
+          <radialGradient id="eyeRg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(240,217,138,0.28)"/><stop offset="100%" stop-color="rgba(201,168,76,0)"/></radialGradient>
+        </defs>
+        <polygon points="42,5 78,75 6,75" stroke="url(#dg)" stroke-width="2.2" fill="rgba(201,168,76,0.035)"/>
+        <polygon points="42,18 65,64 19,64" stroke="#c9a84c" stroke-width=".5" stroke-dasharray="2,3.5" fill="none" opacity=".25"/>
+        <ellipse id="eyeGlow" cx="42" cy="54" rx="13" ry="8.5" fill="url(#eyeRg)"/>
+        <ellipse id="eyeOutline" cx="42" cy="54" rx="12" ry="7.5" stroke="url(#dg)" stroke-width="1.3" fill="none"/>
+        <circle id="iris" cx="42" cy="54" r="5" fill="rgba(201,168,76,0.1)" stroke="url(#dg)" stroke-width="1"/>
+        <circle id="pupil" cx="42" cy="54" r="2.2" fill="url(#dg)" opacity=".92"/>
+        <circle id="spec" cx="43.2" cy="52.8" r=".7" fill="rgba(255,248,220,0.8)"/>
+        <line x1="42" y1="40" x2="42" y2="44" stroke="#c9a84c" stroke-width=".7" opacity=".4"/><line x1="42" y1="64" x2="42" y2="68" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
+        <line x1="28" y1="54" x2="32" y2="54" stroke="#c9a84c" stroke-width=".7" opacity=".4"/><line x1="52" y1="54" x2="56" y2="54" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
+      </svg>
+    </div>
+  </div>
+  <h1 class="site-name" style="font-size:clamp(1.5rem,4.5vw,2.4rem);letter-spacing:.4em">ACERVO</h1>
+  <p class="page-tagline">Qual pedra o Irmão deseja lapidar hoje?</p>
 </header>
-
 <div class="searchbar">
-  <input id="q" type="text" placeholder="Buscar por tema, orador, símbolo, rito, grau…" autocomplete="off">
-</div>
-
-<div class="filters">
-  <div class="frow"><span class="flabel">Grupo</span><div id="fgrupo"></div></div>
-  <div class="frow"><span class="flabel">Tipo</span><div id="ftipo"></div></div>
-  <div class="frow"><span class="flabel">Tema</span>
-    <select id="ftema" class="chip"></select>
-    <select id="fano" class="chip"></select>
-    <button id="clear" class="chip">Limpar filtros</button>
+  <div class="search-row">
+    <span class="search-dot"></span>
+    <input class="search-input" id="consulta" type="search" placeholder="Ex: pedra bruta, grau de mestre, Templários, história…" autofocus autocomplete="off">
   </div>
 </div>
-
-<p class="count" id="count"></p>
-<div class="grid" id="grid"></div>
-<p class="empty" id="empty" style="display:none">Nenhum resultado. Tente outro termo ou limpe os filtros.</p>
-
-<footer>Lapidarium · In Nomine GADU · Omnia Vincit Lux</footer>
+<div class="grptoggle" id="grptoggle">
+  <button class="gt ativa" data-g="">Todos os acervos</button>
+  <button class="gt" data-g="EpaminondasOnline">Epaminondas</button>
+  <button class="gt" data-g="Grupo de Estudos Urânia">Urânia</button>
 </div>
-
+<div class="chips-busca">
+  <button class="chipb" data-q="Aprendiz">Aprendiz</button>
+  <button class="chipb" data-q="História">História</button>
+  <button class="chipb" data-q="Templários">Templários</button>
+  <button class="chipb" data-q="Simbolismo">Simbolismo</button>
+  <button class="chipb" data-q="Adonhiramita">Adonhiramita</button>
+  <button class="chipb" data-q="Beneficência">Beneficência</button>
+  <button class="chipb" data-q="Iluminismo">Iluminismo</button>
+</div>
+<div class="expansao" id="expansao"></div>
+<div class="searchgrid">
+  <aside class="facetas" id="facetas"></aside>
+  <main id="resultados"><p class="vazio">Carregando o acervo…</p></main>
+</div>
+<footer><p>Lapidarium · In Nomine G∴A∴D∴U∴ · Omnia Vincit Lux</p></footer>
+</div>
+<script src="config.js"></script>
+<script src="busca.js"></script>
+<script src="ui.js"></script>
 <script>
-let ACERVO = [];  // carregado via fetch de acervo.json
-const state = {q:'', grupo:'', tipo:'', tema:'', ano:''};
-
-// read URL params
-const p = new URLSearchParams(location.search);
-if(p.get('q')) state.q = p.get('q');
-if(p.get('grupo')) state.grupo = p.get('grupo');
-if(p.get('tipo')) state.tipo = p.get('tipo');
-if(p.get('tema')) state.tema = p.get('tema');
-if(p.get('ano')) state.ano = p.get('ano');
-// tolerancia: aceitar grupo por nome aproximado (ex.: ?grupo=urania)
-if(state.grupo && !['Grupo de Estudos Ur\u00e2nia','EpaminondasOnline'].includes(state.grupo)){
-  const gq=state.grupo.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-  if(gq.includes('urania')) state.grupo='Grupo de Estudos Ur\u00e2nia';
-  else if(gq.includes('epaminondas')) state.grupo='EpaminondasOnline';
-  else state.grupo='';
-}
-
-const GBADGE = {'Grupo de Estudos Urânia':'b-ur','EpaminondasOnline':'b-ep'};
-const GSHORT = {'Grupo de Estudos Urânia':'Urânia','EpaminondasOnline':'Epaminondas'};
-
-function norm(s){return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();}
-
-// build filter controls
-function chipRow(el, opts, key, classmap){
-  el.innerHTML='';
-  opts.forEach(o=>{
-    const b=document.createElement('button');
-    b.className='chip'+(state[key]===o.v?' on'+(classmap&&classmap[o.v]?' '+classmap[o.v]:''):'');
-    b.textContent=o.l;
-    b.onclick=()=>{state[key]=state[key]===o.v?'':o.v; render();};
-    el.appendChild(b);
+(async () => {
+  const $ = (id) => document.getElementById(id);
+  let filtros = {};
+  const vivos = await lapiFetch("video");
+  await LapidariumBusca.iniciar(
+    (vivos && vivos.length)
+      ? { itens: vivos, tesauro: "tesauro.json" }
+      : { fontes: ["videos-epaminondas.json", "videos-urania.json"], tesauro: "tesauro.json" }
+  );
+  const FACETAS = [["tipo","TIPO"],["ano","ANO"],["tags","TEMAS"],["autor","PALESTRANTE"],["rito","RITO"],["grau","GRAU"]];
+  const badge = (o) => (o||"").indexOf("pamin")>=0 ? "b-ep" : "b-ur";
+  const dataBR = (d) => (d||"").slice(0,10).split('-').reverse().join('/');
+  function render() {
+    const q = $("consulta").value;
+    const r = LapidariumBusca.buscar(q, filtros, { limite: 80 });
+    const ativos = Object.keys(filtros).filter(k=>filtros[k]);
+    let aviso = (r.expansao.gruposAtivados.length && q) ? "Busca ampliada pelo <b>tesauro maconico</b>." : "";
+    if (ativos.length) aviso += (aviso?"  ":"") + '<button class="limpar" onclick="window.__limpar()">limpar filtros</button>';
+    $("expansao").innerHTML = aviso;
+    if (!r.resultados.length) {
+      $("resultados").innerHTML = "<p class='vazio'>Nenhuma pedra encontrada neste acervo. Tente outro termo, ou volte para <b>Todos os acervos</b>.</p>";
+    } else {
+      let html = '<p class="contagem">'+r.total+' '+(r.total===1?"item":"itens")+'</p><div class="vgrid">';
+      r.resultados.forEach(({item}) => {
+        html += '<a class="vc" href="'+(item.youtube_id?('video.html?v='+item.youtube_id):(item.anexo||item.anexos||'#'))+'"'+(item.youtube_id?'':' target="_blank" rel="noopener"')+'>'
+          + '<div class="vc-thumb">'+(item.thumbnail?'<img class="vc-img" src="'+item.thumbnail+'" alt="" loading="lazy">':'')
+          + '<span class="vc-badge '+badge(item.origem)+'">'+(item.origem||'').replace('Grupo de Estudos ','')+'</span></div>'
+          + '<div class="vc-body"><p class="vc-title">'+(item.titulo||"(sem titulo)")+'</p>'
+          + '<p class="vc-meta">'+[dataBR(item.data),item.autor].filter(Boolean).join(' · ')+'</p>'
+          + ((item.tags&&item.tags.length)?'<div class="vc-tags">'+item.tags.slice(0,3).map(t=>'<span class="vtag">'+t+'</span>').join('')+'</div>':'')
+          + lapiAnexoBtn(item)
+          + '</div></a>';
+      });
+      $("resultados").innerHTML = html + '</div>';
+    }
+    let fh = '';
+    FACETAS.forEach(([chave,rot]) => {
+      const lista = (r.facetas[chave]||[]).slice(0,12);
+      if (!lista.length) return;
+      fh += '<h3>'+rot+'</h3>';
+      lista.forEach(f => { fh += '<button data-chave="'+chave+'" data-valor="'+f.valor+'" class="'+(filtros[chave]===f.valor?'ativa':'')+'">'+f.valor+'<span class="qtde">'+f.qtde+'</span></button>'; });
+    });
+    $("facetas").innerHTML = fh;
+    $("facetas").querySelectorAll("button").forEach(b => b.onclick = () => {
+      const c=b.dataset.chave, v=b.dataset.valor; filtros[c]=(filtros[c]===v)?null:v; render();
+    });
+  }
+  $("grptoggle").querySelectorAll(".gt").forEach(b => b.onclick = () => {
+    $("grptoggle").querySelectorAll(".gt").forEach(x=>x.classList.remove("ativa"));
+    b.classList.add("ativa"); filtros.origem = b.dataset.g || null; render();
   });
-}
-const grupos=[{v:'',l:'Todos'},{v:'Grupo de Estudos Urânia',l:'Urânia'},{v:'EpaminondasOnline',l:'Epaminondas'}];
-const tipos=[{v:'',l:'Todos'},{v:'video',l:'Vídeos'},{v:'prancha',l:'Pranchas'}];
-function initFiltros(){
-  const temas=[...new Set(ACERVO.flatMap(i=>i.tags))].sort((a,b)=>a.localeCompare(b,'pt'));
-  const anos=[...new Set(ACERVO.filter(i=>i.data).map(i=>i.data.slice(0,4)))].sort().reverse();
-  document.getElementById('ftema').innerHTML='<option value="">Todos os temas</option>'+temas.map(t=>`<option>${t}</option>`).join('');
-  document.getElementById('fano').innerHTML='<option value="">Todos os anos</option>'+anos.map(a=>`<option>${a}</option>`).join('');
-}
-document.getElementById('ftema').onchange=e=>{state.tema=e.target.value;render();};
-document.getElementById('fano').onchange=e=>{state.ano=e.target.value;render();};
-document.getElementById('q').value=state.q;
-document.getElementById('q').addEventListener('input',e=>{state.q=e.target.value;render();});
-document.getElementById('clear').onclick=()=>{state.q='';state.grupo='';state.tipo='';state.tema='';state.ano='';document.getElementById('q').value='';document.getElementById('ftema').value='';document.getElementById('fano').value='';render();};
-
-function match(i){
-  if(state.grupo && i.grupo!==state.grupo) return false;
-  if(state.tipo && i.tipo!==state.tipo) return false;
-  if(state.tema && !i.tags.includes(state.tema)) return false;
-  if(state.ano && (!i.data || i.data.slice(0,4)!==state.ano)) return false;
-  if(state.q){
-    const q=norm(state.q);
-    const hay=norm(i.titulo+' '+i.autor+' '+i.tags.join(' ')+' '+GSHORT[i.grupo]);
-    if(!hay.includes(q)) return false;
-  }
-  return true;
-}
-function fmtDate(d){if(!d)return '';const[y,m,dd]=d.split('-');const M=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];return `${dd} ${M[+m-1]} ${y}`;}
-
-function card(i){
-  const badge=`<span class="badge ${GBADGE[i.grupo]}">${GSHORT[i.grupo]}</span>`;
-  let thumb;
-  if(i.tipo==='video'){
-    thumb=`<div class="thumb"><img loading="lazy" src="https://img.youtube.com/vi/${i.yt}/mqdefault.jpg" alt="">${badge}
-      <div class="play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.1-5.9-5.9C55.3.5 34 .5 34 .5S12.7.5 7.4 1.8C4.5 2.6 2.3 4.8 1.5 7.7.2 13 .2 24 .2 24s0 11 1.3 16.3c.8 2.9 3 5.1 5.9 5.9C12.7 47.5 34 47.5 34 47.5s21.3 0 26.6-1.3c2.9-.8 5.1-3 5.9-5.9C67.8 35 67.8 24 67.8 24s0-11-1.3-16.3z" fill="#cc0000"/><path d="M27 34l18-10-18-10z" fill="#fff"/></svg></div></div>`;
-  } else {
-    thumb=`<div class="prancha-thumb"><span class="doc">&#128220;</span>${badge}</div>`;
-  }
-  const meta=[i.autor,fmtDate(i.data)].filter(Boolean).join('<span class="dot">·</span>');
-  const tags=i.tags.slice(0,3).map(t=>`<span class="c-tag">${t}</span>`).join('');
-  let actions='';
-  if(i.url) actions+=`<a class="act act-yt" href="${i.url}" target="_blank" rel="noopener">Assistir</a>`;
-  if(i.pdf) actions+=`<a class="act act-pdf" href="${i.pdf}" target="_blank" rel="noopener">Prancha PDF</a>`;
-  if(!actions) actions='<span class="act" style="opacity:.5">Em breve</span>';
-  return `<article class="card">${thumb}<div class="body"><p class="c-title">${i.titulo}</p>
-    <p class="c-meta">${meta||'&nbsp;'}</p><div class="c-tags">${tags}</div><div class="c-actions">${actions}</div></div></article>`;
-}
-
-function render(){
-  // sync group chips highlight class
-  chipRow(document.getElementById('fgrupo'),grupos,'grupo',{'Grupo de Estudos Urânia':'ur','EpaminondasOnline':'ep'});
-  chipRow(document.getElementById('ftipo'),tipos,'tipo');
-  document.getElementById('ftema').value=state.tema;
-  document.getElementById('fano').value=state.ano;
-  let res=ACERVO.filter(match);
-  res.sort((a,b)=>(b.data||'0').localeCompare(a.data||'0'));
-  const g=document.getElementById('grid'), e=document.getElementById('empty');
-  g.innerHTML=res.map(card).join('');
-  e.style.display=res.length?'none':'block';
-  document.getElementById('count').innerHTML=`<b>${res.length}</b> resultado${res.length===1?'':'s'}`+(state.grupo?` em ${GSHORT[state.grupo]}`:'');
-}
-// carrega o acervo (acervo.json no mesmo diretório) e só então renderiza
-const countEl=document.getElementById('count');
-countEl.textContent='Carregando acervo…';
-fetch('acervo.json')
-  .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
-  .then(data=>{ACERVO=data;initFiltros();render();})
-  .catch(()=>{countEl.textContent='Não foi possível carregar o acervo.';});
+  document.querySelectorAll(".chipb").forEach(b => b.onclick = () => { $("consulta").value = b.dataset.q; render(); $("consulta").focus(); });
+  window.__limpar = () => { filtros = {}; $("consulta").value=""; $("grptoggle").querySelectorAll(".gt").forEach((x,i)=>x.classList.toggle("ativa",i===0)); render(); };
+  const params = new URLSearchParams(location.search);
+  if (params.get('q')) $("consulta").value = params.get('q');
+  let t; $("consulta").oninput = () => { clearTimeout(t); t = setTimeout(render, 180); };
+  render();
+})();
 </script>
 </body>
 </html>

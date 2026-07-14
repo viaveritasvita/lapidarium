@@ -73,6 +73,8 @@ header{text-align:center;padding:46px 0 0}
 .vc-meta{font-size:.75rem;color:var(--text-d)}
 .vc-tags{margin-top:7px;display:flex;flex-wrap:wrap;gap:4px}
 .vtag{font-size:.6rem;color:var(--gold-d);border:1px solid var(--border);padding:1px 6px;border-radius:2px}
+.vc-pdf{display:inline-block;margin-top:8px;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-d);border:1px solid var(--gold-d);padding:3px 9px;border-radius:2px;transition:color .3s,border-color .3s,background .3s}
+.vc-pdf:hover{color:var(--gold-l);border-color:var(--gold-l);background:rgba(201,168,76,.08)}
 
 /* ── BUSCA ── */
 .searchbar{position:relative;border:1px solid var(--border);border-top:1px solid rgba(201,168,76,.26);background:rgba(16,14,9,.82);padding:14px 16px 12px;margin:6px 0 8px}
