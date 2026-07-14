@@ -386,10 +386,18 @@
     h += '<p class="instalar-dica">Instalado, o Lapidarium abre como um aplicativo, direto da tela inicial &mdash; e funciona offline.</p>';
     return h;
   }
-  function abrirDicaInstalar() {
+  function abrirModalInstalar(btn) {
+    var conteudo;
+    if (_instEvt) {
+      conteudo = '<h3>Instalar o Lapidarium</h3>'
+        + '<p class="instalar-intro">Instalar adiciona o Lapidarium \u00e0 sua tela inicial: abre em tela cheia, carrega r\u00e1pido e funciona offline \u2014 como um aplicativo. Nenhum dado sai do seu aparelho.</p>'
+        + '<button type="button" class="la-btn instalar-agora">\u21e9 Instalar agora</button>';
+    } else {
+      conteudo = dicaInstalarHtml();
+    }
     var ov = document.createElement('div');
     ov.className = 'la-overlay';
-    ov.innerHTML = '<div class="instalar-modal">' + dicaInstalarHtml()
+    ov.innerHTML = '<div class="instalar-modal">' + conteudo
       + '<button type="button" class="la-btn instalar-fechar">Fechar</button></div>';
     document.body.appendChild(ov);
     requestAnimationFrame(function () { ov.classList.add('on'); });
@@ -402,6 +410,11 @@
     document.addEventListener('keydown', escF);
     ov.addEventListener('click', function (e) { if (e.target === ov) fechar(); });
     ov.querySelector('.instalar-fechar').addEventListener('click', fechar);
+    var ag = ov.querySelector('.instalar-agora');
+    if (ag) ag.addEventListener('click', function () {
+      var ev = _instEvt; _instEvt = null; fechar();
+      if (ev) { ev.prompt(); if (ev.userChoice && ev.userChoice.then) ev.userChoice.then(function (r) { if (r && r.outcome === 'accepted' && btn) btn.hidden = true; else _instEvt = ev; }); }
+    });
   }
   function montarInstalar() {
     var b = document.getElementById('btnInstalar');   // botão fixo da barra superior
@@ -409,17 +422,7 @@
     var jaInstalado = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
     if (jaInstalado) { b.hidden = true; return; }
     window.addEventListener('appinstalled', function () { _instEvt = null; b.hidden = true; });
-    b.addEventListener('click', function () {
-      if (_instEvt) {
-        var ev = _instEvt; _instEvt = null;
-        ev.prompt();
-        if (ev.userChoice && ev.userChoice.then) ev.userChoice.then(function (r) {
-          if (r && r.outcome === 'accepted') b.hidden = true; else _instEvt = ev;
-        });
-        return;
-      }
-      abrirDicaInstalar();
-    });
+    b.addEventListener('click', function () { abrirModalInstalar(b); });
   }
 
   // ---------- Service Worker ----------
