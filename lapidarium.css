@@ -45,6 +45,7 @@ header{text-align:center;padding:46px 0 0}
 .backlink{display:inline-block;font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.22em;color:var(--text-d);text-decoration:none;text-transform:uppercase;margin-bottom:26px;transition:color .3s}
 .backlink:hover{color:var(--gold)}
 .site-name{font-family:'Cinzel',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:700;letter-spacing:.34em;background:linear-gradient(170deg,#f5e49a 0%,var(--gold) 42%,#8a6820 78%,var(--gold-vd) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+@media(max-width:480px){.site-name{font-size:clamp(1.4rem,7.5vw,2.1rem);letter-spacing:.22em}}
 .page-tagline{font-style:italic;font-size:clamp(.9rem,2vw,1.05rem);color:var(--text-d);letter-spacing:.05em;margin-bottom:6px}
 .site-lema{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.5em;color:var(--gold-d);text-transform:uppercase}
 .orn{display:flex;align-items:center;justify-content:center;gap:10px;margin:16px auto}
@@ -111,7 +112,7 @@ footer p{font-family:'Cinzel',serif;font-size:.64rem;letter-spacing:.32em;color:
 /* ── BOTÃO DE TEMA ── */
 .theme-btn{position:fixed;top:14px;right:14px;z-index:7;display:flex;align-items:center;gap:7px;padding:11px 18px;border-radius:24px;border:1px solid var(--border-h);background:rgba(0,0,0,.4);color:var(--gold);font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;line-height:1;cursor:pointer;backdrop-filter:blur(6px);transition:all .3s;animation:tema-pulsa 2.8s ease-in-out infinite}
 .theme-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.16);box-shadow:0 0 15px rgba(201,168,76,.3)}
-@keyframes tema-pulsa{0%,100%{box-shadow:0 0 0 rgba(201,168,76,0);transform:scale(1)}50%{box-shadow:0 0 18px rgba(201,168,76,.5);transform:scale(1.045)}}
+@keyframes tema-pulsa{0%,100%{box-shadow:0 0 0 rgba(201,168,76,0)}50%{box-shadow:0 0 18px rgba(201,168,76,.5)}}
 @media(prefers-reduced-motion:reduce){.theme-btn{animation:none}}
 .topnav{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 18px;padding:4px 0 24px}
 .topnav a{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;color:var(--text-d);text-decoration:none;text-transform:uppercase;padding:3px 1px;border-bottom:1px solid transparent;transition:color .3s,border-color .3s}

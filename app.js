@@ -311,24 +311,63 @@
   }
 
   // ---------- Instalar app (PWA) ----------
+  // O botão fica SEMPRE visível (menos em publicar.html e quando já instalado).
+  // Com beforeinstallprompt guardado -> prompt() nativo; sem o evento (iOS nunca
+  // dispara; Android às vezes não) -> modal com instruções por plataforma.
   var _instEvt = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault(); _instEvt = e;
+  });
+  function dicaInstalarHtml() {
+    var ua = navigator.userAgent || '';
+    var ehIOS = /iphone|ipad|ipod/i.test(ua);
+    var ehAndroid = /android/i.test(ua);
+    var h = '<h3>Instalar o Lapidarium</h3>';
+    if (ehIOS) {
+      h += '<p>No <b>iPhone/iPad (Safari)</b>: toque em <b>Compartilhar</b> '
+        + '(o quadrado com a seta para cima, na barra do navegador) e depois em '
+        + '<b>&ldquo;Adicionar &agrave; Tela de In&iacute;cio&rdquo;</b>.</p>';
+    } else if (ehAndroid) {
+      h += '<p>No <b>Android (Chrome)</b>: toque no menu <b>&#8942;</b> (canto superior direito) '
+        + 'e escolha <b>&ldquo;Instalar app&rdquo;</b> ou <b>&ldquo;Adicionar &agrave; tela inicial&rdquo;</b>.</p>';
+    } else {
+      h += '<p>No <b>Android (Chrome)</b>: menu <b>&#8942;</b> &rarr; <b>&ldquo;Instalar app&rdquo;</b> '
+        + 'ou <b>&ldquo;Adicionar &agrave; tela inicial&rdquo;</b>.</p>'
+        + '<p>No <b>iPhone (Safari)</b>: <b>Compartilhar</b> &rarr; <b>&ldquo;Adicionar &agrave; Tela de In&iacute;cio&rdquo;</b>.</p>'
+        + '<p>No <b>computador (Chrome/Edge)</b>: &iacute;cone de instala&ccedil;&atilde;o na barra de endere&ccedil;o.</p>';
+    }
+    h += '<p class="instalar-dica">Instalado, o Lapidarium abre como um aplicativo, direto da tela inicial &mdash; e funciona offline.</p>';
+    return h;
+  }
+  function abrirDicaInstalar() {
+    var ov = document.createElement('div');
+    ov.className = 'la-overlay';
+    ov.innerHTML = '<div class="instalar-modal">' + dicaInstalarHtml()
+      + '<button type="button" class="la-btn instalar-fechar">Fechar</button></div>';
+    document.body.appendChild(ov);
+    requestAnimationFrame(function () { ov.classList.add('on'); });
+    function fechar() {
+      ov.classList.remove('on');
+      setTimeout(function () { ov.remove(); }, 320);
+      document.removeEventListener('keydown', escF);
+    }
+    function escF(e) { if (e.key === 'Escape') fechar(); }
+    document.addEventListener('keydown', escF);
+    ov.addEventListener('click', function (e) { if (e.target === ov) fechar(); });
+    ov.querySelector('.instalar-fechar').addEventListener('click', fechar);
+  }
   function montarInstalar() {
     if (location.pathname.indexOf('publicar') >= 0) return;
     var rodape = document.querySelector('footer');
     if (!rodape || document.getElementById('btnInstalar')) return;
-    var ehIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
     var jaInstalado = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
     if (jaInstalado) return;
     var b = document.createElement('button');
-    b.type = 'button'; b.id = 'btnInstalar'; b.className = 'instalar-btn'; b.hidden = true;
-    b.innerHTML = '&#8681; Instalar o app';
+    b.type = 'button'; b.id = 'btnInstalar'; b.className = 'instalar-btn';
+    b.innerHTML = '&#8681; Instalar app';
     b.title = 'Instalar o Lapidarium como aplicativo';
     rodape.appendChild(b);
-    window.addEventListener('beforeinstallprompt', function (e) {
-      e.preventDefault(); _instEvt = e; b.hidden = false;
-    });
     window.addEventListener('appinstalled', function () { _instEvt = null; b.hidden = true; });
-    if (ehIOS) b.hidden = false;  // Safari/iOS não dispara beforeinstallprompt
     b.addEventListener('click', function () {
       if (_instEvt) {
         var ev = _instEvt; _instEvt = null;
@@ -338,13 +377,7 @@
         });
         return;
       }
-      var d = document.getElementById('dicaInstalar');
-      if (!d) {
-        d = document.createElement('p');
-        d.id = 'dicaInstalar'; d.className = 'instalar-dica';
-        d.textContent = 'No iPhone: toque em Compartilhar e depois em "Adicionar à Tela de Início".';
-        b.insertAdjacentElement('afterend', d);
-      } else { d.hidden = !d.hidden; }
+      abrirDicaInstalar();
     });
   }
 
