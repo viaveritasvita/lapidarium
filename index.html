@@ -238,7 +238,10 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
 .mh-left .tb-search{flex:1;min-width:0}
 .mh-left .tb-input{width:100%}
 .mh-right{display:flex;align-items:center;gap:8px;justify-self:end}
-.mh-brand{display:flex;flex-direction:column;align-items:center;text-decoration:none;justify-self:center}
+.mh-brand{display:flex;flex-direction:column;align-items:center;justify-self:center;text-align:center;border:1px solid rgba(201,168,76,.28);background:rgba(16,14,9,.45);padding:8px 30px 10px;border-radius:2px}
+.mh-delta-link{display:block;line-height:0;text-decoration:none}
+.mh-brand .delta-wrap,.mh-brand .delta-svg-wrap{width:80px;height:80px}
+.mh-brand .delta-wrap{margin:2px auto 4px}
 .mh-brand .delta-wrap{margin:0 0 8px}
 .mh-brand .site-name{font-size:clamp(1.5rem,3vw,2.3rem);margin:0 0 3px}
 .mh-brand .site-tagline{margin:0 0 3px}
@@ -262,8 +265,8 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
     </form>
     <button type="button" class="tb-btn" id="btnAcaso" title="Lapide uma pedra ao acaso (tecla A)"><span class="tb-ico">⟡</span><span class="tb-rot">Acaso</span></button>
   </div>
-  <a class="mh-brand" href="index.html" aria-label="Lapidarium — Início">
-    <div class="delta-wrap" id="deltaWrap">
+  <div class="mh-brand">
+    <a class="mh-delta-link" href="index.html" aria-label="Lapidarium — Início"><div class="delta-wrap" id="deltaWrap">
     <div class="delta-halo"></div>
     <svg class="delta-rays" viewBox="0 0 120 120" style="position:absolute;inset:-18px;width:calc(100% + 36px);height:calc(100% + 36px)">
       <g transform="translate(60,60)" stroke="rgba(240,217,138,0.35)" stroke-width="0.8">
@@ -292,11 +295,11 @@ nav a.soon::after{content:'em breve';position:absolute;left:50%;top:calc(100% + 
         <line x1="52" y1="54" x2="56" y2="54" stroke="#c9a84c" stroke-width=".7" opacity=".4"/>
       </svg>
     </div>
-  </div>
+  </div></a>
     <span class="site-name" aria-hidden="true">LAPIDARIUM</span>
     <span class="site-tagline">Um lugar de estudo, reflexão e memória maçônica</span>
     <span class="site-lema">Lux · Sapientia · Opus</span>
-  </a>
+  </div>
   <div class="mh-right">
     <button type="button" class="tb-btn tb-tema" id="themeBtn" onclick="toggleTheme()" title="Alternar tema (claro/escuro)" aria-label="Alternar tema"><span class="tb-ico">☀</span><span class="tb-rot">Tema</span></button>
     <button type="button" class="tb-btn" id="btnInstalar" title="Instalar o Lapidarium como aplicativo"><span class="tb-ico">⇩</span><span class="tb-rot">Instalar</span></button>
