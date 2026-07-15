@@ -109,3 +109,30 @@ function lapiAnexoBtn(item){
       + lapiEscAttr_(rot) + '</span>';
   }).join('');
 }
+
+// ══ BARRA SUPERIOR — FONTE ÚNICA (antes duplicada inline em 6 páginas) ══
+// A home usa o brasão (.masthead) e é ignorada aqui de propósito.
+// data-enxuto="1"  -> só o botão Tema (usado no publicar.html).
+function lapiMontarTopo(){
+  var el = document.getElementById('lapiTopbar');
+  if (!el) return;
+  if (!el.classList.contains('topbar')) return;   // .masthead (home) -> não mexe
+  if (el.children.length) return;                 // já preenchido -> não mexe
+  var acoes = '<button type="button" class="tb-btn tb-tema" id="themeBtn" onclick="toggleTheme()" title="Alternar tema (claro/escuro)" aria-label="Alternar tema"><span class="tb-ico">☀</span><span class="tb-rot">Tema</span></button>';
+  if (el.dataset.enxuto !== '1') {
+    acoes += '<button type="button" class="tb-btn" id="btnInstalar" title="Instalar o Lapidarium como aplicativo"><span class="tb-ico">⇩</span><span class="tb-rot">Instalar</span></button>'
+           + '<button type="button" class="tb-btn" id="btnAcaso" title="Lapide uma pedra ao acaso (tecla A)"><span class="tb-ico">⟡</span><span class="tb-rot">Acaso</span></button>';
+  }
+  el.innerHTML =
+      '<a class="tb-brand" href="index.html" aria-label="Lapidarium — Início">'
+    +   '<span class="tb-delta" id="tbDelta" aria-hidden="true"></span>'
+    +   '<span class="tb-name">LAPIDARIUM</span>'
+    + '</a>'
+    + '<form class="tb-search" action="buscar.html" method="get" role="search">'
+    +   '<input class="tb-input" name="q" type="search" placeholder="Qual pedra o Irmão deseja lapidar hoje?" aria-label="Buscar no acervo" autocomplete="off">'
+    + '</form>'
+    + '<div class="tb-actions">' + acoes + '</div>';
+}
+// monta na hora (o div vem antes dos scripts); se não, no DOMContentLoaded.
+if (document.getElementById('lapiTopbar')) lapiMontarTopo();
+else document.addEventListener('DOMContentLoaded', lapiMontarTopo);

@@ -9,7 +9,7 @@
    Para forçar atualização geral: suba o CACHE_VERSION abaixo.
    ============================================================ */
 
-const CACHE_VERSION = 'lapidarium-v20';
+const CACHE_VERSION = 'lapidarium-v21';
 const CACHE_STATIC  = CACHE_VERSION + '-static';
 const CACHE_PAGES   = CACHE_VERSION + '-pages';
 const CACHE_EXT     = CACHE_VERSION + '-ext';

@@ -18,64 +18,93 @@ Cada coisa tem UM dono. Nunca edite o mesmo dado em dois lugares.
 Motivo: o checkout local pode aparecer com arquivos "deleted" (glitch de mount/sync);
 adicionando pelo nome, nada que você não citar é tocado.
 
-## Regra nº 3 — padrão de nomes dos PDFs
+## Regra nº 3 — planilha com segurança (comprada com sangue em 15/07/2026)
+1. **Nunca importe pra dentro da aba `Videos` com "Substituir página atual"** nem cole blocos com
+   formatação. Uma "Importação padrão" **mesclou as colunas T:U** (`publicado_em` + `anexos`) nas
+   327 linhas. Em célula mesclada só a âncora aceita valor: a coluna `anexos` virou
+   **inescrevível em silêncio** — painel, script e mão gravavam e nada acontecia, sem erro nenhum.
+   As 32 pranchas sumiram do site assim.
+2. **Nunca confie em log de escrita. Releia o dado.** O script de migração reportou
+   "gravei 30 anexos" e gravou zero. Toda rotina que escreve na planilha tem que **ler de volta e
+   conferir a contagem** antes de dizer que deu certo.
+3. **Backup antes de mexer**: duplique a aba (`Backup_AAAA-MM-DD_HHMM`). É de graça.
+4. Recarregar dados do YouTube por cima **apaga** o que o YouTube não conhece: `anexos`, `tags`,
+   `autor`. Se for repopular, faça **merge por `youtube_id`**, nunca overwrite.
+
+## Regra nº 4 — padrão de nomes dos PDFs
 `Urânia AAAA-MM-DD — Título limpo.pdf` (data da sessão + título limpo).
 Sem vídeo/sem data → `Urânia — Título.pdf`. Para Epaminondas, trocar o prefixo por `Epaminondas`.
 
-## Arquitetura (IMPORTANTE — versão MODULAR é a oficial)
-- **Páginas**: `index.html` (home), `buscar.html` (busca em todo o acervo, com tesauro),
-  `urania.html` / `epaminondas.html` (portais por grupo), `calendar.html` (calendário),
+## Arquitetura (versão MODULAR é a oficial)
+- **Páginas**: `index.html` (home), `buscar.html` (busca no acervo, com tesauro),
+  `urania.html` / `epaminondas.html` (portais), `calendar.html`, `video.html` (bancada),
   `publicar.html` (painel de cadastro — "Acesso Restrito").
-- **Motor**: `busca.js` (busca com normalização de acento + expansão por sinônimos do
-  `tesauro.json`), `ui.js` (tema, olho animado, botão "Prancha PDF" via `lapiAnexoBtn`),
-  `config.js` (config central com `API_URL` do Apps Script e `SITE_URL`), `lapidarium.css`.
+- **Motor**: `busca.js` (busca com normalização de acento + sinônimos do `tesauro.json`),
+  `ui.js` (tema, olho animado, **barra superior** e **anexos**), `app.js` (Pedra do Dia/Acaso,
+  favoritos, PWA), `fundo.js` (fundo iconográfico), `config.js` (`API_URL` + `SITE_URL`),
+  `lapidarium.css` + `app.css`, `sw.js` (service worker — **bump `CACHE_VERSION` a cada mudança**).
+- **Dois topos, de propósito**: a home usa o **brasão** (`.masthead`, inline no `index.html`,
+  instância única). As outras 6 páginas usam a **barra fina** (`.topbar`), montada pelo
+  `lapiMontarTopo()` do `ui.js` — **fonte única**. A div fica vazia:
+  `<div class="topbar" id="lapiTopbar">`. `data-enxuto="1"` → só o botão Tema (é o `publicar.html`).
 - **Dados — dois caminhos**:
-  1. **Ao vivo (primário)**: as páginas chamam a `API_URL` (Apps Script) e leem a
-     **planilha-mãe em tempo real**. Ou seja, ao cadastrar/editar na planilha (pelo painel
-     `publicar.html`), o site reflete **sozinho, sem push**.
-  2. **Fallback (estático)**: `videos-urania.json` e `videos-epaminondas.json` (commitados no
-     repo) — usados só se a API não responder. Devem ser atualizados de tempos em tempos.
-- **Prancha/PDF**: qualquer item com o campo `anexo` (JSON) ou `anexos` (API) preenchido
-  ganha o botão **"Prancha PDF"** no card — vale para Urânia E Epaminondas.
+  1. **Ao vivo (primário)**: as páginas chamam a `API_URL` (Apps Script) e leem a planilha-mãe em
+     tempo real. Cadastrou/editou na planilha → o site reflete **sozinho, sem push**.
+  2. **Fallback (estático)**: `videos-urania.json` / `videos-epaminondas.json` — usados só se a API
+     não responder. Regere com **`python3 gerar_fallback.py`** (lê a API) e commite.
+
+## Anexos (pranchas, apresentações, preâmbulos…)
+Campo `anexos` da planilha. Formato: **`Rótulo|URL ;; Rótulo|URL`**
+Rótulos do painel: `Preâmbulo`, `Apresentação`, `Anexo`, `Prancha`, `Outro`.
+Compatibilidade: **URL pelada** (acervo antigo) é lida como `Prancha`.
+- Quem **escreve**: `publicar.html` (sobe o arquivo pro Drive sozinho) e `salvarAnexos_()` no Apps Script.
+- Quem **lê**: `lapiAnexosParse()` / `lapiAnexoBtn()` no `ui.js` → **um botão por material**.
+- Se mexer no formato, mexa **nos dois lados**. Eles ficaram dessincronizados por muito tempo: o
+  painel gravava `Rótulo|URL` e o `ui.js` jogava a string inteira como URL do botão.
 
 ## Como atualizar o conteúdo (o ciclo)
 - **Dia a dia (1 item)**: cadastre pelo painel `publicar.html` → grava na planilha + Drive.
   O site ao vivo já mostra. Nada de git.
-- **Atualizar o fallback estático** (recomendado periodicamente):
-  1. Exporte a aba `Videos` como CSV: Sheets → *Arquivo → Fazer download → CSV*. Salve como `planilha.csv` na raiz do repo.
-  2. `python3 gerar_dados.py planilha.csv`  → escreve `videos-urania.json`
-     (use `--com-epaminondas` só quando o CSV já tiver o acervo do Epaminondas).
-  3. `git add videos-urania.json planilha.csv` → commit → push.
-
-## Schema dos videos-*.json (fallback)
-Topo: `{ "grupo", "tema", "cor_identidade", "videos": [ ... ] }`
-Item: `{ id, titulo, data, palestrante, youtube_id, url, thumbnail, tags:[...], transcricao_status, tipo, anexo }`
-- `tipo`: `video` ou `prancha` · `anexo`: link do PDF no Drive (vira o botão "Prancha PDF")
-- Prancha sem vídeo: `youtube_id`/`url`/`thumbnail` vazios, `tipo:"prancha"`, `anexo` preenchido.
-
-## Colunas da planilha-mãe (aba Videos)
-`id, tipo, titulo, descricao, autor, data, origem, rito, grau, ordem, tags, url, youtube_id, thumbnail, transcricao_status, acesso, perguntas_aprofundamento, publicado_por, publicado_em, anexos`
-(`autor` vira `palestrante`; `origem` vira `grupo`; `anexos` vira `anexo`.)
+- **Fallback estático** (periodicamente): `python3 gerar_fallback.py` →
+  `git add videos-urania.json videos-epaminondas.json` → commit → push.
 
 ## Divisão de trabalho entre superfícies
-- **Cowork** = orquestra dados: pesquisa, prepara conteúdo, atualiza a planilha, sobe PDFs ao Drive, roda `gerar_dados.py`. NÃO mexe no git.
-- **Claude Code** = dono do repositório/deploy: versiona (git add pelo nome, commit, push) e faz código pesado (transcrições). ÚNICO que mexe no git.
+- **Cowork** = orquestra dados: pesquisa, prepara conteúdo, atualiza a planilha, sobe PDFs ao Drive.
+  NÃO mexe no git.
+- **Claude Code** = dono do repositório/deploy: versiona (git add pelo nome, commit, push), roda
+  `gerar_fallback.py` (tem rede) e faz código pesado (transcrições).
 - **Painel `publicar.html`** = cadastro leigo de 1 item por vez (planilha + Drive + API).
 
 ## IDs úteis
 - Planilha-mãe (Sheets): `1Ryh35fkZnxcccb-SVBgtsDyiE3nsW-_omNeokZGiNvo`
 - Drive → pasta `Lapidarium — Acervo`: `1VfZEU-xRiQEriNQvfvkHR-78PrCkLMoZ`
 - Drive → subpasta `Materiais` (PDFs): `1c0nt9U9qDuawQ-YPSSp-gu_qj0NJQ4vU`
+- Apps Script (API) fica **vinculado à planilha**: Extensões → Apps Script → `Código.gs`.
 
 ## Estado / histórico (memória compartilhada)
-- 13/07/2026: unificação do site na versão MODULAR. Foi corrigido um engano em que uma home
-  antiga (arquivo único, menu "em breve") havia sobrescrito a modular — restaurada do git (commit 1424e76).
-- Urânia: 81 vídeos (2023→2026) + 32 pranchas em PDF no Drive; 30 pranchas ligadas a vídeos,
-  2 avulsas ("A Simbologia da Morte"; "Reconhecimento e Regularidade" — sessão não gravada).
-- Correções: Enxertos→"O Espelho Hexagonal" (28/02/2026); Dia Internacional→"22 de Fevereiro"
-  (21/02/2026); "Maçonaria em estado terminal"→"Por que o Maçom não estuda?" (05/07/2025).
-- Epaminondas: só 6 vídeos-semente por enquanto (acervo completo virá depois).
-- APOSENTADOS (não usar): `acervo.json` e `gerar_acervo.py` — trilho paralelo antigo, substituídos
-  por `videos-urania.json` + `gerar_dados.py`. Podem ser removidos do repo (`git rm`).
-- Pendências: enriquecer tags/descrições a partir do texto dos PDFs; transcrições dos vídeos
-  (base da busca inteligente — o tesauro já ajuda); acervo do Epaminondas.
+- **15/07/2026 — restauro + acervo completo.** Planilha: **451 itens**.
+  - **Urânia: 90** (81 vídeos + 7 reclassificados + 2 pranchas avulsas) · **32 anexos** · 83 com
+    tags · 41 com autor · 2023-01-15 → 2026-07-11.
+  - **Epaminondas: 361** (Grau 1) · 2022-12-11 → **2026-07-12**.
+  - Backup da planilha pré-migração: aba `Backup_2026-07-15_1641`.
+- **A fonte do Epaminondas é o xlsx `palestras Epaminondas 4`**, não o YouTube. Ele tem 3 abas;
+  `Plan1` é cópia quase exata da `Planilha1` (220 dos 225 ids em comum). O pulo do gato: dentro da
+  `Planilha1` há **207 linhas onde o registro inteiro está como texto solto numa célula** —
+  `Título - Palestrante - DD/MM/AAAA - EpaminondasOnline https://youtu.be/...`. É aí que vivem 2025
+  e 2026. Quem lê só as colunas para em 01/2025 e acha que acabou — foi o que aconteceu, e o acervo
+  ficou 14 meses defasado.
+- **"O acervo do Ricardo"** = as linhas estruturadas. Ele catalogava em colunas até adoecer, em
+  2025; quem continuou passou a jogar tudo em texto. Os dois lados juntos = 369 vídeos únicos.
+- **Aguardando destino** (no xlsx, ainda não classificados): 4 do Café Filosofia Cósmica, 3 do
+  ACAOL, 2 do AMEM. Estão no ar como Epaminondas (é o canal que publicou) — o campo `Local` do
+  Ricardo diz onde a palestra **aconteceu**, que é coisa diferente de **quem publicou**.
+- **Fora por ora**: Grau 2 (5) e Grau 3 (6+1). Regra vigente: **só Grau 1**. Ressalva honesta — as
+  143 linhas de texto **não têm coluna Grau**; foram inferidas como Grau 1 (varri os títulos atrás
+  de "Grau 2/3", "Companheiro", "Elevação" e só achei um Setenário Grau 3). Se aparecer um Grau 2
+  no meio do acervo, veio daí.
+- **APOSENTADOS (não usar)**: `gerar_dados.py` e `planilha.csv` — o CSV era um retrato manual que
+  envelhecia calado (85 linhas contra 327 na planilha). Substituídos por `gerar_fallback.py`.
+  `acervo.json` / `gerar_acervo.py` já removidos.
+- **Pendências**: duração dos 122 vídeos novos do Epaminondas (o YouTube nunca foi colhido pra
+  eles); enriquecer tags/descrições a partir do texto dos PDFs; transcrições dos vídeos (o tesauro
+  segura a busca enquanto isso); dar destino aos 9 de outras casas; Grau 2 e 3.

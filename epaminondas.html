@@ -25,20 +25,7 @@
 </head>
 <body class="theme-ep">
 <!-- ══ BARRA SUPERIOR (global, sticky — mesma em todas as páginas) ══ -->
-<div class="topbar" id="lapiTopbar">
-  <a class="tb-brand" href="index.html" aria-label="Lapidarium — Início">
-    <span class="tb-delta" id="tbDelta" aria-hidden="true"></span>
-    <span class="tb-name">LAPIDARIUM</span>
-  </a>
-  <form class="tb-search" action="buscar.html" method="get" role="search">
-    <input class="tb-input" name="q" type="search" placeholder="Qual pedra o Irmão deseja lapidar hoje?" aria-label="Buscar no acervo" autocomplete="off">
-  </form>
-  <div class="tb-actions">
-    <button type="button" class="tb-btn tb-tema" id="themeBtn" onclick="toggleTheme()" title="Alternar tema (claro/escuro)" aria-label="Alternar tema"><span class="tb-ico">☀</span><span class="tb-rot">Tema</span></button>
-    <button type="button" class="tb-btn" id="btnInstalar" title="Instalar o Lapidarium como aplicativo"><span class="tb-ico">⇩</span><span class="tb-rot">Instalar</span></button>
-    <button type="button" class="tb-btn" id="btnAcaso" title="Lapide uma pedra ao acaso (tecla A)"><span class="tb-ico">⟡</span><span class="tb-rot">Acaso</span></button>
-  </div>
-</div>
+<div class="topbar" id="lapiTopbar"></div><!-- montada pelo ui.js (fonte única) -->
 <script src="fundo.js"></script>
 
 <div class="wrap">
