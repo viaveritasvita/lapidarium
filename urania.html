@@ -79,7 +79,7 @@
     grade.innerHTML = `<div class="vgrid">` + vids.map(v => `
       <a class="vc" href="${v.youtube_id?('video.html?v='+v.youtube_id):(v.anexo||v.anexos||'#')}"${v.youtube_id?'':' target="_blank" rel="noopener"'}>
         <div class="vc-thumb">${(v.thumbnail||v.youtube_id)?`<img class="vc-img" src="${v.thumbnail||('https://img.youtube.com/vi/'+v.youtube_id+'/hqdefault.jpg')}" alt="" loading="lazy">`:''}
-          <span class="vc-badge b-ur">Urânia</span></div>
+          <span class="vc-badge b-ur">Urânia</span>${v.duracao?'<span class="vc-dur">'+String(v.duracao).replace(/^0:/,'')+'</span>':''}</div>
         <div class="vc-body"><p class="vc-title">${v.titulo||''}</p>
           <p class="vc-meta">${lapiData(v.data).split('-').reverse().join('/')}${v.palestrante?' · '+v.palestrante:''}</p>
           ${(v.tags&&v.tags.length)?`<div class="vc-tags">${v.tags.slice(0,3).map(t=>`<span class="vtag">${t}</span>`).join('')}</div>`:''}

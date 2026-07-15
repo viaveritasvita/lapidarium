@@ -158,7 +158,7 @@
       lista.forEach(({item}) => {
         html += '<a class="vc" href="'+(item.youtube_id?('video.html?v='+item.youtube_id):(item.anexo||item.anexos||'#'))+'"'+(item.youtube_id?'':' target="_blank" rel="noopener"')+'>'
           + '<div class="vc-thumb">'+(item.thumbnail?'<img class="vc-img" src="'+item.thumbnail+'" alt="" loading="lazy">':'')
-          + '<span class="vc-badge '+badge(item.origem)+'">'+(item.origem||'').replace('Grupo de Estudos ','')+'</span></div>'
+          + '<span class="vc-badge '+badge(item.origem)+'">'+(item.origem||'').replace('Grupo de Estudos ','')+'</span>'+(item.duracao?'<span class="vc-dur">'+String(item.duracao).replace(/^0:/,'')+'</span>':'')+'</div>'
           + '<div class="vc-body"><p class="vc-title">'+(item.titulo||"(sem titulo)")+'</p>'
           + '<p class="vc-meta">'+[dataBR(item.data),item.autor].filter(Boolean).join(' · ')+'</p>'
           + ((item.tags&&item.tags.length)?'<div class="vc-tags">'+item.tags.slice(0,3).map(t=>'<span class="vtag">'+t+'</span>').join('')+'</div>':'')
