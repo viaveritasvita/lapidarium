@@ -201,9 +201,12 @@
           (p.data || '').slice(0, 10).split('-').reverse().join('/')].filter(Boolean).join(' · ')) + '</p>'
       + '<div class="pdia-row">'
       + '<a class="pdia-cta" href="' + esc(href) + '"' + (externo ? ' target="_blank" rel="noopener"' : '') + '>Lapidar esta pedra ▸</a>'
-      + '<button type="button" class="pdia-acaso" onclick="LapidariumApp.pedraAoAcaso()">⟡ Pedra ao Acaso</button>'
       + botoesHtml(p)
       + '</div>'
+      + '<div class="pdia-row pdia-row2">'
+      + '<button type="button" class="pdia-acaso" onclick="LapidariumApp.pedraAoAcaso()">⟡ Pedra ao Acaso</button>'
+      + '</div>'
+      + '<p class="pdia-acaso-note">⟡ <em>Pedra ao Acaso</em> — o site sorteia uma pedra qualquer do acervo para o Irmão lapidar.</p>'
       + '<p class="pdia-foot">' + foot + '</p>'
       + '</div></div>';
   }
