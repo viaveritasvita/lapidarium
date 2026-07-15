@@ -89,7 +89,7 @@
   function destino(it) {
     var k = chave(it);
     if (it.youtube_id) return 'video.html?v=' + encodeURIComponent(k);
-    if (it.anexo) return it.anexo;
+    if (it.anexo) { var _u = (typeof lapiAnexoUrl === 'function') ? lapiAnexoUrl(it.anexo) : it.anexo; if (_u) return _u; }
     return 'video.html?v=' + encodeURIComponent(k);
   }
   function thumbDe(it) {

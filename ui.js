@@ -85,9 +85,27 @@ function lapiData(d){ return ("" + (d||"")).slice(0,10); }              // ISO o
 function lapiHora(h){ const s=""+(h||""); let m=s.match(/T(\d\d:\d\d)/); if(m) return m[1]; m=s.match(/^(\d\d?:\d\d)/); return m?m[1]:""; }
 
 // ══ ANEXO — botão "Prancha PDF" (campo item.anexo = link do PDF no Drive) ══
+// Formato do campo: "Rotulo|URL ;; Rotulo|URL" (o publicar.html grava assim).
+// Compatibilidade: URL pelada (acervo antigo) vale como Prancha.
+function lapiAnexosParse(raw){
+  if (!raw) return [];
+  return String(raw).split(/\s*;;\s*/).map(function(x){ return x.trim(); }).filter(Boolean).map(function(x){
+    var i = x.indexOf('|');
+    if (i < 0) return { rotulo: 'Prancha', url: x.trim() };
+    return { rotulo: (x.slice(0, i).trim() || 'Anexo'), url: x.slice(i + 1).trim() };
+  }).filter(function(m){ return /^https?:\/\//i.test(m.url); });
+}
+function lapiAnexoUrl(raw){ var m = lapiAnexosParse(raw); return m.length ? m[0].url : ''; }
+function lapiEscAttr_(s){
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 function lapiAnexoBtn(item){
-  const a = item && (item.anexo || item.anexos);   // JSON modular usa 'anexo'; API da planilha, 'anexos'
-  if (!a) return "";
-  return '<span class="vc-pdf" data-pdf="' + a + '" role="link" tabindex="0" '
-    + 'onclick="event.preventDefault();event.stopPropagation();window.open(this.dataset.pdf,\'_blank\',\'noopener\')">Prancha PDF</span>';
+  var mats = lapiAnexosParse(item && (item.anexo || item.anexos));
+  if (!mats.length) return "";
+  return mats.map(function(m){
+    var rot = /^prancha$/i.test(m.rotulo) ? 'Prancha PDF' : m.rotulo;
+    return '<span class="vc-pdf" data-pdf="' + lapiEscAttr_(m.url) + '" role="link" tabindex="0" '
+      + 'onclick="event.preventDefault();event.stopPropagation();window.open(this.dataset.pdf,\'_blank\',\'noopener\')">'
+      + lapiEscAttr_(rot) + '</span>';
+  }).join('');
 }
