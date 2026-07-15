@@ -2,23 +2,23 @@
    LAPIDARIUM — Folha de estilo compartilhada (subpáginas)
    Identidade visual da home, em arquivo único reutilizável.
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:115%}
 :root{
   --gold:#c9a84c;--gold-l:#f0d98a;--gold-d:#9a7d3a;--gold-vd:#3d3018;
   --copper:#b87333;--copper-l:#d4905a;--blue:#1a3a5c;--blue-l:#4a7fa8;
-  --s1:#171510;--s2:#1e1c14;--s3:#252118;
+  --s1:#1d1912;--s2:#242017;--s3:#2b2519;
   --text:#e6d8bc;--text-d:#c2b28a;--text-dd:#6b6250;
   --border:rgba(201,168,76,0.13);--border-h:rgba(201,168,76,0.3);
   --panel:rgba(16,14,9,0.75);
 }
-body{background:var(--s1);color:var(--text);font-family:'EB Garamond',serif;min-height:100vh;overflow-x:hidden;position:relative}
+body{background:var(--s1);color:var(--text);font-family:'EB Garamond',serif;font-weight:500;min-height:100vh;overflow-x:hidden;position:relative}
 /* fundo pedra (CSS puro, leve) */
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-   radial-gradient(ellipse 60% 55% at 50% 42%,#2a2518 0%,#171510 60%,#0e0d0a 100%),
+   radial-gradient(ellipse 60% 55% at 50% 42%,#332d1d 0%,#241f15 60%,#17140d 100%),
    radial-gradient(ellipse 38% 38% at 18% 22%,rgba(35,31,20,.7),transparent 70%),
    radial-gradient(ellipse 42% 42% at 82% 78%,rgba(31,28,17,.6),transparent 70%)}
 body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -90,7 +90,7 @@ header{text-align:center;padding:46px 0 0}
 .searchbar::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--gold-l) 50%,var(--gold) 70%,transparent)}
 .search-row{display:flex;align-items:center;gap:8px}
 .search-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--gold);box-shadow:0 0 7px var(--gold);animation:delta-breathe 2.5s ease-in-out infinite}
-.search-input{flex:1;min-width:0;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.18);color:var(--text);font-family:'EB Garamond',serif;font-size:1.15rem;padding:12px 16px;outline:none;transition:border-color .3s}
+.search-input{flex:1;min-width:0;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.18);color:var(--text);font-family:'EB Garamond',serif;font-weight:500;font-size:1.15rem;padding:12px 16px;outline:none;transition:border-color .3s}
 .search-input::placeholder{color:#93855f;font-style:italic}
 .search-input:focus{border-color:rgba(201,168,76,.35);background:rgba(255,255,255,.06)}
 .expansao{color:var(--text-d);font-size:.92rem;font-style:italic;margin:8px 2px}
@@ -134,7 +134,7 @@ body.light .site-name{background:linear-gradient(170deg,#b8933f,#9a7a2e 45%,#6a5
 body.light .sec-label{color:#8a6a24}
 body.light footer p{color:#7c6f54}
 body.light .search-input{background:rgba(0,0,0,.03)}
-body.light .search-input::placeholder{color:#8a7c5c}
+body.light .search-input::placeholder{color:#6e6144}
 body.light .searchbar{background:rgba(255,251,242,.82)}
 body.light .vc-img{filter:brightness(.95) saturate(.82)}
 /* ── AGENDA responsiva (compartilhada) ── */

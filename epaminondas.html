@@ -49,9 +49,9 @@
     <h1 class="ghero-name">EpaminondasOnline</h1>
     <p class="ghero-sub">Loja Maçônica Epaminondas Souza Costa — estudos online</p>
     <div class="ghero-stats">
-      <div><span class="gs-n">400+</span><span class="gs-l">Vídeos</span></div>
+      <div><span class="gs-n">209</span><span class="gs-l">Vídeos</span></div>
       <div><span class="gs-n">2021</span><span class="gs-l">Desde</span></div>
-      <div><span class="gs-n">80+</span><span class="gs-l">Oradores</span></div>
+      <div><span class="gs-n">67+</span><span class="gs-l">Oradores</span></div>
     </div>
     <div class="orn"><span class="ol"></span><span class="od"></span><span class="ol r"></span></div>
     <a class="backlink" href="buscar.html?q=" style="margin-bottom:0">Buscar em todo o acervo ▸</a>
@@ -84,7 +84,7 @@
           <p class="vc-meta">${lapiData(v.data).split('-').reverse().join('/')}${v.palestrante?' · '+v.palestrante:''}</p>
           ${(v.tags&&v.tags.length)?`<div class="vc-tags">${v.tags.slice(0,3).map(t=>`<span class="vtag">${t}</span>`).join('')}</div>`:''}
         ${lapiAnexoBtn(v)}${window.LapidariumApp?LapidariumApp.botoesHtml(v):''}</div></a>`).join('') + `</div>
-      <p class="expansao" style="text-align:center">Acervo em expansão — em breve os ~400 vídeos completos e a busca por transcrição.</p>`;
+      <p class="expansao" style="text-align:center">Acervo em expansão — em breve os demais graus e a busca por transcrição.</p>`;
     if(window.LapidariumApp)LapidariumApp.decorarCards(grade);
   } catch(e) {
     grade.innerHTML = "<p class='vazio'>Não foi possível carregar o acervo (verifique a conexão).</p>";
