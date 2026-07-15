@@ -391,9 +391,9 @@ body.light #mh-notch{background:#e9dfc8 !important}
       <div class="p-icon" id="icon-ep">E</div>
       <p class="p-name">Epaminondas</p><p class="p-sub">EpaminondasOnline</p>
       <div class="p-stats">
-        <div><span class="ps-n">246</span><span class="ps-l">Vídeos</span></div>
-        <div><span class="ps-n">2021</span><span class="ps-l">Desde</span></div>
-        <div><span class="ps-n">74+</span><span class="ps-l">Oradores</span></div>
+        <div><span class="ps-n" id="st-ep-n">246</span><span class="ps-l">Vídeos</span></div>
+        <div><span class="ps-n" id="st-ep-desde">2021</span><span class="ps-l">Desde</span></div>
+        <div><span class="ps-n" id="st-ep-orad">74+</span><span class="ps-l">Oradores</span></div>
       </div>
       <div class="p-cta"><span>Entrar no Portal</span>
         <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
@@ -406,9 +406,9 @@ body.light #mh-notch{background:#e9dfc8 !important}
       <div class="p-icon" id="icon-ur">U</div>
       <p class="p-name">Urânia</p><p class="p-sub">Grupo de Estudos Urânia</p>
       <div class="p-stats">
-        <div><span class="ps-n">81</span><span class="ps-l">Vídeos</span></div>
-        <div><span class="ps-n">2023</span><span class="ps-l">Desde</span></div>
-        <div><span class="ps-n">13+</span><span class="ps-l">Oradores</span></div>
+        <div><span class="ps-n" id="st-ur-n">81</span><span class="ps-l">Vídeos</span></div>
+        <div><span class="ps-n" id="st-ur-desde">2023</span><span class="ps-l">Desde</span></div>
+        <div><span class="ps-n" id="st-ur-orad">13+</span><span class="ps-l">Oradores</span></div>
       </div>
       <div class="p-cta"><span>Entrar no Portal</span>
         <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
@@ -509,6 +509,22 @@ function lapiHora(h){const s=''+(h||'');let m=s.match(/T(\d\d:\d\d)/);if(m)retur
 (async function(){
   let vids = await lapiFetch('video');
   if (vids && vids.length){
+    // ── Números dos portais: SEMPRE da API. Chumbar no HTML já nos fez mentir
+    //    (dizia 81/246 quando o acervo tinha 88/361). Regra nº1.
+    (function(){
+      const põe = (id,v) => { const e=document.getElementById(id); if(e) e.textContent=v; };
+      const stats = (f) => {
+        const g = vids.filter(f);
+        const vid = g.filter(v => (v.tipo||'video') !== 'prancha');
+        const anos = g.map(v=>(v.data||'').slice(0,4)).filter(Boolean).sort();
+        const orad = new Set(g.map(v=>(v.autor||'').trim()).filter(Boolean));
+        return { n: vid.length, desde: anos[0] || '—', orad: orad.size };
+      };
+      const ep = stats(v => (v.origem||'').toLowerCase().indexOf('pamin') >= 0);
+      const ur = stats(v => (v.origem||'').toLowerCase().indexOf('rânia') >= 0);
+      põe('st-ep-n', ep.n);  põe('st-ep-desde', ep.desde);  põe('st-ep-orad', ep.orad + '+');
+      põe('st-ur-n', ur.n);  põe('st-ur-desde', ur.desde);  põe('st-ur-orad', ur.orad + '+');
+    })();
     // Intercala os dois grupos: por data pura o Epaminondas some do rolo,
     // porque a Urânia vai mais longe no calendário. 7 de cada, alternados.
     const ehEp = v => (v.origem||'').toLowerCase().indexOf('pamin') >= 0;

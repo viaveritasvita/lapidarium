@@ -206,7 +206,7 @@
       + '<div class="pdia-row pdia-row2">'
       + '<button type="button" class="pdia-acaso" onclick="LapidariumApp.pedraAoAcaso()">⟡ Pedra ao Acaso</button>'
       + '</div>'
-      + '<p class="pdia-acaso-note">⟡ <em>Pedra ao Acaso</em> — o site sorteia uma pedra qualquer do acervo para o Irmão lapidar.</p>'
+      + '<p class="pdia-acaso-note">⟡ <em>Pedra ao Acaso</em> — um vídeo escolhido ao acaso.</p>'
       + '<p class="pdia-foot">' + foot + '</p>'
       + '</div></div>';
   }
